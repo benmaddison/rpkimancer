@@ -1,1 +1,4 @@
 target/
+venv/
+modules/RpkiSignedURIList-2021.asn
+lib/rpki_rsu.py
