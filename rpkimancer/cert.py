@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography import x509
 
-from .rpki_rsu import IPAddrAndASCertExtn
+from .asn1 import IPAddrAndASCertExtn
 
 
 def make_cert(common_name: str = "TA",
