@@ -1,8 +1,9 @@
 import datetime
 import ipaddress
+import os
 import typing
 
-from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography import x509
 
@@ -20,37 +21,48 @@ AFI = {4: (1).to_bytes(2, "big"),
        6: (2).to_bytes(2, "big")}
 
 IpResourcesInfo = typing.List[ipaddress.ip_network]
-AsResourcesInfo = typing.List[typing.Union[int,
-                                           typing.Tuple[int, int]]]
+AsResourcesInfo = typing.List[typing.Union[int, typing.Tuple[int, int]]]
+ResourceCertificateList = typing.List['ResourceCertificate']
 
 
 class ResourceCertificate:
+
+    # rfc6487 section 4.3
+    HASH_ALGORITHM = hashes.SHA256()
+
+    # rfc6487 section 4.8.9
+    CPS = x509.CertificatePolicies([
+        x509.PolicyInformation(RPKI_CERT_POLICY_OID,
+                               policy_qualifiers=None)
+    ])
+
     def __init__(self,
-                 common_name: str = "TA",
+                 common_name: str = None,
                  days: int = 365,
-                 issuer: 'ResourceCertificate' = None,
-                 ca: bool = True,
+                 issuer: 'CertificateAuthority' = None,
+                 ca: bool = False,
                  signed_object_type: str = None,
                  base_uri: str = "rsync://rpki.example.net/rpki",
                  ip_resources: IpResourcesInfo = None,
                  as_resources: AsResourcesInfo = None) -> None:
+
+        self._issuer = issuer
 
         builder = x509.CertificateBuilder()
 
         # rfc6487 section 4.2
         serial_number = x509.random_serial_number()
         builder = builder.serial_number(serial_number)
-        # rfc6487 section 4.3
-        hash_algorithm = hashes.SHA256()
         # rfc6487 section 4.5
+        self._cn = common_name
         subject_name = x509.Name([x509.NameAttribute(x509.NameOID.COMMON_NAME,
-                                                     common_name)])
+                                                     self.subject_cn)])
         builder = builder.subject_name(subject_name)
         # rfc6487 section 4.4
-        if issuer is None:
+        if self.issuer is None:
             issuer_name = subject_name
         else:
-            issuer_name = issuer.cert.subject
+            issuer_name = self.issuer.cert.subject
         builder = builder.issuer_name(issuer_name)
         # rfc6487 section 4.6
         valid_from = datetime.datetime.utcnow()
@@ -70,9 +82,9 @@ class ResourceCertificate:
         ski = x509.SubjectKeyIdentifier.from_public_key(self.public_key)
         builder = builder.add_extension(ski, critical=False)
         # rfc6487 section 4.8.3
-        if issuer is not None:
+        if self.issuer is not None:
             aki = x509.AuthorityKeyIdentifier\
-                      .from_issuer_public_key(issuer.public_key)
+                      .from_issuer_public_key(self.issuer.public_key)
             builder = builder.add_extension(aki, critical=False)
         # rfc6487 section 4.8.4
         key_usage = x509.KeyUsage(digital_signature=ca is False,
@@ -86,64 +98,33 @@ class ResourceCertificate:
                                   decipher_only=False)
         builder = builder.add_extension(key_usage, critical=True)
         # rfc6487 section 4.8.6
-        if issuer is not None:
-            crldp_uri = f"{base_uri}/{issuer.subject_cn}/revoked.crl"
-            crldp = x509.CRLDistributionPoints([
-                x509.DistributionPoint([x509.UniformResourceIdentifier(crldp_uri)],
-                                       relative_name=None,
-                                       reasons=None,
-                                       crl_issuer=None)
-            ])
+        if self.issuer is not None:
+            crldp = self.issuer.crldp(base_uri)
             builder = builder.add_extension(crldp, critical=False)
         # rfc6487 section 4.8.7
         if issuer is not None:
-            if issuer.cert.issuer == issuer.cert.subject:
-                aia_uri = f"{base_uri}/{issuer.subject_cn}.cer"
-            else:
-                aia_uri = f"{base_uri}/{issuer.issuer_cn}/{issuer.subject_cn}.cer"
-            aia = x509.AuthorityInformationAccess([
-                x509.AccessDescription(AIA_CA_ISSUERS_OID,
-                                       x509.UniformResourceIdentifier(aia_uri))
-            ])
+            aia = self.issuer.aia(base_uri)
             builder = builder.add_extension(aia, critical=False)
         # rfc6487 section 4.8.8
-        if ca is True:
-            sia_repo_uri = f"{base_uri}/{common_name}"
-            sia_mft_uri = f"{base_uri}/{common_name}/manifest.mft"
-            sia = x509.SubjectInformationAccess([
-                x509.AccessDescription(SIA_CA_REPOSITORY_OID,
-                                       x509.UniformResourceIdentifier(sia_repo_uri)),
-                x509.AccessDescription(SIA_MFT_ACCESS_OID,
-                                       x509.UniformResourceIdentifier(sia_mft_uri))
-            ])
-        else:
-            sia_obj_uri = f"{base_uri}/{issuer.subject_cn}/{common_name}.{signed_object_type}"
-            sia = x509.SubjectInformationAccess([
-                x509.AccessDescription(SIA_OBJ_ACCESS_OID,
-                                       x509.UniformResourceIdentifier(sia_obj_uri))
-            ])
+        sia = self.sia(base_uri, signed_object_type)
         builder = builder.add_extension(sia, critical=False)
         # rfc6487 section 4.8.9
-        cps = x509.CertificatePolicies([
-            x509.PolicyInformation(RPKI_CERT_POLICY_OID,
-                                   policy_qualifiers=None)
-        ])
-        builder = builder.add_extension(cps, critical=True)
-        # rfc6487 section 4.8.10 (TODO: IPAddressRange and inherit support)
+        builder = builder.add_extension(self.CPS, critical=True)
+        # rfc6487 section 4.8.10
         if ip_resources is not None:
             ip_resources_ext = IpResources(ip_resources)
             builder = builder.add_extension(ip_resources_ext, critical=True)
-        # rfc6487 section 4.8.11 (TODO: ASRange and inherit support)
+        # rfc6487 section 4.8.11
         if as_resources is not None:
             as_resources_ext = AsResources(as_resources)
             builder = builder.add_extension(as_resources_ext, critical=True)
 
-        if issuer is None:
-            signing_key = self.private_key
+        self._cert_builder = builder
+
+        if self.issuer is None:
+            self._cert = self.issue_cert()
         else:
-            signing_key = issuer.private_key
-        self._cert = builder.sign(private_key=signing_key,
-                                  algorithm=hash_algorithm)
+            self._cert = self.issuer.issue_cert(self)
 
     @property
     def private_key(self):
@@ -154,27 +135,175 @@ class ResourceCertificate:
         return self._key.public_key()
 
     @property
+    def cert_builder(self):
+        return self._cert_builder
+
+    @property
     def cert(self):
         return self._cert
 
     @property
+    def issuer(self):
+        return self._issuer
+
+    @property
     def subject_cn(self):
-        cn = x509.NameOID.COMMON_NAME
-        return self._cert.subject.get_attributes_for_oid(cn)[0].value
+        return self._cn
 
     @property
     def issuer_cn(self):
-        cn = x509.NameOID.COMMON_NAME
-        return self._cert.issuer.get_attributes_for_oid(cn)[0].value
+        if self.issuer is not None:
+            return self.issuer.subject_cn
+        else:
+            return self.subject_cn
+
+    def sia(self, base_uri, signed_object_type):
+        sia_obj_uri = f"{base_uri}/{self.issuer.repo_path}/"\
+                      f"{self.subject_cn}.{signed_object_type}"
+        sia = x509.SubjectInformationAccess([
+            x509.AccessDescription(SIA_OBJ_ACCESS_OID,
+                                   x509.UniformResourceIdentifier(sia_obj_uri))
+        ])
+        return sia
+
+
+class CertificateAuthority(ResourceCertificate):
+    def __init__(self,
+                 common_name: str = None,
+                 crl_days: int = 7,
+                 *args, **kwargs) -> None:
+        self._issued = list()
+        super().__init__(common_name=common_name, ca=True, *args, **kwargs)
+        # rfc 6487 section 5
+        self._crl = None
+        self.crl_days = crl_days
+        self.next_crl_number = 0
+        self.issue_crl()
+
+    @property
+    def crl(self):
+        return self._crl
+
+    @property
+    def repo_path(self):
+        return os.path.join(self.issuer.repo_path, self.subject_cn)
+
+    @property
+    def cert_path(self):
+        return os.path.join(self.issuer.repo_path, f"{self.subject_cn}.cer")
+
+    @property
+    def crl_path(self):
+        return os.path.join(self.repo_path, "revoked.crl")
+
+    @property
+    def mft_path(self):
+        return os.path.join(self.repo_path, "manifest.mft")
+
+    @property
+    def issued(self):
+        for cert in self._issued:
+            yield cert
+
+    def crldp(self, base_uri):
+        crldp_uri = f"{base_uri}/{self.crl_path}"
+        crldp = x509.CRLDistributionPoints([
+            x509.DistributionPoint([x509.UniformResourceIdentifier(crldp_uri)],
+                                   relative_name=None,
+                                   reasons=None,
+                                   crl_issuer=None)
+        ])
+        return crldp
+
+    def aia(self, base_uri):
+        aia_uri = f"{base_uri}/{self.cert_path}"
+        aia = x509.AuthorityInformationAccess([
+            x509.AccessDescription(AIA_CA_ISSUERS_OID,
+                                   x509.UniformResourceIdentifier(aia_uri))
+        ])
+        return aia
+
+    def sia(self, base_uri, *args, **kwargs):
+        sia_repo_uri = f"{base_uri}/{self.repo_path}"
+        sia_mft_uri = f"{base_uri}/{self.mft_path}"
+        sia = x509.SubjectInformationAccess([
+            x509.AccessDescription(SIA_CA_REPOSITORY_OID,
+                x509.UniformResourceIdentifier(sia_repo_uri)),  # noqa: E501
+            x509.AccessDescription(SIA_MFT_ACCESS_OID,
+                                   x509.UniformResourceIdentifier(sia_mft_uri))
+        ])
+        return sia
+
+    def issue_cert(self, subject: ResourceCertificate = None):
+        if subject is None:
+            subject = self
+        cert = subject.cert_builder.sign(private_key=self.private_key,
+                                         algorithm=self.HASH_ALGORITHM)
+        self._issued.append(subject)
+        return cert
+
+    def issue_crl(self, to_revoke: ResourceCertificateList = None):
+        now = datetime.datetime.utcnow()
+        next_update = now + datetime.timedelta(days=self.crl_days)
+        crl_builder = x509.CertificateRevocationListBuilder()
+        crl_builder = crl_builder.issuer_name(self.cert.subject)
+        crl_builder = crl_builder.last_update(now)
+        crl_builder = crl_builder.next_update(next_update)
+        aki = x509.AuthorityKeyIdentifier\
+                  .from_issuer_public_key(self.public_key)
+        crl_builder = crl_builder.add_extension(aki, critical=False)
+        crl_number = x509.CRLNumber(self.next_crl_number)
+        crl_builder = crl_builder.add_extension(crl_number, critical=False)
+        if self.crl is not None:
+            for revoked in self.crl:
+                # TODO: clean up expired certs
+                crl_builder = crl_builder.add_revoked_certificate(revoked)
+        if to_revoke is not None:
+            for c in to_revoke:
+                serial_number = c.cert.serial_number
+                rc_builder = x509.RevokedCertificateBuilder(serial_number, now)
+                revoked_cert = rc_builder.build()
+                crl_builder = crl_builder.add_revoked_certificate(revoked_cert)
+        self._crl = crl_builder.sign(self.private_key, self.HASH_ALGORITHM)
+        self.next_crl_number += 1
+
+    def publish(self, base_path, recursive=True):
+        os.makedirs(os.path.join(base_path, self.repo_path), exist_ok=True)
+        with open(os.path.join(base_path, self.cert_path), "wb") as f:
+            f.write(self.cert.public_bytes(serialization.Encoding.DER))
+        with open(os.path.join(base_path, self.crl_path), "wb") as f:
+            f.write(self.crl.public_bytes(serialization.Encoding.DER))
+        if recursive is True:
+            for issuee in self.issued:
+                if issuee is not self:
+                    issuee.publish(base_path, recursive=recursive)
+
+
+class TACertificateAuthority(CertificateAuthority):
+    def __init__(self, common_name: str = "TA", *args, **kwargs) -> None:
+        super().__init__(common_name=common_name, issuer=None, *args, **kwargs)
+
+    @property
+    def repo_path(self):
+        return self.subject_cn
+
+    @property
+    def cert_path(self):
+        return f"{self.subject_cn}.cer"
 
 
 class IpResources(x509.UnrecognizedExtension):
+    # TODO: IPAddressRange and inherit support
     def __init__(self, ip_resources: IpResourcesInfo):
+        def to_bitstring(network: ipaddress.ip_network):
+            netbits = network.prefixlen
+            hostbits = network.max_prefixlen - netbits
+            value = int(network.network_address) >> hostbits
+            return (value, netbits)
         ip_address_blocks = [{"addressFamily": AFI[n.version],
                               "ipAddressChoice": ("addressesOrRanges",
                                                   [("addressPrefix",
-                                                   (int(n.network_address),
-                                                    n.prefixlen))])}
+                                                    to_bitstring(n))])}
                              for n in ip_resources]
         IPAddrAndASCertExtn.IPAddrBlocks.set_val(ip_address_blocks)
         ip_address_blocks_data = IPAddrAndASCertExtn.IPAddrBlocks.to_der()
@@ -183,6 +312,7 @@ class IpResources(x509.UnrecognizedExtension):
 
 
 class AsResources(x509.UnrecognizedExtension):
+    # TODO: inherit support
     def __init__(self, as_resources: AsResourcesInfo):
         as_blocks = {"asnum": ("asIdsOrRanges",
                                [("id", a) for a in as_resources
