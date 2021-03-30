@@ -4,7 +4,7 @@ import os
 
 
 from .econtent import RpkiSignedURIList
-from .cert import CertificateAuthority, TACertificateAuthority 
+from .cert import CertificateAuthority, TACertificateAuthority
 
 DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
