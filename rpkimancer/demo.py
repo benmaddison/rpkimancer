@@ -3,8 +3,9 @@ import ipaddress
 import os
 
 
-from .econtent import RpkiSignedURIList
 from .cert import CertificateAuthority, TACertificateAuthority
+from .econtent import RpkiSignedURIList
+from .sigobj import SignedObject
 
 DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
@@ -23,10 +24,6 @@ def demo():
     parser.add_argument("--content-type", default=COMMUNITY_DEFS_OID,
                         help="Content type of hashed data")
     args = parser.parse_args()
-    rsu = RpkiSignedURIList(*args.uri_list,
-                            version=0,
-                            resources=dict(asID=[("id", args.asn)]),
-                            type=args.content_type)
     # create CAs
     ta = TACertificateAuthority(ip_resources=[ipaddress.ip_network("0.0.0.0/0"),
                                               ipaddress.ip_network("::/0")],
@@ -37,9 +34,14 @@ def demo():
                                as_resources=[37271])
     ca2 = CertificateAuthority(common_name="CA2", issuer=ca1,
                                as_resources=[37271])
-    ta.publish(base_path=DEMO_PUB_PATH)
     # create RSU
-    print(rsu.to_asn1())
+    econtent = RpkiSignedURIList(*args.uri_list,
+                                 inner_type=args.content_type,
+                                 as_resources=[args.asn])
+    rsu = SignedObject(econtent=econtent,
+                       issuer=ca2)
+    # publish objects
+    ta.publish(base_path=DEMO_PUB_PATH)
 
 
 if __name__ == "__main__":

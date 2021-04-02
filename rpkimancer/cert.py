@@ -1,13 +1,14 @@
 import datetime
-import ipaddress
 import os
 import typing
 
 from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography import x509
 
-from .asn1 import IPAddrAndASCertExtn
+from .cms import Certificate
+from .resources import (ASIdentifiers, AsResourcesInfo,
+                        IPAddrBlocks, IpResourcesInfo)
 
 AIA_CA_ISSUERS_OID = x509.oid.AuthorityInformationAccessOID.CA_ISSUERS
 SIA_CA_REPOSITORY_OID = x509.oid.SubjectInformationAccessOID.CA_REPOSITORY
@@ -17,11 +18,6 @@ RPKI_CERT_POLICY_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.14.2")
 IP_RESOURCES_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.1.7")
 AS_RESOURCES_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.1.8")
 
-AFI = {4: (1).to_bytes(2, "big"),
-       6: (2).to_bytes(2, "big")}
-
-IpResourcesInfo = typing.List[ipaddress.ip_network]
-AsResourcesInfo = typing.List[typing.Union[int, typing.Tuple[int, int]]]
 ResourceCertificateList = typing.List['ResourceCertificate']
 
 
@@ -41,7 +37,6 @@ class ResourceCertificate:
                  days: int = 365,
                  issuer: 'CertificateAuthority' = None,
                  ca: bool = False,
-                 signed_object_type: str = None,
                  base_uri: str = "rsync://rpki.example.net/rpki",
                  ip_resources: IpResourcesInfo = None,
                  as_resources: AsResourcesInfo = None) -> None:
@@ -80,6 +75,7 @@ class ResourceCertificate:
             builder = builder.add_extension(basic_constraints, critical=True)
         # rfc6487 section 4.8.2
         ski = x509.SubjectKeyIdentifier.from_public_key(self.public_key)
+        self._ski_digest = ski.digest
         builder = builder.add_extension(ski, critical=False)
         # rfc6487 section 4.8.3
         if self.issuer is not None:
@@ -106,7 +102,7 @@ class ResourceCertificate:
             aia = self.issuer.aia(base_uri)
             builder = builder.add_extension(aia, critical=False)
         # rfc6487 section 4.8.8
-        sia = self.sia(base_uri, signed_object_type)
+        sia = self.sia(base_uri)
         builder = builder.add_extension(sia, critical=False)
         # rfc6487 section 4.8.9
         builder = builder.add_extension(self.CPS, critical=True)
@@ -143,6 +139,10 @@ class ResourceCertificate:
         return self._cert
 
     @property
+    def cert_der(self):
+        return self.cert.public_bytes(serialization.Encoding.DER)
+
+    @property
     def issuer(self):
         return self._issuer
 
@@ -157,14 +157,51 @@ class ResourceCertificate:
         else:
             return self.subject_cn
 
-    def sia(self, base_uri, signed_object_type):
-        sia_obj_uri = f"{base_uri}/{self.issuer.repo_path}/"\
-                      f"{self.subject_cn}.{signed_object_type}"
+    @property
+    def ski_digest(self):
+        return self._ski_digest
+
+    def asn1_data(self):
+        c = Certificate.from_der(self.cert_der)
+        return ("certificate", c.content_data)
+
+
+class EECertificate(ResourceCertificate):
+    def __init__(self, signed_object: "SignedObject", *args, **kwargs):
+        self._signed_object = signed_object
+        common_name = signed_object.econtent.signed_attrs_digest()
+        super().__init__(common_name=common_name, *args, **kwargs)
+
+    @property
+    def signed_object(self):
+        return self._signed_object
+
+    @property
+    def file_name(self):
+        return f"{self.subject_cn}.{self.signed_object.econtent.file_ext}"
+
+    @property
+    def object_path(self):
+        return os.path.join(self.issuer.repo_path, self.file_name)
+
+    def sia(self, base_uri):
+        sia_obj_uri = f"{base_uri}/{self.object_path}"
         sia = x509.SubjectInformationAccess([
             x509.AccessDescription(SIA_OBJ_ACCESS_OID,
                                    x509.UniformResourceIdentifier(sia_obj_uri))
         ])
         return sia
+
+    def sign_object(self):
+        message = self.signed_object.econtent.signed_attrs().to_der()
+        signature = self.private_key.sign(data=message,
+                                          padding=padding.PKCS1v15(),
+                                          algorithm=self.HASH_ALGORITHM)
+        return signature
+
+    def publish(self, base_path, recursive=True):
+        with open(os.path.join(base_path, self.object_path), "wb") as f:
+            f.write(self.signed_object.to_der())
 
 
 class CertificateAuthority(ResourceCertificate):
@@ -183,6 +220,10 @@ class CertificateAuthority(ResourceCertificate):
     @property
     def crl(self):
         return self._crl
+
+    @property
+    def crl_der(self):
+        return self.crl.public_bytes(serialization.Encoding.DER)
 
     @property
     def repo_path(self):
@@ -270,9 +311,9 @@ class CertificateAuthority(ResourceCertificate):
     def publish(self, base_path, recursive=True):
         os.makedirs(os.path.join(base_path, self.repo_path), exist_ok=True)
         with open(os.path.join(base_path, self.cert_path), "wb") as f:
-            f.write(self.cert.public_bytes(serialization.Encoding.DER))
+            f.write(self.cert_der)
         with open(os.path.join(base_path, self.crl_path), "wb") as f:
-            f.write(self.crl.public_bytes(serialization.Encoding.DER))
+            f.write(self.crl_der)
         if recursive is True:
             for issuee in self.issued:
                 if issuee is not self:
@@ -295,32 +336,34 @@ class TACertificateAuthority(CertificateAuthority):
 class IpResources(x509.UnrecognizedExtension):
     # TODO: IPAddressRange and inherit support
     def __init__(self, ip_resources: IpResourcesInfo):
-        def to_bitstring(network: ipaddress.ip_network):
-            netbits = network.prefixlen
-            hostbits = network.max_prefixlen - netbits
-            value = int(network.network_address) >> hostbits
-            return (value, netbits)
-        ip_address_blocks = [{"addressFamily": AFI[n.version],
-                              "ipAddressChoice": ("addressesOrRanges",
-                                                  [("addressPrefix",
-                                                    to_bitstring(n))])}
-                             for n in ip_resources]
-        IPAddrAndASCertExtn.IPAddrBlocks.set_val(ip_address_blocks)
-        ip_address_blocks_data = IPAddrAndASCertExtn.IPAddrBlocks.to_der()
-        IPAddrAndASCertExtn.IPAddrBlocks.reset_val()
+        # def to_bitstring(network: ipaddress.ip_network):
+        #     netbits = network.prefixlen
+        #     hostbits = network.max_prefixlen - netbits
+        #     value = int(network.network_address) >> hostbits
+        #     return (value, netbits)
+        # ip_address_blocks = [{"addressFamily": AFI[n.version],
+        #                       "ipAddressChoice": ("addressesOrRanges",
+        #                                           [("addressPrefix",
+        #                                             to_bitstring(n))])}
+        #                      for n in ip_resources]
+        # IPAddrAndASCertExtn.IPAddrBlocks.set_val(ip_address_blocks)
+        # ip_address_blocks_data = IPAddrAndASCertExtn.IPAddrBlocks.to_der()
+        # IPAddrAndASCertExtn.IPAddrBlocks.reset_val()
+        ip_address_blocks_data = IPAddrBlocks(ip_resources).to_der()
         super().__init__(IP_RESOURCES_OID, ip_address_blocks_data)
 
 
 class AsResources(x509.UnrecognizedExtension):
     # TODO: inherit support
     def __init__(self, as_resources: AsResourcesInfo):
-        as_blocks = {"asnum": ("asIdsOrRanges",
-                               [("id", a) for a in as_resources
-                                if isinstance(a, int)] +
-                               [("range", {"min": a[0], "max": a[1]})
-                                for a in as_resources
-                                if isinstance(a, tuple)])}
-        IPAddrAndASCertExtn.ASIdentifiers.set_val(as_blocks)
-        as_identifiers_data = IPAddrAndASCertExtn.ASIdentifiers.to_der()
-        IPAddrAndASCertExtn.ASIdentifiers.reset_val()
+        # as_blocks = {"asnum": ("asIdsOrRanges",
+        #                        [("id", a) for a in as_resources
+        #                         if isinstance(a, int)] +
+        #                        [("range", {"min": a[0], "max": a[1]})
+        #                         for a in as_resources
+        #                         if isinstance(a, tuple)])}
+        # IPAddrAndASCertExtn.ASIdentifiers.set_val(as_blocks)
+        # as_identifiers_data = IPAddrAndASCertExtn.ASIdentifiers.to_der()
+        # IPAddrAndASCertExtn.ASIdentifiers.reset_val()
+        as_identifiers_data = ASIdentifiers(as_resources).to_der()
         super().__init__(AS_RESOURCES_OID, as_identifiers_data)

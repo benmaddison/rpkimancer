@@ -1,47 +1,43 @@
-import contextlib
 import hashlib
+import typing
 import urllib.request
 
+from .algorithms import SHA256
 from .asn1 import RpkiSignedURIList_2021
+from .cms import Content, SignedAttributes
+from .resources import (IPAddressFamily, IpResourcesInfo,
+                        ASIdOrRange, AsResourcesInfo)
 
-SHA256 = (2, 16, 840, 1, 101, 3, 4, 2)
 DIGEST_ALGORITHMS = {SHA256: hashlib.sha256}
 
 
-class EncapsulatedContentInfo:
+class EncapsulatedContent(Content):
 
-    content_type = None
-    content_syntax = None
+    digest_algorithm = DIGEST_ALGORITHMS[SHA256]
 
-    def __init__(self, **kwargs):
-        with self.constructed(kwargs) as instance:
-            self.data = instance.get_val()
+    def digest(self):
+        return self.digest_algorithm(self.to_der()).digest()
 
-    @contextlib.contextmanager
-    def constructed(self, data=None):
-        if data is None:
-            data = self.data
-        try:
-            self.content_syntax.set_val(data)
-            yield self.content_syntax
-        finally:
-            self.content_syntax.reset_val()
+    def signed_attrs(self):
+        return SignedAttributes(content_type=self.content_type.get_val(),
+                                message_digest=self.digest())
 
-    def to_asn1(self):
-        with self.constructed() as instance:
-            return instance.to_asn1()
-
-    def to_der(self):
-        with self.constructed() as instance:
-            return instance.to_der()
+    def signed_attrs_digest(self):
+        return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()
 
 
-class RpkiSignedURIList(EncapsulatedContentInfo):
+class RpkiSignedURIList(EncapsulatedContent):
 
-    content_type = RpkiSignedURIList_2021.ct_rpkiSignedURIList
+    content_type = RpkiSignedURIList_2021.id_ct_signedURIList
     content_syntax = RpkiSignedURIList_2021.RpkiSignedURIList
+    file_ext = "rsu"
 
-    def __init__(self, *uris, digest_algorithm=SHA256, **kwargs):
+    def __init__(self, *uris,
+                 version: int = 0,
+                 inner_type: typing.Tuple[int] = None,
+                 ip_resources: IpResourcesInfo = None,
+                 as_resources: AsResourcesInfo = None,
+                 digest_algorithm=SHA256):
         uri_list = list()
         alg = DIGEST_ALGORITHMS[digest_algorithm]
         for uri in uris:
@@ -52,5 +48,16 @@ class RpkiSignedURIList(EncapsulatedContentInfo):
             hasher.update(data)
             digest = hasher.digest()
             uri_list.append(dict(uri=uri, size=length, hash=digest))
-        super().__init__(digestAlgorithm=dict(algorithm=digest_algorithm),
-                         uriList=uri_list, **kwargs)
+        data = {"version": version,
+                "digestAlgorithm": {"algorithm": digest_algorithm},
+                "uriList": uri_list,
+                "resources": {}}
+        if inner_type is not None:
+            data["type"] = inner_type
+        if ip_resources is not None:
+            data["resources"]["ipAddrBlocks"] = [IPAddressFamily(n).content_data
+                                                 for n in ip_resources]
+        if as_resources is not None:
+            data["resources"]["asID"] = [ASIdOrRange(a).content_data
+                                         for a in as_resources]
+        super().__init__(data)
