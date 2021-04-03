@@ -206,7 +206,7 @@ class EECertificate(ResourceCertificate):
 
 class CertificateAuthority(ResourceCertificate):
     def __init__(self,
-                 common_name: str = None,
+                 common_name: str = "CA",
                  crl_days: int = 7,
                  *args, **kwargs) -> None:
         self._issued = list()
