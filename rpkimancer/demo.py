@@ -25,21 +25,20 @@ def demo():
                         help="Content type of hashed data")
     args = parser.parse_args()
     # create CAs
-    ta = TACertificateAuthority(ip_resources=[ipaddress.ip_network("0.0.0.0/0"),
-                                              ipaddress.ip_network("::/0")],
-                                as_resources=[(0, 4294967295)])
-    ca1 = CertificateAuthority(common_name="CA1", issuer=ta,
-                               ip_resources=[ipaddress.ip_network("41.78.188.0/22"),
-                                             ipaddress.ip_network("197.157.64.0/19")],
-                               as_resources=[37271])
-    ca2 = CertificateAuthority(common_name="CA2", issuer=ca1,
-                               as_resources=[37271])
+    ta_resources = {"ip_resources": [ipaddress.ip_network("0.0.0.0/0"),
+                                     ipaddress.ip_network("::/0")],
+                    "as_resources": [(0, 4294967295)]}
+    ta = TACertificateAuthority(**ta_resources)
+    ca_resources = {"ip_resources": [ipaddress.ip_network("41.78.188.0/22"),
+                                     ipaddress.ip_network("197.157.64.0/19")],
+                    "as_resources": [37271]}
+    ca = CertificateAuthority(issuer=ta, **ca_resources)
     # create RSU
     econtent = RpkiSignedURIList(*args.uri_list,
                                  inner_type=args.content_type,
                                  as_resources=[args.asn])
     rsu = SignedObject(econtent=econtent,
-                       issuer=ca2)
+                       issuer=ca)
     # publish objects
     ta.publish(base_path=DEMO_PUB_PATH)
 
