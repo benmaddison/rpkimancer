@@ -10,7 +10,7 @@ DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
 COMMUNITY_DEFS_OID = (1, 3, 6, 1, 4, 1, 35743, 3)
 DEMO_PUB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                             "target", "demo", "rpki")
+                             "target", "demo", "rpki.example.net", "rpki")
 
 
 def demo():

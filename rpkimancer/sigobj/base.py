@@ -51,7 +51,7 @@ class SignedObject(ContentInfo):
             },
             # rfc6488 section 2.1.4
             "certificates": [
-                ee_cert.asn1_data()
+                ("certificate", ee_cert.asn1_data())
             ],
             # 'crls' omitted per rfc6488 section 2.1.5
             # rfc6488 section 2.1.6

@@ -1,3 +1,4 @@
+import base64
 import datetime
 import os
 
@@ -149,8 +150,14 @@ class CertificateAuthority(BaseResourceCertificate):
 
 
 class TACertificateAuthority(CertificateAuthority):
-    def __init__(self, common_name: str = "TA", *args, **kwargs) -> None:
+    def __init__(self,
+                 common_name: str = "TA",
+                 base_uri: str = "rsync://rpki.example.net/rpki",
+                 *args, **kwargs) -> None:
         super().__init__(common_name=common_name, issuer=None, *args, **kwargs)
+        tal_contents = f"{base_uri}/{self.cert_path}\n\n".encode()
+        tal_contents += base64.b64encode(self.subject_public_key_info.to_der())
+        self._tal = tal_contents
 
     @property
     def repo_path(self):
@@ -159,3 +166,16 @@ class TACertificateAuthority(CertificateAuthority):
     @property
     def cert_path(self):
         return f"{self.subject_cn}.cer"
+
+    @property
+    def tal_path(self):
+        return f"{self.subject_cn}.tal"
+
+    @property
+    def tal(self):
+        return self._tal
+
+    def publish(self, base_path, recursive=True):
+        super().publish(base_path, recursive=recursive)
+        with open(os.path.join(base_path, self.tal_path), "wb") as f:
+            f.write(self.tal)

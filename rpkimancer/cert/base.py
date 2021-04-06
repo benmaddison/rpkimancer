@@ -158,7 +158,12 @@ class BaseResourceCertificate:
 
     def asn1_data(self):
         c = Certificate.from_der(self.cert_der)
-        return ("certificate", c.content_data)
+        return c.content_data
+
+    @property
+    def subject_public_key_info(self):
+        c = Certificate.from_der(self.cert_der)
+        return c.subject_public_key_info
 
 
 ResourceCertificateList = typing.List[BaseResourceCertificate]

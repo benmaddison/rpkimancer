@@ -70,6 +70,17 @@ class Certificate(Content):
 
     content_syntax = PKIX1Explicit_2009.Certificate
 
+    @property
+    def subject_public_key_info(self):
+        with self.constructed() as instance:
+            data = instance.get_val_at(["toBeSigned", "subjectPublicKeyInfo"])
+        return SubjectPublicKeyInfo(data)
+
+
+class SubjectPublicKeyInfo(Content):
+
+    content_syntax = PKIX1Explicit_2009.SubjectPublicKeyInfo
+
 
 class SignedAttributes(Content):
 
