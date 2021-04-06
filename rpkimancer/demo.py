@@ -4,8 +4,7 @@ import os
 
 
 from .cert import CertificateAuthority, TACertificateAuthority
-from .econtent import RpkiSignedURIList
-from .sigobj import SignedObject
+from .sigobj import RpkiSignedURIList
 
 DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
@@ -34,11 +33,10 @@ def demo():
                     "as_resources": [37271]}
     ca = CertificateAuthority(issuer=ta, **ca_resources)
     # create RSU
-    econtent = RpkiSignedURIList(*args.uri_list,
-                                 inner_type=args.content_type,
-                                 as_resources=[args.asn])
-    rsu = SignedObject(econtent=econtent,
-                       issuer=ca)
+    rsu = RpkiSignedURIList(issuer=ca,
+                            uris=args.uri_list,
+                            inner_type=args.content_type,
+                            as_resources=[args.asn])
     # publish objects
     ta.publish(base_path=DEMO_PUB_PATH)
 

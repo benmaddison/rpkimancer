@@ -1,0 +1,37 @@
+RPKIManifest { iso(1) member-body(2) us(840) rsadsi(113549)
+   pkcs(1) pkcs9(9) smime(16) mod(0) 60 }
+
+DEFINITIONS EXPLICIT TAGS ::=
+
+BEGIN
+
+-- EXPORTS ALL --
+
+-- IMPORTS NOTHING --
+
+-- Manifest Content Type: OID
+
+id-smime OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+us(840) rsadsi(113549) pkcs(1) pkcs9(9) 16 }
+
+id-ct OBJECT IDENTIFIER ::= { id-smime 1 }
+
+id-ct-rpkiManifest OBJECT IDENTIFIER ::= { id-ct 26 }
+
+-- Manifest Content Type: eContent
+
+Manifest ::= SEQUENCE {
+version        [0] INTEGER DEFAULT 0,
+manifestNumber     INTEGER (0..MAX),
+thisUpdate         GeneralizedTime,
+nextUpdate         GeneralizedTime,
+fileHashAlg        OBJECT IDENTIFIER,
+fileList           SEQUENCE SIZE (0..MAX) OF FileAndHash
+}
+
+FileAndHash ::= SEQUENCE {
+file  IA5String,
+hash  BIT STRING
+}
+
+END
