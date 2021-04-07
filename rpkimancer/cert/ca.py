@@ -139,10 +139,11 @@ class CertificateAuthority(BaseResourceCertificate):
 
     def publish(self, pub_path, recursive=True):
         mft_file_list = list()
-        os.makedirs(os.path.join(pub_path, self.repo_path), exist_ok=True)
-        with open(os.path.join(pub_path, self.cert_path), "wb") as f:
+        full_pub_path = os.path.join(pub_path, self.uri_path)
+        os.makedirs(os.path.join(full_pub_path, self.repo_path), exist_ok=True)
+        with open(os.path.join(full_pub_path, self.cert_path), "wb") as f:
             f.write(self.cert_der)
-        with open(os.path.join(pub_path, self.crl_path), "wb") as f:
+        with open(os.path.join(full_pub_path, self.crl_path), "wb") as f:
             f.write(self.crl_der)
         mft_file_list.append((os.path.basename(self.crl_path),
                               self.crl_der))
@@ -152,7 +153,7 @@ class CertificateAuthority(BaseResourceCertificate):
                 if recursive is True:
                     issuee.publish(pub_path, recursive=recursive)
         self.issue_mft(mft_file_list)
-        with open(os.path.join(pub_path, self.mft_path), "wb") as f:
+        with open(os.path.join(full_pub_path, self.mft_path), "wb") as f:
             f.write(self.mft.to_der())
 
 

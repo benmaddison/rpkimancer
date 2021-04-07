@@ -132,6 +132,11 @@ class BaseResourceCertificate:
         return self._base_uri.geturl()
 
     @property
+    def uri_path(self):
+        return os.path.join(self._base_uri.hostname,
+                            *self._base_uri.path.rstrip("/").split("/"))
+
+    @property
     def cert(self):
         return self._cert
 

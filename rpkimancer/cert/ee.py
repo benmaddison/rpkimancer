@@ -45,5 +45,6 @@ class EECertificate(BaseResourceCertificate):
         return signature
 
     def publish(self, pub_path, recursive=True):
-        with open(os.path.join(pub_path, self.object_path), "wb") as f:
+        with open(os.path.join(pub_path, self.uri_path, self.object_path),
+                  "wb") as f:
             f.write(self.signed_object.to_der())
