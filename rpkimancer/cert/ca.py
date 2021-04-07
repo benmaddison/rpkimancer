@@ -134,12 +134,12 @@ class CertificateAuthority(BaseResourceCertificate):
     def mft(self):
         return self._mft
 
-    def publish(self, base_path, recursive=True):
+    def publish(self, pub_path, recursive=True):
         mft_file_list = list()
-        os.makedirs(os.path.join(base_path, self.repo_path), exist_ok=True)
-        with open(os.path.join(base_path, self.cert_path), "wb") as f:
+        os.makedirs(os.path.join(pub_path, self.repo_path), exist_ok=True)
+        with open(os.path.join(pub_path, self.cert_path), "wb") as f:
             f.write(self.cert_der)
-        with open(os.path.join(base_path, self.crl_path), "wb") as f:
+        with open(os.path.join(pub_path, self.crl_path), "wb") as f:
             f.write(self.crl_der)
         mft_file_list.append((os.path.basename(self.crl_path),
                               self.crl_der))
@@ -147,9 +147,9 @@ class CertificateAuthority(BaseResourceCertificate):
             if issuee is not self:
                 mft_file_list.append(issuee.mft_entry)
                 if recursive is True:
-                    issuee.publish(base_path, recursive=recursive)
+                    issuee.publish(pub_path, recursive=recursive)
         self.issue_mft(mft_file_list)
-        with open(os.path.join(base_path, self.mft_path), "wb") as f:
+        with open(os.path.join(pub_path, self.mft_path), "wb") as f:
             f.write(self.mft.to_der())
 
 
@@ -179,7 +179,8 @@ class TACertificateAuthority(CertificateAuthority):
     def tal(self):
         return self._tal
 
-    def publish(self, base_path, recursive=True):
-        super().publish(base_path, recursive=recursive)
-        with open(os.path.join(base_path, self.tal_path), "wb") as f:
+    def publish(self, pub_path, tal_path, recursive=True):
+        super().publish(pub_path, recursive=recursive)
+        os.makedirs(tal_path, exist_ok=True)
+        with open(os.path.join(tal_path, self.tal_path), "wb") as f:
             f.write(self.tal)

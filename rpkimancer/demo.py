@@ -9,8 +9,10 @@ from .sigobj import RpkiSignedURIList
 DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
 COMMUNITY_DEFS_OID = (1, 3, 6, 1, 4, 1, 35743, 3)
-DEMO_PUB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                             "target", "demo", "rpki.example.net", "rpki")
+DEMO_BASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                              "target", "demo")
+PUB_PATH = os.path.join(DEMO_BASE_PATH, "repo", "rpki.example.net", "rpki")
+TAL_PATH = os.path.join(DEMO_BASE_PATH, "tals")
 
 
 def demo():
@@ -33,12 +35,12 @@ def demo():
                     "as_resources": [37271]}
     ca = CertificateAuthority(issuer=ta, **ca_resources)
     # create RSU
-    rsu = RpkiSignedURIList(issuer=ca,
-                            uris=args.uri_list,
-                            inner_type=args.content_type,
-                            as_resources=[args.asn])
+    RpkiSignedURIList(issuer=ca,
+                      uris=args.uri_list,
+                      inner_type=args.content_type,
+                      as_resources=[args.asn])
     # publish objects
-    ta.publish(base_path=DEMO_PUB_PATH)
+    ta.publish(pub_path=PUB_PATH, tal_path=TAL_PATH)
 
 
 if __name__ == "__main__":

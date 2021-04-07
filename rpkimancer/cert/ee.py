@@ -43,6 +43,6 @@ class EECertificate(BaseResourceCertificate):
                                           algorithm=self.HASH_ALGORITHM)
         return signature
 
-    def publish(self, base_path, recursive=True):
-        with open(os.path.join(base_path, self.object_path), "wb") as f:
+    def publish(self, pub_path, recursive=True):
+        with open(os.path.join(pub_path, self.object_path), "wb") as f:
             f.write(self.signed_object.to_der())
