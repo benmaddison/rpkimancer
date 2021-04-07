@@ -19,12 +19,9 @@ class EECertificate(BaseResourceCertificate):
         return self._signed_object
 
     @property
-    def file_name(self):
-        return f"{self.subject_cn}.{self.signed_object.econtent.file_ext}"
-
-    @property
     def object_path(self):
-        return os.path.join(self.issuer.repo_path, self.file_name)
+        return os.path.join(self.issuer.repo_path,
+                            self.signed_object.file_name)
 
     @property
     def mft_entry(self):

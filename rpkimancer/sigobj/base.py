@@ -8,6 +8,8 @@ CMS_VERSION = 3
 class EncapsulatedContent(Content):
 
     digest_algorithm = DIGEST_ALGORITHMS[SHA256]
+    as_resources = None
+    ip_resources = None
 
     def digest(self):
         return self.digest_algorithm(self.to_der()).digest()
@@ -24,14 +26,20 @@ class SignedObject(ContentInfo):
 
     econtent_cls = None
 
-    def __init__(self, issuer: "CertificateAuthority", *args, **kwargs):
+    def __init__(self,
+                 issuer: "CertificateAuthority",
+                 file_name: str = None,
+                 *args, **kwargs):
+        # set object file name
+        self._file_name = file_name
         # construct econtent
         self._econtent = self.econtent_cls(*args, **kwargs)
         # construct certificate
         from ..cert import EECertificate
         ee_cert = EECertificate(signed_object=self,
                                 issuer=issuer,
-                                as_resources=[37271])
+                                as_resources=self.econtent.as_resources,
+                                ip_resources=self.econtent.ip_resources)
         # construct signedAttrs
         signed_attrs = self.econtent.signed_attrs()
         # construct signature
@@ -80,3 +88,10 @@ class SignedObject(ContentInfo):
     @property
     def econtent(self):
         return self._econtent
+
+    @property
+    def file_name(self):
+        if self._file_name is None:
+            return f"{self.econtent.signed_attrs_digest()}.{self.econtent.file_ext}"
+        else:
+            return self._file_name

@@ -4,7 +4,7 @@ import urllib.request
 from .base import EncapsulatedContent, SignedObject
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
 from ..asn1 import RpkiSignedURIList_2021
-from ..resources import (IPAddressFamily, IpResourcesInfo,
+from ..resources import (IPList, IpResourcesInfo,
                          ASIdOrRange, AsResourcesInfo)
 
 
@@ -38,12 +38,13 @@ class RpkiSignedURIListEContent(EncapsulatedContent):
         if inner_type is not None:
             data["type"] = inner_type
         if ip_resources is not None:
-            data["resources"]["ipAddrBlocks"] = [IPAddressFamily(n).content_data  # noqa: E501
-                                                 for n in ip_resources]
+            data["resources"]["ipAddrBlocks"] = IPList(ip_resources)
         if as_resources is not None:
             data["resources"]["asID"] = [ASIdOrRange(a).content_data
                                          for a in as_resources]
         super().__init__(data)
+        self.as_resources = as_resources
+        self.ip_resources = ip_resources
 
 
 class RpkiSignedURIList(SignedObject):
