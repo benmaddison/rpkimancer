@@ -17,6 +17,7 @@ class CertificateAuthority(BaseResourceCertificate):
                  mft_days: int = 7,
                  *args, **kwargs) -> None:
         self._issued = list()
+        self.next_serial_number = 1
         super().__init__(common_name=common_name, ca=True, *args, **kwargs)
         # rfc 6487 section 5
         self._crl = None
@@ -90,6 +91,7 @@ class CertificateAuthority(BaseResourceCertificate):
         cert = subject.cert_builder.sign(private_key=self.private_key,
                                          algorithm=self.HASH_ALGORITHM)
         self._issued.append(subject)
+        self.next_serial_number += 1
         return cert
 
     def issue_crl(self, to_revoke: ResourceCertificateList = None):
@@ -121,10 +123,12 @@ class CertificateAuthority(BaseResourceCertificate):
         now = datetime.datetime.utcnow()
         next_update = now + datetime.timedelta(days=self.mft_days)
         self._mft = RpkiManifest(issuer=self,
+                                 file_name=os.path.basename(self.mft_path),
                                  manifest_number=self.next_mft_number,
                                  this_update=now,
                                  next_update=next_update,
                                  file_list=file_list)
+        self.next_mft_number += 1
 
     @property
     def mft(self):

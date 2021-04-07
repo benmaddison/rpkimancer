@@ -37,7 +37,10 @@ class BaseResourceCertificate:
         builder = x509.CertificateBuilder()
 
         # rfc6487 section 4.2
-        serial_number = x509.random_serial_number()
+        if self.issuer is None:
+            serial_number = self.next_serial_number
+        else:
+            serial_number = self.issuer.next_serial_number
         builder = builder.serial_number(serial_number)
         # rfc6487 section 4.5
         self._cn = common_name
