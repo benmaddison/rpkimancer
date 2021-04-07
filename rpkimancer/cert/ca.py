@@ -56,8 +56,9 @@ class CertificateAuthority(BaseResourceCertificate):
         for cert in self._issued:
             yield cert
 
-    def crldp(self, base_uri):
-        crldp_uri = f"{base_uri}/{self.crl_path}"
+    @property
+    def crldp(self):
+        crldp_uri = f"{self.base_uri}/{self.crl_path}"
         crldp = x509.CRLDistributionPoints([
             x509.DistributionPoint([x509.UniformResourceIdentifier(crldp_uri)],
                                    relative_name=None,
@@ -66,17 +67,19 @@ class CertificateAuthority(BaseResourceCertificate):
         ])
         return crldp
 
-    def aia(self, base_uri):
-        aia_uri = f"{base_uri}/{self.cert_path}"
+    @property
+    def aia(self):
+        aia_uri = f"{self.base_uri}/{self.cert_path}"
         aia = x509.AuthorityInformationAccess([
             x509.AccessDescription(AIA_CA_ISSUERS_OID,
                                    x509.UniformResourceIdentifier(aia_uri))
         ])
         return aia
 
-    def sia(self, base_uri, *args, **kwargs):
-        sia_repo_uri = f"{base_uri}/{self.repo_path}"
-        sia_mft_uri = f"{base_uri}/{self.mft_path}"
+    @property
+    def sia(self):
+        sia_repo_uri = f"{self.base_uri}/{self.repo_path}"
+        sia_mft_uri = f"{self.base_uri}/{self.mft_path}"
         sia = x509.SubjectInformationAccess([
             x509.AccessDescription(SIA_CA_REPOSITORY_OID,
                                    x509.UniformResourceIdentifier(sia_repo_uri)),  # noqa: E501
@@ -159,9 +162,6 @@ class TACertificateAuthority(CertificateAuthority):
                  base_uri: str = "rsync://rpki.example.net/rpki",
                  *args, **kwargs) -> None:
         super().__init__(common_name=common_name, issuer=None, *args, **kwargs)
-        tal_contents = f"{base_uri}/{self.cert_path}\n\n".encode()
-        tal_contents += base64.b64encode(self.subject_public_key_info.to_der())
-        self._tal = tal_contents
 
     @property
     def repo_path(self):
@@ -177,7 +177,9 @@ class TACertificateAuthority(CertificateAuthority):
 
     @property
     def tal(self):
-        return self._tal
+        tal_contents = f"{self.base_uri}/{self.cert_path}\n\n".encode()
+        tal_contents += base64.b64encode(self.subject_public_key_info.to_der())
+        return tal_contents
 
     def publish(self, pub_path, tal_path, recursive=True):
         super().publish(pub_path, recursive=recursive)

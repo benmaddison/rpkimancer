@@ -28,8 +28,9 @@ class EECertificate(BaseResourceCertificate):
         return (os.path.basename(self.object_path),
                 self.signed_object.to_der())
 
-    def sia(self, base_uri):
-        sia_obj_uri = f"{base_uri}/{self.object_path}"
+    @property
+    def sia(self):
+        sia_obj_uri = f"{self.base_uri}/{self.object_path}"
         sia = x509.SubjectInformationAccess([
             x509.AccessDescription(SIA_OBJ_ACCESS_OID,
                                    x509.UniformResourceIdentifier(sia_obj_uri))

@@ -1,6 +1,7 @@
 import datetime
 import os
 import typing
+import urllib.parse
 
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -33,6 +34,7 @@ class BaseResourceCertificate:
                  as_resources: AsResourcesInfo = None) -> None:
 
         self._issuer = issuer
+        self._base_uri = urllib.parse.urlparse(base_uri)
 
         builder = x509.CertificateBuilder()
 
@@ -89,15 +91,12 @@ class BaseResourceCertificate:
         builder = builder.add_extension(key_usage, critical=True)
         # rfc6487 section 4.8.6
         if self.issuer is not None:
-            crldp = self.issuer.crldp(base_uri)
-            builder = builder.add_extension(crldp, critical=False)
+            builder = builder.add_extension(self.issuer.crldp, critical=False)
         # rfc6487 section 4.8.7
         if issuer is not None:
-            aia = self.issuer.aia(base_uri)
-            builder = builder.add_extension(aia, critical=False)
+            builder = builder.add_extension(self.issuer.aia, critical=False)
         # rfc6487 section 4.8.8
-        sia = self.sia(base_uri)
-        builder = builder.add_extension(sia, critical=False)
+        builder = builder.add_extension(self.sia, critical=False)
         # rfc6487 section 4.8.9
         builder = builder.add_extension(self.CPS, critical=True)
         # rfc6487 section 4.8.10
@@ -127,6 +126,10 @@ class BaseResourceCertificate:
     @property
     def cert_builder(self):
         return self._cert_builder
+
+    @property
+    def base_uri(self):
+        return self._base_uri.geturl()
 
     @property
     def cert(self):
