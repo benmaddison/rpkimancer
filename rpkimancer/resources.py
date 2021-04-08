@@ -23,16 +23,21 @@ AsResourcesInfo = typing.Union[Inherit,
                                typing.List[ASIdOrRangeInfo]]
 
 
+def net_to_bitstring(network: IPNetwork) -> typing.Tuple[int, int]:
+    netbits = network.prefixlen
+    hostbits = network.max_prefixlen - netbits
+    value = int(network.network_address) >> hostbits
+    return (value, netbits)
+
+
 class SeqOfIPAddressFamily(Content):
 
     def __init__(self, ip_resources: IpResourcesInfo):
         def data(network: IPAddressFamilyInfo):
             if isinstance(network, (ipaddress.IPv4Network,
                                     ipaddress.IPv6Network)):
-                netbits = network.prefixlen
-                hostbits = network.max_prefixlen - netbits
-                value = int(network.network_address) >> hostbits
-                return network.version, ("addressPrefix", (value, netbits))
+                return network.version, ("addressPrefix",
+                                         net_to_bitstring(network))
             else:
                 return network[0], _INHERIT
 

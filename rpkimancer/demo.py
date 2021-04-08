@@ -4,7 +4,7 @@ import os
 
 
 from .cert import CertificateAuthority, TACertificateAuthority
-from .sigobj import RpkiSignedURIList
+from .sigobj import RouteOriginAttestation, RpkiSignedURIList
 
 DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
@@ -39,6 +39,13 @@ def demo():
                       uris=args.uri_list,
                       inner_type=args.content_type,
                       as_resources=[args.asn])
+    # create ROA
+    RouteOriginAttestation(issuer=ca,
+                           as_id=args.asn,
+                           ip_address_blocks=[(ipaddress.ip_network("41.78.188.0/22"),
+                                               None),
+                                              (ipaddress.ip_network("197.157.64.0/19"),
+                                               24)])
     # publish objects
     ta.publish(pub_path=PUB_PATH, tal_path=TAL_PATH)
 
