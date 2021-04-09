@@ -6,6 +6,7 @@ import os
 from .cert import CertificateAuthority, TACertificateAuthority
 from .sigobj import (RouteOriginAttestation,
                      RpkiGhostbusters,
+                     RpkiSignedChecklist,
                      RpkiSignedURIList)
 
 DEMO_ASN = 37271
@@ -53,6 +54,13 @@ def demo():
                      full_name="Workonline Network Operations Center",
                      org="Workonline Communications",
                      email="noc@workonline.africa")
+    # create RSC
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                        "modules", "draft-ietf-sidrops-rpki-rsc",
+                        "RpkiSignedChecklist-2021.asn")
+    RpkiSignedChecklist(issuer=ca,
+                        paths=[path],
+                        as_resources=[args.asn])
     # publish objects
     ta.publish(pub_path=PUB_PATH, tal_path=TAL_PATH)
 
