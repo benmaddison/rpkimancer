@@ -1,0 +1,24 @@
+RPKIGhostbusters
+
+DEFINITIONS EXPLICIT TAGS ::=
+
+BEGIN
+
+-- EXPORTS ALL --
+
+-- IMPORTS NOTHING --
+
+-- Ghostbusters Content Type: OID
+
+id-smime OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+us(840) rsadsi(113549) pkcs(1) pkcs9(9) 16 }
+
+id-ct OBJECT IDENTIFIER ::= { id-smime 1 }
+
+id-ct-rpkiGhostbusters OBJECT IDENTIFIER ::= { id-ct 35 }
+
+-- Ghostbusters Content Type: eContent
+
+GhostbustersRecord ::= OCTET STRING
+
+END

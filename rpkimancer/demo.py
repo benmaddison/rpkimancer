@@ -4,7 +4,9 @@ import os
 
 
 from .cert import CertificateAuthority, TACertificateAuthority
-from .sigobj import RouteOriginAttestation, RpkiSignedURIList
+from .sigobj import (RouteOriginAttestation,
+                     RpkiGhostbusters,
+                     RpkiSignedURIList)
 
 DEMO_ASN = 37271
 DEMO_URI = "https://as37271.fyi/static/net_info_portal/md/bgp-communities.md"
@@ -46,6 +48,11 @@ def demo():
                                                None),
                                               (ipaddress.ip_network("197.157.64.0/19"),
                                                24)])
+    # create GBR
+    RpkiGhostbusters(issuer=ca,
+                     full_name="Workonline Network Operations Center",
+                     org="Workonline Communications",
+                     email="noc@workonline.africa")
     # publish objects
     ta.publish(pub_path=PUB_PATH, tal_path=TAL_PATH)
 
