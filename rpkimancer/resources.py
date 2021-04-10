@@ -1,7 +1,7 @@
 import ipaddress
 import typing
 
-from .asn1 import IPAddrAndASCertExtn, RpkiSignedChecklist_2021
+from .asn1 import IPAddrAndASCertExtn
 from .cms import Content
 
 AFI = {4: (1).to_bytes(2, "big"),
@@ -60,11 +60,6 @@ class SeqOfIPAddressFamily(Content):
 class IPAddrBlocks(SeqOfIPAddressFamily):
 
     content_syntax = IPAddrAndASCertExtn.IPAddrBlocks
-
-
-class IPList(SeqOfIPAddressFamily):
-
-    content_syntax = RpkiSignedChecklist_2021.IPList
 
 
 class ASIdOrRange(Content):

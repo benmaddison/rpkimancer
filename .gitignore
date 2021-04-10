@@ -1,5 +1,4 @@
 target/
-venv/
-modules/RpkiSignedURIList-2021.asn
+.venv/
 lib/asn1.py
 __pycache__
