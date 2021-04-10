@@ -1,4 +1,4 @@
 target/
 .venv/
-lib/asn1.py
+rpkimancer/asn1.py
 __pycache__
