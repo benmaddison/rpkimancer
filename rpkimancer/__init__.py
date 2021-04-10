@@ -10,3 +10,5 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 """rpkimancer package."""
+
+__version__ = "0.0.1"

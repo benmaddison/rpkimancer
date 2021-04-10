@@ -1,5 +1,0 @@
-# pycrate
---no-binary pycrate
-git+https://github.com/P1sec/pycrate.git@c6d5b361f217c483b8d7b05f944681ab1859e14b#egg=pycrate
-# others
-cryptography
