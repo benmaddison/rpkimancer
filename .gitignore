@@ -1,5 +1,5 @@
+rpkimancer/asn1/_asn1.py
 target/
 .venv/
-rpkimancer/asn1.py
 __pycache__
 *.egg-info/

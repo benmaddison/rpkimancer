@@ -1,8 +1,3 @@
 [build-system]
-requires = [
-    "setuptools",
-    "wheel",
-    "pycrate @ git+https://github.com/P1sec/pycrate.git@c6d5b361f217c483b8d7b05f944681ab1859e14b#egg=pycrate"
-]
-backend-path = ["build"]
-build-backend = "backend"
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
