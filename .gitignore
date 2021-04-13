@@ -1,5 +1,18 @@
+# generated source code
 rpkimancer/asn1/_asn1.py
-target/
-.venv/
-__pycache__
+
+# build outputs
 *.egg-info/
+build/
+dist/
+
+# execution artifacts
+.venv/
+target/
+__pycache__
+
+# test artifacts
+.tox/
+.coverage
+.pytest_cache/
+.mypy_cache/
