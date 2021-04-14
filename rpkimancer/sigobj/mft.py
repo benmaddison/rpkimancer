@@ -52,7 +52,7 @@ class RpkiManifestEContent(EncapsulatedContent):
                tuple(None for _ in range(4))
 
     def hash_bitstring(self, contents: bytes):
-        digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, misc] # noqa: E501
+        digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
         hash_bits = int.from_bytes(digest, "big")
         hash_len = len(digest) * 8
         return (hash_bits, hash_len)
