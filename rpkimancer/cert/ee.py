@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 import os
 
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -20,10 +22,10 @@ from ..sigobj import SignedObject
 
 
 class EECertificate(BaseResourceCertificate):
-    def __init__(self, signed_object: SignedObject, *args, **kwargs):
+    def __init__(self, *, signed_object: SignedObject, **kwargs):
         self._signed_object = signed_object
         common_name = signed_object.econtent.signed_attrs_digest()
-        super().__init__(common_name=common_name, *args, **kwargs)
+        super().__init__(common_name=common_name, **kwargs)
 
     @property
     def signed_object(self):

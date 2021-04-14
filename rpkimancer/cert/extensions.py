@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 from cryptography import x509
 
 from .oid import AS_RESOURCES_OID, IP_RESOURCES_OID

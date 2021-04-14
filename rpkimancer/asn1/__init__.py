@@ -9,8 +9,9 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 import glob
-import importlib.resources
 import os
 
 import pycrate_asn1c.asnproc as _asn1_compile

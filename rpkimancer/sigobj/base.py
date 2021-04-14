@@ -9,18 +9,32 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
+import typing
+
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
 from ..asn1 import PKIXAlgs_2009
 from ..cms import Content, ContentInfo, SignedAttributes, SignedData
+from ..resources import AsResourcesInfo, IpResourcesInfo
 
-CMS_VERSION = 3
+if typing.TYPE_CHECKING:
+    from ..cert import CertificateAuthority
+
+CMS_VERSION: typing.Final = 3
 
 
 class EncapsulatedContent(Content):
 
     digest_algorithm = DIGEST_ALGORITHMS[SHA256]
-    as_resources = None
-    ip_resources = None
+
+    @property
+    def as_resources(self) -> typing.Optional[AsResourcesInfo]:
+        raise NotImplementedError
+
+    @property
+    def ip_resources(self) -> typing.Optional[IpResourcesInfo]:
+        raise NotImplementedError
 
     def digest(self):
         return self.digest_algorithm(self.to_der()).digest()
@@ -35,10 +49,12 @@ class EncapsulatedContent(Content):
 
 class SignedObject(ContentInfo):
 
-    econtent_cls = None
+    @property
+    def econtent_cls(self) -> type:
+        raise NotImplementedError
 
     def __init__(self,
-                 issuer: "CertificateAuthority",
+                 issuer: CertificateAuthority,
                  file_name: str = None,
                  *args, **kwargs):
         # set object file name

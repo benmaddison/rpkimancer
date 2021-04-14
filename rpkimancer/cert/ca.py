@@ -9,9 +9,12 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 import base64
 import datetime
 import os
+import typing
 
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization
@@ -22,16 +25,16 @@ from ..sigobj import RpkiManifest
 
 
 class CertificateAuthority(BaseResourceCertificate):
-    def __init__(self,
+    def __init__(self, *,
                  common_name: str = "CA",
                  crl_days: int = 7,
                  mft_days: int = 7,
-                 *args, **kwargs) -> None:
-        self._issued = list()
+                 **kwargs) -> None:
+        self._issued: typing.List[BaseResourceCertificate] = list()
         self.next_serial_number = 1
-        super().__init__(common_name=common_name, ca=True, *args, **kwargs)
+        super().__init__(common_name=common_name, ca=True, **kwargs)
         # rfc 6487 section 5
-        self._crl = None
+        self._crl: typing.Optional[x509.CertificateRevocationList] = None
         self.crl_days = crl_days
         self.next_crl_number = 0
         self.issue_crl()
@@ -169,11 +172,11 @@ class CertificateAuthority(BaseResourceCertificate):
 
 
 class TACertificateAuthority(CertificateAuthority):
-    def __init__(self,
+    def __init__(self, *,
                  common_name: str = "TA",
                  base_uri: str = "rsync://rpki.example.net/rpki",
-                 *args, **kwargs) -> None:
-        super().__init__(common_name=common_name, issuer=None, *args, **kwargs)
+                 **kwargs) -> None:
+        super().__init__(common_name=common_name, issuer=None, **kwargs)
 
     @property
     def repo_path(self):

@@ -9,7 +9,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 import contextlib
+import typing
 
 from .asn1 import (CryptographicMessageSyntax_2009,
                    PKIX1Explicit_2009)
@@ -17,9 +20,11 @@ from .asn1 import (CryptographicMessageSyntax_2009,
 
 class Content:
 
-    content_syntax = None
+    @property
+    def content_syntax(self):
+        raise NotImplementedError
 
-    def __init__(self, data):
+    def __init__(self, data: typing.Any):
         with self.constructed(data) as instance:
             self._content_data = instance.get_val()
 
@@ -44,18 +49,20 @@ class Content:
         finally:
             self.content_syntax.reset_val()
 
-    def to_asn1(self):
+    def to_asn1(self) -> str:
         with self.constructed() as instance:
             return instance.to_asn1()
 
-    def to_der(self):
+    def to_der(self) -> bytes:
         with self.constructed() as instance:
             return instance.to_der()
 
 
 class ContentData(Content):
 
-    content_type = None
+    @property
+    def content_type(self):
+        raise NotImplementedError
 
 
 class ContentInfo(Content):

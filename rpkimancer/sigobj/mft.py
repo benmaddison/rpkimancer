@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 import datetime
 import typing
 
@@ -24,16 +26,16 @@ class RpkiManifestEContent(EncapsulatedContent):
     content_syntax = RPKIManifest.Manifest
     file_ext = "mft"
     as_resources = INHERIT_AS
-    ip_resources = [INHERIT_IPV4, INHERIT_IPV6]
+    ip_resources: typing.Final = (INHERIT_IPV4, INHERIT_IPV6)
 
     _file_list_type = typing.List[typing.Tuple[str, bytes]]
 
-    def __init__(self,
+    def __init__(self, *,
                  version: int = 0,
                  manifest_number: int = 0,
-                 this_update: datetime.datetime = None,
-                 next_update: datetime.datetime = None,
-                 file_list: _file_list_type = []):
+                 this_update: datetime.datetime,
+                 next_update: datetime.datetime,
+                 file_list: _file_list_type):
         data = {"version": version,
                 "manifestNumber": manifest_number,
                 "thisUpdate": self.generalized_time(this_update),
@@ -50,7 +52,7 @@ class RpkiManifestEContent(EncapsulatedContent):
                tuple(None for _ in range(4))
 
     def hash_bitstring(self, contents: bytes):
-        digest = self.digest_algorithm(contents).digest()
+        digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, misc] # noqa: E501
         hash_bits = int.from_bytes(digest, "big")
         hash_len = len(digest) * 8
         return (hash_bits, hash_len)

@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+from __future__ import annotations
+
 import datetime
 import os
 import typing
@@ -23,6 +25,9 @@ from .oid import RPKI_CERT_POLICY_OID
 from ..cms import Certificate
 from ..resources import AsResourcesInfo, IpResourcesInfo
 
+if typing.TYPE_CHECKING:
+    from .ca import CertificateAuthority
+
 
 class BaseResourceCertificate:
 
@@ -35,10 +40,10 @@ class BaseResourceCertificate:
                                policy_qualifiers=None)
     ])
 
-    def __init__(self,
-                 common_name: str = None,
+    def __init__(self, *,
+                 common_name: str,
                  days: int = 365,
-                 issuer: "CertificateAuthority" = None,
+                 issuer: CertificateAuthority = None,
                  ca: bool = False,
                  base_uri: str = "rsync://rpki.example.net/rpki",
                  ip_resources: IpResourcesInfo = None,
@@ -51,6 +56,7 @@ class BaseResourceCertificate:
 
         # rfc6487 section 4.2
         if self.issuer is None:
+            assert isinstance(self, CertificateAuthority)
             serial_number = self.next_serial_number
         else:
             serial_number = self.issuer.next_serial_number
@@ -125,6 +131,17 @@ class BaseResourceCertificate:
             self._cert = self.issue_cert()
         else:
             self._cert = self.issuer.issue_cert(self)
+
+    # @property
+    # def next_serial_number(self) -> int:
+    #     raise NotImplementedError
+
+    @property
+    def sia(self) -> x509.SubjectInformationAccess:
+        raise NotImplementedError
+
+    def issue_cert(self) -> x509.Certificate:
+        raise NotImplementedError
 
     @property
     def private_key(self):
