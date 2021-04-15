@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Base RPKI Resource Certificate implementation - RFC6487."""
+
 from __future__ import annotations
 
 import datetime
@@ -16,9 +18,9 @@ import os
 import typing
 import urllib.parse
 
+from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography import x509
 
 from .extensions import AsResources, IpResources
 from .oid import RPKI_CERT_POLICY_OID
@@ -30,6 +32,7 @@ if typing.TYPE_CHECKING:
 
 
 class BaseResourceCertificate:
+    """Base RPKI Resource Certificate class - RFC6487."""
 
     # rfc6487 section 4.3
     HASH_ALGORITHM = hashes.SHA256()
@@ -37,10 +40,10 @@ class BaseResourceCertificate:
     # rfc6487 section 4.8.9
     CPS = x509.CertificatePolicies([
         x509.PolicyInformation(RPKI_CERT_POLICY_OID,
-                               policy_qualifiers=None)
+                               policy_qualifiers=None),
     ])
 
-    def __init__(self, *,
+    def __init__(self, *,  # noqa: R701
                  common_name: str,
                  days: int = 365,
                  issuer: CertificateAuthority = None,
@@ -48,7 +51,7 @@ class BaseResourceCertificate:
                  base_uri: str = "rsync://rpki.example.net/rpki",
                  ip_resources: IpResourcesInfo = None,
                  as_resources: AsResourcesInfo = None) -> None:
-
+        """Initialise the Resource Certificate."""
         self._issuer = issuer
         self._base_uri = urllib.parse.urlparse(base_uri)
 
@@ -56,7 +59,7 @@ class BaseResourceCertificate:
 
         # rfc6487 section 4.2
         if self.issuer is None:
-            assert isinstance(self, CertificateAuthority)
+            assert isinstance(self, CertificateAuthority)  # noqa: S101
             serial_number = self.next_serial_number
         else:
             serial_number = self.issuer.next_serial_number
@@ -128,60 +131,65 @@ class BaseResourceCertificate:
         self._cert_builder = builder
 
         if self.issuer is None:
+            assert isinstance(self, CertificateAuthority)  # noqa: S101
             self._cert = self.issue_cert()
         else:
             self._cert = self.issuer.issue_cert(self)
 
-    # @property
-    # def next_serial_number(self) -> int:
-    #     raise NotImplementedError
-
     @property
     def sia(self) -> x509.SubjectInformationAccess:
-        raise NotImplementedError
-
-    def issue_cert(self) -> x509.Certificate:
+        """Construct the SIA extension."""
         raise NotImplementedError
 
     @property
     def private_key(self):
+        """Get the private part of the RSA key pair."""
         return self._key
 
     @property
     def public_key(self):
+        """Get the public part of the RSA key pair."""
         return self._key.public_key()
 
     @property
     def cert_builder(self):
+        """Get the certificate builder used to construct the certificate."""
         return self._cert_builder
 
     @property
     def base_uri(self):
+        """Get the base URI of the RPKI publication service."""
         return self._base_uri.geturl()
 
     @property
     def uri_path(self):
+        """Get the relative filesystem path equivalent of base_uri."""
         return os.path.join(self._base_uri.hostname,
                             *self._base_uri.path.rstrip("/").split("/"))
 
     @property
     def cert(self):
+        """Get the underlying cryptography X.509 Certificate object."""
         return self._cert
 
     @property
     def cert_der(self):
+        """Get cert DER-encoded."""
         return self.cert.public_bytes(serialization.Encoding.DER)
 
     @property
     def issuer(self):
+        """Get the issuing CertificateAuthority."""
         return self._issuer
 
     @property
     def subject_cn(self):
+        """Get the common_name component of the subjectName."""
         return self._cn
 
     @property
     def issuer_cn(self):
+        """Get the common_name component of the issuerName."""
         if self.issuer is not None:
             return self.issuer.subject_cn
         else:
@@ -189,18 +197,22 @@ class BaseResourceCertificate:
 
     @property
     def ski_digest(self):
+        """Get the message digest of the SKI extension."""
         return self._ski_digest
 
     @property
     def mft_entry(self):
+        """Get an entry for inclusion in the issuer's manifest."""
         return (os.path.basename(self.cert_path), self.cert_der)
 
     def asn1_data(self):
+        """Get an ASN.1 data for the certificate."""
         c = Certificate.from_der(self.cert_der)
         return c.content_data
 
     @property
     def subject_public_key_info(self):
+        """Get the subjectPublicKeyInfo for the certificate."""
         c = Certificate.from_der(self.cert_der)
         return c.subject_public_key_info
 

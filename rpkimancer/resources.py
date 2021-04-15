@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Number resource ASN.1 type helpers."""
+
 from __future__ import annotations
 
 import ipaddress
@@ -38,6 +40,7 @@ AsResourcesInfo = typing.Union[Inherit,
 
 
 def net_to_bitstring(network: IPNetwork) -> typing.Tuple[int, int]:
+    """Convert an IPNetwork to an ASN.1 BIT STRING representation."""
     netbits = network.prefixlen
     hostbits = network.max_prefixlen - netbits
     value = int(network.network_address) >> hostbits
@@ -45,8 +48,10 @@ def net_to_bitstring(network: IPNetwork) -> typing.Tuple[int, int]:
 
 
 class SeqOfIPAddressFamily(Content):
+    """Base class for ASN.1 SEQUENCE OF IPAddressFamily types."""
 
     def __init__(self, ip_resources: IpResourcesInfo):
+        """Initialise instance from python data."""
         def _net_data(network: IPAddressFamilyInfo):
             if isinstance(network, (ipaddress.IPv4Network,
                                     ipaddress.IPv6Network)):
@@ -72,15 +77,18 @@ class SeqOfIPAddressFamily(Content):
 
 
 class IPAddrBlocks(SeqOfIPAddressFamily):
+    """ASN.1 IPAddrBlocks type - RFC3779."""
 
     content_syntax = IPAddrAndASCertExtn.IPAddrBlocks
 
 
 class ASIdOrRange(Content):
+    """ASN.1 ASIdOrRange type - RFC3779."""
 
     content_syntax = IPAddrAndASCertExtn.ASIdOrRange
 
     def __init__(self, a: ASIdOrRangeInfo):
+        """Initialise instance from python data."""
         data: typing.Union[typing.Tuple[str, int],
                            typing.Tuple[str, typing.Dict[str, int]]]
         if isinstance(a, int):
@@ -91,10 +99,12 @@ class ASIdOrRange(Content):
 
 
 class ASIdentifiers(Content):
+    """ASN.1 ASIdentifiers type - RFC3779."""
 
     content_syntax = IPAddrAndASCertExtn.ASIdentifiers
 
     def __init__(self, as_resources: AsResourcesInfo):
+        """Initialise instance from python data."""
         asnum: typing.Union[typing.Tuple[str, int],
                             typing.Tuple[str, typing.List[typing.Any]]]
         if as_resources == INHERIT_AS:

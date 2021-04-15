@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Base classes for RPKI Signed Object implementations - RFC6488."""
+
 from __future__ import annotations
 
 import typing
@@ -25,38 +27,47 @@ CMS_VERSION: typing.Final = 3
 
 
 class EncapsulatedContent(Content):
+    """Base class for encapContentInfo in RPKI Signed Objects - RFC6488."""
 
     digest_algorithm = DIGEST_ALGORITHMS[SHA256]
 
     @property
     def as_resources(self) -> typing.Optional[AsResourcesInfo]:
+        """Get the AS Number Resources required by this eContent."""
         raise NotImplementedError
 
     @property
     def ip_resources(self) -> typing.Optional[IpResourcesInfo]:
+        """Get the IP Address Resources required by this eContent."""
         raise NotImplementedError
 
     def digest(self):
+        """Calculate the message digest over the DER-encoded eContent."""
         return self.digest_algorithm(self.to_der()).digest()
 
     def signed_attrs(self):
+        """Construct the signedAttrs value from the encapContentInfo."""
         return SignedAttributes(content_type=self.content_type.get_val(),
                                 message_digest=self.digest())
 
     def signed_attrs_digest(self):
+        """Calculate the message digest over the DER-encoded signedAttrs."""
         return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()
 
 
 class SignedObject(ContentInfo):
+    """Base CMS ASN.1 ContentInfo for RPKI Signed Objects - RFC5911/RFC6488."""
 
     @property
-    def econtent_cls(self) -> type:
+    def econtent_cls(self) -> typing.Type[EncapsulatedContent]:
+        """Get the class implementing the encapContentInfo for this SignedObject."""  # noqa: E501
         raise NotImplementedError
 
     def __init__(self,
                  issuer: CertificateAuthority,
                  file_name: str = None,
                  *args, **kwargs):
+        """Initialise the SignedObject."""
         # set object file name
         self._file_name = file_name
         # construct econtent
@@ -86,7 +97,7 @@ class SignedObject(ContentInfo):
             },
             # rfc6488 section 2.1.4
             "certificates": [
-                ("certificate", ee_cert.asn1_data())
+                ("certificate", ee_cert.asn1_data()),
             ],
             # 'crls' omitted per rfc6488 section 2.1.5
             # rfc6488 section 2.1.6
@@ -102,23 +113,25 @@ class SignedObject(ContentInfo):
                     "signedAttrs": signed_attrs.content_data,
                     # rfc6488 section 2.1.6.5 and rfc7935
                     "signatureAlgorithm": {
-                        "algorithm": PKIXAlgs_2009.rsaEncryption.get_val()
+                        "algorithm": PKIXAlgs_2009.rsaEncryption.get_val(),
                     },
                     # rfc6488 section 2.1.6.6
-                    "signature": signature
+                    "signature": signature,
                     # 'unsignedAttrs' omitted per rfc6488 section 2.1.6.7
-                }
-            ]
+                },
+            ],
         }
         super().__init__(content=SignedData(data))
 
     @property
     def econtent(self):
+        """Get the Signed Object's encapContentInfo."""
         return self._econtent
 
     @property
     def file_name(self):
+        """Construct the file name of the SignedObject."""
         if self._file_name is None:
-            return f"{self.econtent.signed_attrs_digest()}.{self.econtent.file_ext}"
+            return f"{self.econtent.signed_attrs_digest()}.{self.econtent.file_ext}"  # noqa: E501
         else:
             return self._file_name

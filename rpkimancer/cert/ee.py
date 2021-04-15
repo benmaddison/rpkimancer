@@ -9,12 +9,14 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""RPKI EE Certificate implementation - RFC6487."""
+
 from __future__ import annotations
 
 import os
 
-from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography import x509
+from cryptography.hazmat.primitives.asymmetric import padding
 
 from .base import BaseResourceCertificate
 from .oid import SIA_OBJ_ACCESS_OID
@@ -22,35 +24,43 @@ from ..sigobj import SignedObject
 
 
 class EECertificate(BaseResourceCertificate):
+    """RPKI EE Certificate - RFC6487."""
+
     def __init__(self, *, signed_object: SignedObject, **kwargs):
+        """Initialise the EE Certificate."""
         self._signed_object = signed_object
         common_name = signed_object.econtent.signed_attrs_digest()
         super().__init__(common_name=common_name, **kwargs)
 
     @property
     def signed_object(self):
+        """Get the SignedObject that this certificate signs."""
         return self._signed_object
 
     @property
     def object_path(self):
+        """Get the filesystem path to the SignedObject in the issuer publication point."""  # noqa: E501
         return os.path.join(self.issuer.repo_path,
                             self.signed_object.file_name)
 
     @property
     def mft_entry(self):
+        """Get an entry for inclusion in the issuer's manifest."""
         return (os.path.basename(self.object_path),
                 self.signed_object.to_der())
 
     @property
     def sia(self):
+        """Get the SubjectInformationAccess extension for the certificate."""
         sia_obj_uri = f"{self.base_uri}/{self.object_path}"
         sia = x509.SubjectInformationAccess([
             x509.AccessDescription(SIA_OBJ_ACCESS_OID,
-                                   x509.UniformResourceIdentifier(sia_obj_uri))
+                                   x509.UniformResourceIdentifier(sia_obj_uri)),  # noqa: E501
         ])
         return sia
 
     def sign_object(self):
+        """Construct a signature over the signedAttrs of the SignedObject."""
         message = self.signed_object.econtent.signed_attrs().to_der()
         signature = self.private_key.sign(data=message,
                                           padding=padding.PKCS1v15(),
@@ -58,6 +68,7 @@ class EECertificate(BaseResourceCertificate):
         return signature
 
     def publish(self, pub_path, recursive=True):
+        """Publish the SignedObject artifact as a DER file in the PP."""
         with open(os.path.join(pub_path, self.uri_path, self.object_path),
                   "wb") as f:
             f.write(self.signed_object.to_der())

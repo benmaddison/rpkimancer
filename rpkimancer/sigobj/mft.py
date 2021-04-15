@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""RPKI Manifest implementation - RFC6486."""
+
 from __future__ import annotations
 
 import datetime
@@ -21,6 +23,7 @@ from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
 
 
 class RpkiManifestEContent(EncapsulatedContent):
+    """encapContentInfo for RPKI Manifests - RFC6486."""
 
     content_type = RPKIManifest.id_ct_rpkiManifest
     content_syntax = RPKIManifest.Manifest
@@ -36,6 +39,7 @@ class RpkiManifestEContent(EncapsulatedContent):
                  this_update: datetime.datetime,
                  next_update: datetime.datetime,
                  file_list: _file_list_type):
+        """Initialise the encapContentInfo."""
         data = {"version": version,
                 "manifestNumber": manifest_number,
                 "thisUpdate": self.generalized_time(this_update),
@@ -48,10 +52,12 @@ class RpkiManifestEContent(EncapsulatedContent):
 
     @staticmethod
     def generalized_time(timestamp: datetime.datetime):
+        """Construct ASN.1 GeneralizedTime data from python datetime."""
         return tuple(f"{t:02}" for t in timestamp.timetuple()[:4]) + \
-               tuple(None for _ in range(4))
+               tuple(None for _ in range(4))  # noqa: E127
 
     def hash_bitstring(self, contents: bytes):
+        """Construct ASN.1 BIT STRING of a hash over file contents."""
         digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
         hash_bits = int.from_bytes(digest, "big")
         hash_len = len(digest) * 8
@@ -59,5 +65,6 @@ class RpkiManifestEContent(EncapsulatedContent):
 
 
 class RpkiManifest(SignedObject):
+    """CMS ASN.1 ContentInfo for RPKI Manifests."""
 
     econtent_cls = RpkiManifestEContent

@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Demo script to show rpkimancer library usage."""
+
 from __future__ import annotations
 
 import argparse
@@ -26,6 +28,7 @@ TAL_PATH = os.path.join(DEMO_BASE_PATH, "tals")
 
 
 def demo():
+    """Run the demo."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--asn", default=DEMO_ASN,
                         help="ASN to include in resources")
@@ -42,9 +45,9 @@ def demo():
     # create ROA
     RouteOriginAttestation(issuer=ca,
                            as_id=args.asn,
-                           ip_address_blocks=[(ipaddress.ip_network("41.78.188.0/22"),
+                           ip_address_blocks=[(ipaddress.ip_network("41.78.188.0/22"),  # noqa: E501
                                                None),
-                                              (ipaddress.ip_network("197.157.64.0/19"),
+                                              (ipaddress.ip_network("197.157.64.0/19"),  # noqa: E501
                                                24)])
     # create GBR
     RpkiGhostbusters(issuer=ca,

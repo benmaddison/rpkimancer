@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""RPKI Ghostbusters Record implementation - RFC6493."""
+
 from __future__ import annotations
 
 from .base import EncapsulatedContent, SignedObject
@@ -17,6 +19,7 @@ from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
 
 
 class RpkiGhostbustersEContent(EncapsulatedContent):
+    """encapContentInfo for RPKI Ghostbusters Record - RFC6493."""
 
     content_type = RPKIGhostbusters.id_ct_rpkiGhostbusters
     content_syntax = RPKIGhostbusters.GhostbustersRecord
@@ -30,6 +33,7 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
                  address: str = None,
                  tel: str = None,
                  email: str = None):
+        """Initialise the encapContentInfo."""
         vcard = "BEGIN:VCARD\r\n"
         vcard += "VERSION:4.0\r\n"
         vcard += f"FN:{full_name}\r\n"
@@ -47,5 +51,6 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
 
 
 class RpkiGhostbusters(SignedObject):
+    """CMS ASN.1 ContentInfo for RPKI Ghostbusters Records."""
 
     econtent_cls = RpkiGhostbustersEContent

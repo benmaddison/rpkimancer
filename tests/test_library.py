@@ -15,5 +15,8 @@ import rpkimancer
 
 
 class TestLibrary:
+    """Test cases for the rpkimancer library."""
+
     def test_dummy(self):
-        pass
+        """Dummy test."""
+        assert rpkimancer

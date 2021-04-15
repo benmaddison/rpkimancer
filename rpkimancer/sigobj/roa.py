@@ -9,6 +9,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""RPKI ROA implementation - RFC6482."""
+
 from __future__ import annotations
 
 import typing
@@ -19,6 +21,7 @@ from ..resources import AFI, IPNetwork, net_to_bitstring
 
 
 class RouteOriginAttestationEContent(EncapsulatedContent):
+    """encapContentInfo for RPKI ROAs - RFC6482."""
 
     content_type = RPKI_ROA.id_ct_routeOriginAuthz
     content_syntax = RPKI_ROA.RouteOriginAttestation
@@ -32,6 +35,7 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
                  version: int = 0,
                  as_id: int,
                  ip_address_blocks: _ip_address_blocks_type):
+        """Initialise the encapContentInfo."""
 
         def address_entry(network: IPNetwork,
                           maxlen: typing.Optional[int] = None) -> typing.Dict:
@@ -52,9 +56,11 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
 
     @property
     def ip_resources(self):
+        """Get the IP Address Resources covered by this ROA."""
         return self._ip_resources
 
 
 class RouteOriginAttestation(SignedObject):
+    """CMS ASN.1 ContentInfo for RPKI ROAs."""
 
     econtent_cls = RouteOriginAttestationEContent
