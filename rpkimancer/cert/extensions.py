@@ -23,7 +23,7 @@ class IpResources(x509.UnrecognizedExtension):
     """IP Address Resources X.509 certificate extension - RFC3779."""
 
     # TODO: IPAddressRange support
-    def __init__(self, ip_resources: IpResourcesInfo):
+    def __init__(self, ip_resources: IpResourcesInfo) -> None:
         """Initialise the certificate extension."""
         ip_address_blocks_data = IPAddrBlocks(ip_resources).to_der()
         super().__init__(IP_RESOURCES_OID, ip_address_blocks_data)
@@ -32,7 +32,7 @@ class IpResources(x509.UnrecognizedExtension):
 class AsResources(x509.UnrecognizedExtension):
     """AS Number Resources X.509 certificate extension - RFC3779."""
 
-    def __init__(self, as_resources: AsResourcesInfo):
+    def __init__(self, as_resources: AsResourcesInfo) -> None:
         """Initialise the certificate extension."""
         as_identifiers_data = ASIdentifiers(as_resources).to_der()
         super().__init__(AS_RESOURCES_OID, as_identifiers_data)

@@ -13,6 +13,8 @@
 
 from __future__ import annotations
 
+import typing
+
 from .base import EncapsulatedContent, SignedObject
 from ..asn1 import RPKIGhostbusters
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
@@ -29,10 +31,10 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
 
     def __init__(self,
                  full_name: str,
-                 org: str = None,
-                 address: str = None,
-                 tel: str = None,
-                 email: str = None):
+                 org: typing.Optional[str] = None,
+                 address: typing.Optional[str] = None,
+                 tel: typing.Optional[str] = None,
+                 email: typing.Optional[str] = None) -> None:
         """Initialise the encapContentInfo."""
         vcard = "BEGIN:VCARD\r\n"
         vcard += "VERSION:4.0\r\n"

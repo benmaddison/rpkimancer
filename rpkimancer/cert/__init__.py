@@ -13,5 +13,9 @@
 
 from __future__ import annotations
 
-from .ca import CertificateAuthority, TACertificateAuthority
-from .ee import EECertificate
+from . import ca, ee
+
+CertificateAuthority = ca.CertificateAuthority
+TACertificateAuthority = ca.TACertificateAuthority
+
+EECertificate = ee.EECertificate

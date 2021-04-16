@@ -17,7 +17,8 @@ import typing
 
 from .base import EncapsulatedContent, SignedObject
 from ..asn1 import RPKI_ROA
-from ..resources import AFI, IPNetwork, net_to_bitstring
+from ..resources import (AFI, IPNetwork, IPNetworkBits,
+                         IpResourcesInfo, net_to_bitstring)
 
 
 class RouteOriginAttestationEContent(EncapsulatedContent):
@@ -34,13 +35,12 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
     def __init__(self, *,
                  version: int = 0,
                  as_id: int,
-                 ip_address_blocks: _ip_address_blocks_type):
+                 ip_address_blocks: _ip_address_blocks_type) -> None:
         """Initialise the encapContentInfo."""
-
+        entry_type = typing.Dict[str, typing.Union[IPNetworkBits, int]]
         def address_entry(network: IPNetwork,
-                          maxlen: typing.Optional[int] = None) -> typing.Dict:
-            entry: typing.Dict
-            entry = {"address": net_to_bitstring(network)}
+                          maxlen: typing.Optional[int] = None) -> entry_type:
+            entry: entry_type = {"address": net_to_bitstring(network)}
             if maxlen is not None:
                 entry["maxLength"] = maxlen
             return entry
@@ -55,7 +55,7 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
         self._ip_resources = [network for network, _ in ip_address_blocks]
 
     @property
-    def ip_resources(self):
+    def ip_resources(self) -> IpResourcesInfo:
         """Get the IP Address Resources covered by this ROA."""
         return self._ip_resources
 

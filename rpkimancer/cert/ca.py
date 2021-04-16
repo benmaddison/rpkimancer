@@ -21,7 +21,10 @@ import typing
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization
 
-from .base import BaseResourceCertificate, ResourceCertificateList
+from .base import (BaseResourceCertificate,
+                   ManifestEntryInfo,
+                   ResourceCertificateList,
+                   ResourceCertificates)
 from .oid import AIA_CA_ISSUERS_OID, SIA_CA_REPOSITORY_OID, SIA_MFT_ACCESS_OID
 from ..sigobj import RpkiManifest
 
@@ -33,13 +36,12 @@ class CertificateAuthority(BaseResourceCertificate):
                  common_name: str = "CA",
                  crl_days: int = 7,
                  mft_days: int = 7,
-                 **kwargs) -> None:
+                 **kwargs: typing.Any) -> None:
         """Initialise the Certificate Authority."""
-        self._issued: typing.List[BaseResourceCertificate] = list()
+        self._issued: ResourceCertificateList = list()
         self.next_serial_number = 1
         super().__init__(common_name=common_name, ca=True, **kwargs)
         # rfc 6487 section 5
-        self._crl: typing.Optional[x509.CertificateRevocationList] = None
         self.crl_days = crl_days
         self.next_crl_number = 0
         self.issue_crl()
@@ -47,43 +49,52 @@ class CertificateAuthority(BaseResourceCertificate):
         self.next_mft_number = 0
 
     @property
-    def crl(self):
+    def crl(self) -> x509.CertificateRevocationList:
         """Get the last CRL issued by this CA."""
         return self._crl
 
     @property
-    def crl_der(self):
+    def crl_der(self) -> bytes:
         """Get the last CRL as DER-encoded bytes."""
         return self.crl.public_bytes(serialization.Encoding.DER)
 
     @property
-    def repo_path(self):
+    def repo_path(self) -> str:
         """Get the filesystem path to this CA's publication point."""
-        return os.path.join(self.issuer.repo_path, self.subject_cn)
+        return os.path.join(typing.cast(CertificateAuthority,
+                                        self.issuer).repo_path,
+                            self.subject_cn)
 
     @property
-    def cert_path(self):
+    def cert_path(self) -> str:
         """Get the filesystem path to cert in the issuer publication point."""
-        return os.path.join(self.issuer.repo_path, f"{self.subject_cn}.cer")
+        return os.path.join(typing.cast(CertificateAuthority,
+                                        self.issuer).repo_path,
+                            f"{self.subject_cn}.cer")
 
     @property
-    def crl_path(self):
+    def mft_entry(self) -> ManifestEntryInfo:
+        """Get an entry for inclusion in the issuer's manifest."""
+        return (os.path.basename(self.cert_path), self.cert_der)
+
+    @property
+    def crl_path(self) -> str:
         """Get the filesystem path to the CRL in publication point."""
         return os.path.join(self.repo_path, "revoked.crl")
 
     @property
-    def mft_path(self):
+    def mft_path(self) -> str:
         """Get the filesystem path to the manifest in publication point."""
         return os.path.join(self.repo_path, "manifest.mft")
 
     @property
-    def issued(self):
+    def issued(self) -> ResourceCertificates:
         """Get a generator over the certifactes issued by this CA."""
         for cert in self._issued:
             yield cert
 
     @property
-    def crldp(self):
+    def crldp(self) -> x509.CRLDistributionPoints:
         """Get the CRLDistributionPoint extension for the certificate."""
         crldp_uri = f"{self.base_uri}/{self.crl_path}"
         crldp = x509.CRLDistributionPoints([
@@ -95,7 +106,7 @@ class CertificateAuthority(BaseResourceCertificate):
         return crldp
 
     @property
-    def aia(self):
+    def aia(self) -> x509.AuthorityInformationAccess:
         """Get the AuthorityInformationAccess extension for the certificate."""
         aia_uri = f"{self.base_uri}/{self.cert_path}"
         aia = x509.AuthorityInformationAccess([
@@ -105,7 +116,7 @@ class CertificateAuthority(BaseResourceCertificate):
         return aia
 
     @property
-    def sia(self):
+    def sia(self) -> x509.SubjectInformationAccess:
         """Get the SubjectInformationAccess extension for the certificate."""
         sia_repo_uri = f"{self.base_uri}/{self.repo_path}"
         sia_mft_uri = f"{self.base_uri}/{self.mft_path}"
@@ -117,7 +128,8 @@ class CertificateAuthority(BaseResourceCertificate):
         ])
         return sia
 
-    def issue_cert(self, subject: BaseResourceCertificate = None):
+    def issue_cert(self,
+                   subject: typing.Optional[BaseResourceCertificate] = None) -> x509.Certificate:  # noqa: E501
         """Issue a new Resource Certificate with this CA."""
         if subject is None:
             subject = self
@@ -127,7 +139,8 @@ class CertificateAuthority(BaseResourceCertificate):
         self.next_serial_number += 1
         return cert
 
-    def issue_crl(self, to_revoke: ResourceCertificateList = None):
+    def issue_crl(self,
+                  to_revoke: typing.Optional[ResourceCertificates] = None) -> None:  # noqa: E501
         """Issue a new CRL for this CA."""
         now = datetime.datetime.utcnow()
         next_update = now + datetime.timedelta(days=self.crl_days)
@@ -141,19 +154,20 @@ class CertificateAuthority(BaseResourceCertificate):
         crl_number = x509.CRLNumber(self.next_crl_number)
         crl_builder = crl_builder.add_extension(crl_number, critical=False)
         if self.crl is not None:
-            for revoked in self.crl:
+            for revoked in self.crl:  # type: ignore[attr-defined]
                 # TODO: clean up expired certs
                 crl_builder = crl_builder.add_revoked_certificate(revoked)
         if to_revoke is not None:
             for c in to_revoke:
-                serial_number = c.cert.serial_number
-                rc_builder = x509.RevokedCertificateBuilder(serial_number, now)
+                rc_builder = x509.RevokedCertificateBuilder()
+                rc_builder = rc_builder.revocation_date(now)
+                rc_builder = rc_builder.serial_number(c.cert.serial_number)
                 revoked_cert = rc_builder.build()
                 crl_builder = crl_builder.add_revoked_certificate(revoked_cert)
         self._crl = crl_builder.sign(self.private_key, self.HASH_ALGORITHM)
         self.next_crl_number += 1
 
-    def issue_mft(self, file_list):
+    def issue_mft(self, file_list: typing.List[ManifestEntryInfo]) -> None:
         """Issue a new manifest for this CA."""
         now = datetime.datetime.utcnow()
         next_update = now + datetime.timedelta(days=self.mft_days)
@@ -166,11 +180,11 @@ class CertificateAuthority(BaseResourceCertificate):
         self.next_mft_number += 1
 
     @property
-    def mft(self):
+    def mft(self) -> RpkiManifest:
         """Get the last manifest issued by this CA."""
         return self._mft
 
-    def publish(self, pub_path, recursive=True):
+    def publish(self, *, pub_path: str, recursive: bool = True) -> None:
         """Publish this CA's artifacts as DER files in the PP."""
         mft_file_list = list()
         full_pub_path = os.path.join(pub_path, self.uri_path)
@@ -185,7 +199,7 @@ class CertificateAuthority(BaseResourceCertificate):
             if issuee is not self:
                 mft_file_list.append(issuee.mft_entry)
                 if recursive is True:
-                    issuee.publish(pub_path, recursive=recursive)
+                    issuee.publish(pub_path=pub_path, recursive=recursive)
         self.issue_mft(mft_file_list)
         with open(os.path.join(full_pub_path, self.mft_path), "wb") as f:
             f.write(self.mft.to_der())
@@ -197,35 +211,39 @@ class TACertificateAuthority(CertificateAuthority):
     def __init__(self, *,
                  common_name: str = "TA",
                  base_uri: str = "rsync://rpki.example.net/rpki",
-                 **kwargs) -> None:
+                 **kwargs: typing.Any) -> None:
         """Initialise the Certificate Authority."""
         super().__init__(common_name=common_name, issuer=None, **kwargs)
 
     @property
-    def repo_path(self):
+    def repo_path(self) -> str:
         """Get the filesystem path to this CA's publication point."""
         return self.subject_cn
 
     @property
-    def cert_path(self):
+    def cert_path(self) -> str:
         """Get the filesystem path to cert in the publication point root."""
         return f"{self.subject_cn}.cer"
 
     @property
-    def tal_path(self):
+    def tal_path(self) -> str:
         """Get the filesystem path to the trust anchor locator."""
         return f"{self.subject_cn}.tal"
 
     @property
-    def tal(self):
+    def tal(self) -> bytes:
         """Get the contents of the TAL for this trust anchor."""
         tal_contents = f"{self.base_uri}/{self.cert_path}\n\n".encode()
         tal_contents += base64.b64encode(self.subject_public_key_info.to_der())
         return tal_contents
 
-    def publish(self, pub_path, tal_path, recursive=True):
+    def publish(self, *,
+                pub_path: str,
+                tal_path: typing.Optional[str] = None,
+                recursive: bool = True) -> None:
         """Publish this CA's artifacts and TAL."""
-        super().publish(pub_path, recursive=recursive)
-        os.makedirs(tal_path, exist_ok=True)
-        with open(os.path.join(tal_path, self.tal_path), "wb") as f:
-            f.write(self.tal)
+        super().publish(pub_path=pub_path, recursive=recursive)
+        if tal_path is not None:
+            os.makedirs(tal_path, exist_ok=True)
+            with open(os.path.join(tal_path, self.tal_path), "wb") as f:
+                f.write(self.tal)

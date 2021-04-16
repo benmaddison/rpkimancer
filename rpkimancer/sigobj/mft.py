@@ -21,6 +21,9 @@ from ..algorithms import SHA256
 from ..asn1 import RPKIManifest
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
 
+GeneralizedTimeInfo = typing.Tuple[typing.Optional[str], ...]
+HashInfo = typing.Tuple[int, int]
+
 
 class RpkiManifestEContent(EncapsulatedContent):
     """encapContentInfo for RPKI Manifests - RFC6486."""
@@ -38,7 +41,7 @@ class RpkiManifestEContent(EncapsulatedContent):
                  manifest_number: int = 0,
                  this_update: datetime.datetime,
                  next_update: datetime.datetime,
-                 file_list: _file_list_type):
+                 file_list: _file_list_type) -> None:
         """Initialise the encapContentInfo."""
         data = {"version": version,
                 "manifestNumber": manifest_number,
@@ -51,12 +54,12 @@ class RpkiManifestEContent(EncapsulatedContent):
         super().__init__(data)
 
     @staticmethod
-    def generalized_time(timestamp: datetime.datetime):
+    def generalized_time(timestamp: datetime.datetime) -> GeneralizedTimeInfo:
         """Construct ASN.1 GeneralizedTime data from python datetime."""
         return tuple(f"{t:02}" for t in timestamp.timetuple()[:4]) + \
                tuple(None for _ in range(4))  # noqa: E127
 
-    def hash_bitstring(self, contents: bytes):
+    def hash_bitstring(self, contents: bytes) -> HashInfo:
         """Construct ASN.1 BIT STRING of a hash over file contents."""
         digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
         hash_bits = int.from_bytes(digest, "big")

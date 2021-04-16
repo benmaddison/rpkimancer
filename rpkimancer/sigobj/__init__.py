@@ -13,7 +13,9 @@
 
 from __future__ import annotations
 
-from .base import SignedObject
-from .gbr import RpkiGhostbusters
-from .mft import RpkiManifest
-from .roa import RouteOriginAttestation
+from . import base, gbr, mft, roa
+
+SignedObject = base.SignedObject
+RpkiGhostbusters = gbr.RpkiGhostbusters
+RpkiManifest = mft.RpkiManifest
+RouteOriginAttestation = roa.RouteOriginAttestation

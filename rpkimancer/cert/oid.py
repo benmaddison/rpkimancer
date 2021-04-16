@@ -13,13 +13,15 @@
 
 from __future__ import annotations
 
+import typing
+
 from cryptography import x509
 
 
-AIA_CA_ISSUERS_OID = x509.oid.AuthorityInformationAccessOID.CA_ISSUERS
-SIA_CA_REPOSITORY_OID = x509.oid.SubjectInformationAccessOID.CA_REPOSITORY
-SIA_MFT_ACCESS_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.48.10")
-SIA_OBJ_ACCESS_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.48.11")
-RPKI_CERT_POLICY_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.14.2")
-IP_RESOURCES_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.1.7")
-AS_RESOURCES_OID = x509.ObjectIdentifier("1.3.6.1.5.5.7.1.8")
+AIA_CA_ISSUERS_OID: typing.Final = x509.oid.AuthorityInformationAccessOID.CA_ISSUERS  # noqa: E501
+SIA_CA_REPOSITORY_OID: typing.Final = x509.oid.SubjectInformationAccessOID.CA_REPOSITORY  # noqa: E501
+SIA_MFT_ACCESS_OID: typing.Final = x509.ObjectIdentifier("1.3.6.1.5.5.7.48.10")
+SIA_OBJ_ACCESS_OID: typing.Final = x509.ObjectIdentifier("1.3.6.1.5.5.7.48.11")
+RPKI_CERT_POLICY_OID: typing.Final = x509.ObjectIdentifier("1.3.6.1.5.5.7.14.2")  # noqa: E501
+IP_RESOURCES_OID: typing.Final = x509.ObjectIdentifier("1.3.6.1.5.5.7.1.7")
+AS_RESOURCES_OID: typing.Final = x509.ObjectIdentifier("1.3.6.1.5.5.7.1.8")

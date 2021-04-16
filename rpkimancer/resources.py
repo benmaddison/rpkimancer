@@ -16,8 +16,7 @@ from __future__ import annotations
 import ipaddress
 import typing
 
-from .asn1 import IPAddrAndASCertExtn
-from .cms import Content
+from .asn1 import Content, IPAddrAndASCertExtn
 
 AFI = {4: (1).to_bytes(2, "big"),
        6: (2).to_bytes(2, "big")}
@@ -31,6 +30,7 @@ INHERIT_IPV4: typing.Tuple[AfiInfo, Inherit] = (4, _INHERIT)
 INHERIT_IPV6: typing.Tuple[AfiInfo, Inherit] = (6, _INHERIT)
 
 IPNetwork = typing.Union[ipaddress.IPv4Network, ipaddress.IPv6Network]
+IPNetworkBits = typing.Tuple[int, int]
 IPAddressFamilyInfo = typing.Union[typing.Tuple[AfiInfo, Inherit],
                                    IPNetwork]
 IpResourcesInfo = typing.Iterable[IPAddressFamilyInfo]
@@ -39,7 +39,7 @@ AsResourcesInfo = typing.Union[Inherit,
                                typing.Iterable[ASIdOrRangeInfo]]
 
 
-def net_to_bitstring(network: IPNetwork) -> typing.Tuple[int, int]:
+def net_to_bitstring(network: IPNetwork) -> IPNetworkBits:
     """Convert an IPNetwork to an ASN.1 BIT STRING representation."""
     netbits = network.prefixlen
     hostbits = network.max_prefixlen - netbits
@@ -50,9 +50,13 @@ def net_to_bitstring(network: IPNetwork) -> typing.Tuple[int, int]:
 class SeqOfIPAddressFamily(Content):
     """Base class for ASN.1 SEQUENCE OF IPAddressFamily types."""
 
-    def __init__(self, ip_resources: IpResourcesInfo):
+    def __init__(self, ip_resources: IpResourcesInfo) -> None:
         """Initialise instance from python data."""
-        def _net_data(network: IPAddressFamilyInfo):
+        net_data_type = typing.Union[Inherit,
+                                     typing.Tuple[str, IPNetworkBits]]
+        entry_type = typing.Tuple[int, net_data_type]
+
+        def _net_entry(network: IPAddressFamilyInfo) -> entry_type:
             if isinstance(network, (ipaddress.IPv4Network,
                                     ipaddress.IPv6Network)):
                 return network.version, ("addressPrefix",
@@ -60,15 +64,19 @@ class SeqOfIPAddressFamily(Content):
             else:
                 return network[0], _INHERIT
 
-        def _combine(entries):
-            if any(entry == _INHERIT for entry in entries):
+        combined_type = typing.Tuple[str,
+                                     typing.Union[typing.Literal[0],
+                                                  typing.List[net_data_type]]]
+
+        def _combine(entries: typing.List[net_data_type]) -> combined_type:
+            if any(entry[1] == _INHERIT for entry in entries):
                 return ("inherit", 0)
             else:
                 return ("addressesOrRanges", [entry for entry in entries])
 
         by_afi = {afi_data: [net_data
                              for net_version, net_data
-                             in map(_net_data, ip_resources)
+                             in map(_net_entry, ip_resources)
                              if net_version == afi_version]
                   for (afi_version, afi_data) in AFI.items()}
         data = [{"addressFamily": afi, "ipAddressChoice": _combine(entries)}
@@ -87,7 +95,7 @@ class ASIdOrRange(Content):
 
     content_syntax = IPAddrAndASCertExtn.ASIdOrRange
 
-    def __init__(self, a: ASIdOrRangeInfo):
+    def __init__(self, a: ASIdOrRangeInfo) -> None:
         """Initialise instance from python data."""
         data: typing.Union[typing.Tuple[str, int],
                            typing.Tuple[str, typing.Dict[str, int]]]
@@ -103,7 +111,7 @@ class ASIdentifiers(Content):
 
     content_syntax = IPAddrAndASCertExtn.ASIdentifiers
 
-    def __init__(self, as_resources: AsResourcesInfo):
+    def __init__(self, as_resources: AsResourcesInfo) -> None:
         """Initialise instance from python data."""
         asnum: typing.Union[typing.Tuple[str, int],
                             typing.Tuple[str, typing.List[typing.Any]]]

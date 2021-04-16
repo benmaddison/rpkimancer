@@ -9,13 +9,13 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Message digest algoritms used in rpkimancer library."""
-
+"""Compile and re-export the provided ASN.1 modules."""
 from __future__ import annotations
 
-import hashlib
 import typing
 
+import pycrate_asn1rt as _asn1_runtime
 
-SHA256: typing.Final = (2, 16, 840, 1, 101, 3, 4, 2, 1)
-DIGEST_ALGORITHMS: typing.Final = {SHA256: hashlib.sha256}
+ASN1Obj = _asn1_runtime.asnobj.ASN1Obj
+ASN1ObjData = typing.Any
+OID = _asn1_runtime.asnobj_basic.OID

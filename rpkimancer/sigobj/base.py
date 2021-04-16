@@ -16,8 +16,9 @@ from __future__ import annotations
 import typing
 
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
-from ..asn1 import PKIXAlgs_2009
-from ..cms import Content, ContentInfo, SignedAttributes, SignedData
+from ..asn1 import Content, PKIXAlgs_2009
+from ..asn1.types import OID
+from ..cms import ContentInfo, SignedAttributes, SignedData
 from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:
@@ -30,6 +31,8 @@ class EncapsulatedContent(Content):
     """Base class for encapContentInfo in RPKI Signed Objects - RFC6488."""
 
     digest_algorithm = DIGEST_ALGORITHMS[SHA256]
+    content_type: OID
+    file_ext: str
 
     @property
     def as_resources(self) -> typing.Optional[AsResourcesInfo]:
@@ -41,32 +44,30 @@ class EncapsulatedContent(Content):
         """Get the IP Address Resources required by this eContent."""
         raise NotImplementedError
 
-    def digest(self):
+    def digest(self) -> bytes:
         """Calculate the message digest over the DER-encoded eContent."""
-        return self.digest_algorithm(self.to_der()).digest()
+        return self.digest_algorithm(self.to_der()).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
 
-    def signed_attrs(self):
+    def signed_attrs(self) -> SignedAttributes:
         """Construct the signedAttrs value from the encapContentInfo."""
-        return SignedAttributes(content_type=self.content_type.get_val(),
+        return SignedAttributes(content_type=self.content_type,
                                 message_digest=self.digest())
 
-    def signed_attrs_digest(self):
+    def signed_attrs_digest(self) -> str:
         """Calculate the message digest over the DER-encoded signedAttrs."""
-        return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()
+        return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
 
 
 class SignedObject(ContentInfo):
     """Base CMS ASN.1 ContentInfo for RPKI Signed Objects - RFC5911/RFC6488."""
 
-    @property
-    def econtent_cls(self) -> typing.Type[EncapsulatedContent]:
-        """Get the class implementing the encapContentInfo for this SignedObject."""  # noqa: E501
-        raise NotImplementedError
+    econtent_cls: typing.Type[EncapsulatedContent]
 
     def __init__(self,
                  issuer: CertificateAuthority,
-                 file_name: str = None,
-                 *args, **kwargs):
+                 file_name: typing.Optional[str] = None,
+                 *args: typing.Any,
+                 **kwargs: typing.Any) -> None:
         """Initialise the SignedObject."""
         # set object file name
         self._file_name = file_name
@@ -97,7 +98,7 @@ class SignedObject(ContentInfo):
             },
             # rfc6488 section 2.1.4
             "certificates": [
-                ("certificate", ee_cert.asn1_data()),
+                ("certificate", ee_cert.asn1_cert.content_data),
             ],
             # 'crls' omitted per rfc6488 section 2.1.5
             # rfc6488 section 2.1.6
@@ -124,12 +125,12 @@ class SignedObject(ContentInfo):
         super().__init__(content=SignedData(data))
 
     @property
-    def econtent(self):
+    def econtent(self) -> EncapsulatedContent:
         """Get the Signed Object's encapContentInfo."""
         return self._econtent
 
     @property
-    def file_name(self):
+    def file_name(self) -> str:
         """Construct the file name of the SignedObject."""
         if self._file_name is None:
             return f"{self.econtent.signed_attrs_digest()}.{self.econtent.file_ext}"  # noqa: E501

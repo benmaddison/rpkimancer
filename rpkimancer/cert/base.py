@@ -24,11 +24,13 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 
 from .extensions import AsResources, IpResources
 from .oid import RPKI_CERT_POLICY_OID
-from ..cms import Certificate
+from ..asn1 import Content, PKIX1Explicit_2009
 from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:
     from .ca import CertificateAuthority
+
+ManifestEntryInfo = typing.Tuple[str, bytes]
 
 
 class BaseResourceCertificate:
@@ -46,11 +48,11 @@ class BaseResourceCertificate:
     def __init__(self, *,  # noqa: R701
                  common_name: str,
                  days: int = 365,
-                 issuer: CertificateAuthority = None,
+                 issuer: typing.Optional[CertificateAuthority] = None,
                  ca: bool = False,
                  base_uri: str = "rsync://rpki.example.net/rpki",
-                 ip_resources: IpResourcesInfo = None,
-                 as_resources: AsResourcesInfo = None) -> None:
+                 ip_resources: typing.Optional[IpResourcesInfo] = None,
+                 as_resources: typing.Optional[AsResourcesInfo] = None) -> None:  # noqa: E501
         """Initialise the Resource Certificate."""
         self._issuer = issuer
         self._base_uri = urllib.parse.urlparse(base_uri)
@@ -113,7 +115,7 @@ class BaseResourceCertificate:
         if self.issuer is not None:
             builder = builder.add_extension(self.issuer.crldp, critical=False)
         # rfc6487 section 4.8.7
-        if issuer is not None:
+        if self.issuer is not None:
             builder = builder.add_extension(self.issuer.aia, critical=False)
         # rfc6487 section 4.8.8
         builder = builder.add_extension(self.sia, critical=False)
@@ -142,53 +144,62 @@ class BaseResourceCertificate:
         raise NotImplementedError
 
     @property
-    def private_key(self):
+    def mft_entry(self) -> ManifestEntryInfo:
+        """Get an entry for inclusion in the issuer's manifest."""
+        raise NotImplementedError
+
+    def publish(self, *, pub_path: str, recursive: bool = True) -> None:
+        """Publish artifact files in the PP."""
+        raise NotImplementedError
+
+    @property
+    def private_key(self) -> rsa.RSAPrivateKey:
         """Get the private part of the RSA key pair."""
         return self._key
 
     @property
-    def public_key(self):
+    def public_key(self) -> rsa.RSAPublicKey:
         """Get the public part of the RSA key pair."""
         return self._key.public_key()
 
     @property
-    def cert_builder(self):
+    def cert_builder(self) -> x509.CertificateBuilder:
         """Get the certificate builder used to construct the certificate."""
         return self._cert_builder
 
     @property
-    def base_uri(self):
+    def base_uri(self) -> str:
         """Get the base URI of the RPKI publication service."""
         return self._base_uri.geturl()
 
     @property
-    def uri_path(self):
+    def uri_path(self) -> str:
         """Get the relative filesystem path equivalent of base_uri."""
-        return os.path.join(self._base_uri.hostname,
+        return os.path.join(self._base_uri.hostname or "",
                             *self._base_uri.path.rstrip("/").split("/"))
 
     @property
-    def cert(self):
+    def cert(self) -> x509.Certificate:
         """Get the underlying cryptography X.509 Certificate object."""
         return self._cert
 
     @property
-    def cert_der(self):
+    def cert_der(self) -> bytes:
         """Get cert DER-encoded."""
         return self.cert.public_bytes(serialization.Encoding.DER)
 
     @property
-    def issuer(self):
+    def issuer(self) -> typing.Optional[CertificateAuthority]:
         """Get the issuing CertificateAuthority."""
         return self._issuer
 
     @property
-    def subject_cn(self):
+    def subject_cn(self) -> str:
         """Get the common_name component of the subjectName."""
         return self._cn
 
     @property
-    def issuer_cn(self):
+    def issuer_cn(self) -> str:
         """Get the common_name component of the issuerName."""
         if self.issuer is not None:
             return self.issuer.subject_cn
@@ -196,25 +207,39 @@ class BaseResourceCertificate:
             return self.subject_cn
 
     @property
-    def ski_digest(self):
+    def ski_digest(self) -> bytes:
         """Get the message digest of the SKI extension."""
         return self._ski_digest
 
     @property
-    def mft_entry(self):
-        """Get an entry for inclusion in the issuer's manifest."""
-        return (os.path.basename(self.cert_path), self.cert_der)
-
-    def asn1_data(self):
-        """Get an ASN.1 data for the certificate."""
-        c = Certificate.from_der(self.cert_der)
-        return c.content_data
+    def asn1_cert(self) -> Certificate:
+        """Get an ASN.1 Certificate for the certificate."""
+        return Certificate.from_der(self.cert_der)
 
     @property
-    def subject_public_key_info(self):
+    def subject_public_key_info(self) -> SubjectPublicKeyInfo:
         """Get the subjectPublicKeyInfo for the certificate."""
-        c = Certificate.from_der(self.cert_der)
-        return c.subject_public_key_info
+        return self.asn1_cert.subject_public_key_info
 
 
+ResourceCertificates = typing.Iterable[BaseResourceCertificate]
 ResourceCertificateList = typing.List[BaseResourceCertificate]
+
+
+class Certificate(Content):
+    """X.509 ASN.1 Certificate type - RFC5912."""
+
+    content_syntax = PKIX1Explicit_2009.Certificate
+
+    @property
+    def subject_public_key_info(self) -> SubjectPublicKeyInfo:
+        """Get the subjectPublicKeyInfo of the Certificate."""
+        with self.constructed() as instance:
+            data = instance.get_val_at(["toBeSigned", "subjectPublicKeyInfo"])
+        return SubjectPublicKeyInfo(data)
+
+
+class SubjectPublicKeyInfo(Content):
+    """X.509 ASN.1 SubjectPublicKeyInfo type - RFC5912."""
+
+    content_syntax = PKIX1Explicit_2009.SubjectPublicKeyInfo

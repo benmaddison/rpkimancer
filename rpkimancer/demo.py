@@ -27,21 +27,20 @@ PUB_PATH = os.path.join(DEMO_BASE_PATH, "repo")
 TAL_PATH = os.path.join(DEMO_BASE_PATH, "tals")
 
 
-def demo():
+def demo() -> None:
     """Run the demo."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--asn", default=DEMO_ASN,
                         help="ASN to include in resources")
     args = parser.parse_args()
     # create CAs
-    ta_resources = {"ip_resources": [ipaddress.ip_network("0.0.0.0/0"),
-                                     ipaddress.ip_network("::/0")],
-                    "as_resources": [(0, 4294967295)]}
-    ta = TACertificateAuthority(**ta_resources)
-    ca_resources = {"ip_resources": [ipaddress.ip_network("41.78.188.0/22"),
-                                     ipaddress.ip_network("197.157.64.0/19")],
-                    "as_resources": [37271]}
-    ca = CertificateAuthority(issuer=ta, **ca_resources)
+    ta = TACertificateAuthority(ip_resources=[ipaddress.ip_network("0.0.0.0/0"),  # noqa: E501
+                                              ipaddress.ip_network("::/0")],
+                                as_resources=[(0, 4294967295)])
+    ca = CertificateAuthority(issuer=ta,
+                              ip_resources=[ipaddress.ip_network("41.78.188.0/22"),  # noqa: E501
+                                            ipaddress.ip_network("197.157.64.0/19")],  # noqa: E501
+                              as_resources=[args.asn])
     # create ROA
     RouteOriginAttestation(issuer=ca,
                            as_id=args.asn,
