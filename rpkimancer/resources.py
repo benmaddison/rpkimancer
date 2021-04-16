@@ -69,7 +69,7 @@ class SeqOfIPAddressFamily(Content):
                                                   typing.List[net_data_type]]]
 
         def _combine(entries: typing.List[net_data_type]) -> combined_type:
-            if any(entry[1] == _INHERIT for entry in entries):
+            if any(entry == _INHERIT for entry in entries):
                 return ("inherit", 0)
             else:
                 return ("addressesOrRanges", [entry for entry in entries])

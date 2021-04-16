@@ -20,6 +20,8 @@ from ..asn1 import RPKI_ROA
 from ..resources import (AFI, IPNetwork, IPNetworkBits,
                          IpResourcesInfo, net_to_bitstring)
 
+RoaNetworkInfo = typing.Tuple[IPNetwork, typing.Optional[int]]
+
 
 class RouteOriginAttestationEContent(EncapsulatedContent):
     """encapContentInfo for RPKI ROAs - RFC6482."""
@@ -29,13 +31,10 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
     file_ext = "roa"
     as_resources = None
 
-    _ip_address_blocks_type = typing.List[typing.Tuple[IPNetwork,
-                                                       typing.Optional[int]]]
-
     def __init__(self, *,
                  version: int = 0,
                  as_id: int,
-                 ip_address_blocks: _ip_address_blocks_type) -> None:
+                 ip_address_blocks: typing.List[RoaNetworkInfo]) -> None:
         """Initialise the encapContentInfo."""
         entry_type = typing.Dict[str, typing.Union[IPNetworkBits, int]]
         def address_entry(network: IPNetwork,

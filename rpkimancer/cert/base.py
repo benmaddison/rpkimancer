@@ -61,8 +61,8 @@ class BaseResourceCertificate:
 
         # rfc6487 section 4.2
         if self.issuer is None:
-            assert isinstance(self, CertificateAuthority)  # noqa: S101
-            serial_number = self.next_serial_number
+            serial_number = typing.cast("CertificateAuthority",
+                                        self).next_serial_number
         else:
             serial_number = self.issuer.next_serial_number
         builder = builder.serial_number(serial_number)
@@ -133,8 +133,7 @@ class BaseResourceCertificate:
         self._cert_builder = builder
 
         if self.issuer is None:
-            assert isinstance(self, CertificateAuthority)  # noqa: S101
-            self._cert = self.issue_cert()
+            self._cert = typing.cast("CertificateAuthority", self).issue_cert()
         else:
             self._cert = self.issuer.issue_cert(self)
 

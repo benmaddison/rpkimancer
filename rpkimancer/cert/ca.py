@@ -44,19 +44,21 @@ class CertificateAuthority(BaseResourceCertificate):
         # rfc 6487 section 5
         self.crl_days = crl_days
         self.next_crl_number = 0
+        self._crl: typing.Optional[x509.CertificateRevocationList] = None
         self.issue_crl()
         self.mft_days = mft_days
         self.next_mft_number = 0
 
     @property
-    def crl(self) -> x509.CertificateRevocationList:
+    def crl(self) -> typing.Optional[x509.CertificateRevocationList]:
         """Get the last CRL issued by this CA."""
         return self._crl
 
     @property
     def crl_der(self) -> bytes:
         """Get the last CRL as DER-encoded bytes."""
-        return self.crl.public_bytes(serialization.Encoding.DER)
+        return typing.cast(x509.CertificateRevocationList,
+                           self.crl).public_bytes(serialization.Encoding.DER)
 
     @property
     def repo_path(self) -> str:
