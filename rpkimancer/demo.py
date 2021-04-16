@@ -1,3 +1,5 @@
+# PYTHON_ARGCOMPLETE_OK
+#
 # Copyright (c) 2021 Ben Maddison. All rights reserved.
 #
 # The contents of this file are licensed under the MIT License
@@ -16,46 +18,133 @@ from __future__ import annotations
 import argparse
 import ipaddress
 import os
+import typing
 
-from .cert import CertificateAuthority, TACertificateAuthority
-from .sigobj import RouteOriginAttestation, RpkiGhostbusters
+import argcomplete
 
-DEMO_ASN = 37271
-DEMO_BASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                              "target", "demo")
-PUB_PATH = os.path.join(DEMO_BASE_PATH, "repo")
-TAL_PATH = os.path.join(DEMO_BASE_PATH, "tals")
+if typing.TYPE_CHECKING:
+    from .sigobj.roa import RoaNetworkInfo
+
+DEFAULT_OUTPUT_DIR = os.path.join(os.curdir, "target", "demo")
+PUB_SUB_DIR = "repo"
+TAL_SUB_DIR = "tals"
+
+DEFAULT_TA_AS_RESOURCES = [(0, 4294967295)]
+DEFAULT_TA_IP_RESOURCES = [ipaddress.ip_network("0.0.0.0/0"),
+                           ipaddress.ip_network("::0/0")]
+
+DEFAULT_CA_AS_RESOURCES = [65000]
+DEFAULT_CA_IP_RESOURCES = [ipaddress.ip_network("10.0.0.0/8"),
+                           ipaddress.ip_network("2001:db8::/32")]
+
+DEFAULT_GBR_FULLNAME = "Jane Doe"
+DEFAULT_GBR_ORG = "Example Org"
+DEFAULT_GBR_EMAIL = "jane@example.net"
+
+PATH_META = "<path>"
+AS_META = "<asn>"
+IP_META = "<prefix>/<length>"
+ROA_IP_META = f"{IP_META}[-maxlen]"
+NAME_META = "<name>"
+ADDR_META = "<addr>"
 
 
-def demo() -> None:
-    """Run the demo."""
+def parse_args() -> argparse.Namespace:
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--asn", default=DEMO_ASN,
-                        help="ASN to include in resources")
-    args = parser.parse_args()
+    parser.add_argument("--output-dir", "-o",
+                        default=DEFAULT_OUTPUT_DIR,
+                        metavar=PATH_META,
+                        help="Directory to write generated artifacts to "
+                             "(default: %(default)s)")
+    parser.add_argument("--ta-as-resources",
+                        nargs="+", type=int,
+                        default=DEFAULT_TA_AS_RESOURCES,
+                        metavar=AS_META,
+                        help="ASN(s) to include in TA certificate "
+                             "(default: %(default)s)")
+    parser.add_argument("--ta-ip-resources",
+                        nargs="+", type=ipaddress.ip_network,
+                        default=DEFAULT_TA_IP_RESOURCES,
+                        metavar=IP_META,
+                        help="IP addresses to include in TA certificate "
+                             "(default: %(default)s)")
+    parser.add_argument("--ca-as-resources",
+                        nargs="+", type=int,
+                        default=DEFAULT_CA_AS_RESOURCES,
+                        metavar=AS_META,
+                        help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
+                             "(default: %(default)s)")
+    parser.add_argument("--ca-ip-resources",
+                        nargs="+", type=ipaddress.ip_network,
+                        default=DEFAULT_CA_IP_RESOURCES,
+                        metavar=IP_META,
+                        help="IP addresses to include in suboridinate CA certificate "  # noqa: E501
+                             "(default: %(default)s)")
+    parser.add_argument("--roa-asid",
+                        type=int,
+                        default=DEFAULT_CA_AS_RESOURCES[0],
+                        metavar=AS_META,
+                        help="ASN to include in ROA asID "
+                             "(default: %(default)s)")
+    parser.add_argument("--roa-networks",
+                        nargs="+", type=roa_network,
+                        default=[(ipaddress.ip_network(net), None)
+                                 for net in DEFAULT_CA_IP_RESOURCES],
+                        metavar=ROA_IP_META,
+                        help="IP prefixes to include in ROA "
+                             "(default: %(default)s)")
+    parser.add_argument("--gbr-full-name",
+                        default=DEFAULT_GBR_FULLNAME,
+                        metavar=NAME_META,
+                        help="Full name to include in GBR "
+                             "(default: %(default)s)")
+    parser.add_argument("--gbr-org",
+                        default=DEFAULT_GBR_ORG,
+                        metavar=NAME_META,
+                        help="Organisation name to include in GBR "
+                             "(default: %(default)s)")
+    parser.add_argument("--gbr-email",
+                        default=DEFAULT_GBR_EMAIL,
+                        metavar=ADDR_META,
+                        help="Email address to include in GBR "
+                             "(default: %(default)s)")
+    argcomplete.autocomplete(parser, always_complete_options="long")
+    return parser.parse_args()
+
+
+def roa_network(input_str: str) -> RoaNetworkInfo:
+    """Convert input string to RoaNetworkInfo tuple."""
+    try:
+        network, maxlen = input_str.split("-", 1)
+        return (ipaddress.ip_network(network), int(maxlen))
+    except ValueError:
+        return (ipaddress.ip_network(input_str), None)
+
+
+def main() -> typing.Optional[int]:
+    """Generate demo RPKI artifacts."""
+    # get command line args
+    args = parse_args()
+    # import rpkimancer types
+    from .cert import CertificateAuthority, TACertificateAuthority
+    from .sigobj import RouteOriginAttestation, RpkiGhostbusters
     # create CAs
-    ta = TACertificateAuthority(ip_resources=[ipaddress.ip_network("0.0.0.0/0"),  # noqa: E501
-                                              ipaddress.ip_network("::/0")],
-                                as_resources=[(0, 4294967295)])
+    ta = TACertificateAuthority(as_resources=args.ta_as_resources,
+                                ip_resources=args.ta_ip_resources)
     ca = CertificateAuthority(issuer=ta,
-                              ip_resources=[ipaddress.ip_network("41.78.188.0/22"),  # noqa: E501
-                                            ipaddress.ip_network("197.157.64.0/19")],  # noqa: E501
-                              as_resources=[args.asn])
+                              as_resources=args.ca_as_resources,
+                              ip_resources=args.ca_ip_resources)
     # create ROA
     RouteOriginAttestation(issuer=ca,
-                           as_id=args.asn,
-                           ip_address_blocks=[(ipaddress.ip_network("41.78.188.0/22"),  # noqa: E501
-                                               None),
-                                              (ipaddress.ip_network("197.157.64.0/19"),  # noqa: E501
-                                               24)])
+                           as_id=args.roa_asid,
+                           ip_address_blocks=args.roa_networks)
     # create GBR
     RpkiGhostbusters(issuer=ca,
-                     full_name="Workonline Network Operations Center",
-                     org="Workonline Communications",
-                     email="noc@workonline.africa")
+                     full_name=args.gbr_full_name,
+                     org=args.gbr_org,
+                     email=args.gbr_email)
     # publish objects
-    ta.publish(pub_path=PUB_PATH, tal_path=TAL_PATH)
-
-
-if __name__ == "__main__":
-    demo()
+    ta.publish(pub_path=os.path.join(args.output_dir, PUB_SUB_DIR),
+               tal_path=os.path.join(args.output_dir, TAL_SUB_DIR))
+    return None
