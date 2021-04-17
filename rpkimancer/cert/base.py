@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import os
 import typing
 import urllib.parse
@@ -29,6 +30,8 @@ from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:
     from .ca import CertificateAuthority
+
+log = logging.getLogger(__name__)
 
 ManifestEntryInfo = typing.Tuple[str, bytes]
 

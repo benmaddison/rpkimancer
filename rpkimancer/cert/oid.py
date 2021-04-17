@@ -13,10 +13,12 @@
 
 from __future__ import annotations
 
+import logging
 import typing
 
 from cryptography import x509
 
+log = logging.getLogger(__name__)
 
 AIA_CA_ISSUERS_OID: typing.Final = x509.oid.AuthorityInformationAccessOID.CA_ISSUERS  # noqa: E501
 SIA_CA_REPOSITORY_OID: typing.Final = x509.oid.SubjectInformationAccessOID.CA_REPOSITORY  # noqa: E501

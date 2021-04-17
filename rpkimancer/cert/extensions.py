@@ -12,11 +12,15 @@
 """Number Resource Extension implementations - RFC3779."""
 from __future__ import annotations
 
+import logging
+
 from cryptography import x509
 
 from .oid import AS_RESOURCES_OID, IP_RESOURCES_OID
 from ..resources import (ASIdentifiers, AsResourcesInfo,
                          IPAddrBlocks, IpResourcesInfo)
+
+log = logging.getLogger(__name__)
 
 
 class IpResources(x509.UnrecognizedExtension):

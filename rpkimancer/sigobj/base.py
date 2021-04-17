@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import logging
 import typing
 
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
@@ -23,6 +24,8 @@ from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:
     from ..cert import CertificateAuthority
+
+log = logging.getLogger(__name__)
 
 CMS_VERSION: typing.Final = 3
 

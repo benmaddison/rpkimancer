@@ -13,8 +13,12 @@
 
 from __future__ import annotations
 
+import logging
+
 from .asn1 import Content, CryptographicMessageSyntax_2009
 from .asn1.types import OID
+
+log = logging.getLogger(__name__)
 
 
 class ContentData(Content):

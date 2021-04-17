@@ -14,7 +14,10 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 import typing
+
+log = logging.getLogger(__name__)
 
 
 SHA256: typing.Final = (2, 16, 840, 1, 101, 3, 4, 2, 1)

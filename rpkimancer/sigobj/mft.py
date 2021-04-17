@@ -14,12 +14,15 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import typing
 
 from .base import EncapsulatedContent, SignedObject
 from ..algorithms import SHA256
 from ..asn1 import RPKIManifest
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
+
+log = logging.getLogger(__name__)
 
 GeneralizedTimeInfo = typing.Tuple[typing.Optional[str], ...]
 HashInfo = typing.Tuple[int, int]

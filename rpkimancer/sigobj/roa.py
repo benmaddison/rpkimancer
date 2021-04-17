@@ -13,12 +13,15 @@
 
 from __future__ import annotations
 
+import logging
 import typing
 
 from .base import EncapsulatedContent, SignedObject
 from ..asn1 import RPKI_ROA
 from ..resources import (AFI, IPNetwork, IPNetworkBits,
                          IpResourcesInfo, net_to_bitstring)
+
+log = logging.getLogger(__name__)
 
 RoaNetworkInfo = typing.Tuple[IPNetwork, typing.Optional[int]]
 

@@ -14,9 +14,12 @@
 from __future__ import annotations
 
 import ipaddress
+import logging
 import typing
 
 from .asn1 import Content, IPAddrAndASCertExtn
+
+log = logging.getLogger(__name__)
 
 AFI = {4: (1).to_bytes(2, "big"),
        6: (2).to_bytes(2, "big")}

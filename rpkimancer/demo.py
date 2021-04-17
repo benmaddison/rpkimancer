@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import ipaddress
+import logging
 import os
 import typing
 
@@ -24,6 +25,8 @@ import argcomplete
 
 if typing.TYPE_CHECKING:
     from .sigobj.roa import RoaNetworkInfo
+
+log = logging.getLogger(__name__)
 
 DEFAULT_OUTPUT_DIR = os.path.join(os.curdir, "target", "demo")
 PUB_SUB_DIR = "repo"
@@ -109,6 +112,8 @@ def parse_args() -> argparse.Namespace:
                         metavar=ADDR_META,
                         help="Email address to include in GBR "
                              "(default: %(default)s)")
+    parser.add_argument("-v", action="count", default=0, dest="verbosity",
+                        help="Increase logging verbosity")
     argcomplete.autocomplete(parser, always_complete_options="long")
     return parser.parse_args()
 
@@ -122,29 +127,43 @@ def roa_network(input_str: str) -> RoaNetworkInfo:
         return (ipaddress.ip_network(input_str), None)
 
 
+def set_log_level(verbosity: int) -> None:
+    """Set logging verbosity."""
+    level = logging.WARNING - (10 * verbosity)
+    logging.basicConfig(level=level)
+
+
 def main() -> typing.Optional[int]:
     """Generate demo RPKI artifacts."""
-    # get command line args
-    args = parse_args()
-    # import rpkimancer types
-    from .cert import CertificateAuthority, TACertificateAuthority
-    from .sigobj import RouteOriginAttestation, RpkiGhostbusters
-    # create CAs
-    ta = TACertificateAuthority(as_resources=args.ta_as_resources,
-                                ip_resources=args.ta_ip_resources)
-    ca = CertificateAuthority(issuer=ta,
-                              as_resources=args.ca_as_resources,
-                              ip_resources=args.ca_ip_resources)
-    # create ROA
-    RouteOriginAttestation(issuer=ca,
-                           as_id=args.roa_asid,
-                           ip_address_blocks=args.roa_networks)
-    # create GBR
-    RpkiGhostbusters(issuer=ca,
-                     full_name=args.gbr_full_name,
-                     org=args.gbr_org,
-                     email=args.gbr_email)
-    # publish objects
-    ta.publish(pub_path=os.path.join(args.output_dir, PUB_SUB_DIR),
-               tal_path=os.path.join(args.output_dir, TAL_SUB_DIR))
+    try:
+        # get command line args
+        args = parse_args()
+        set_log_level(args.verbosity)
+        # import rpkimancer types
+        from .cert import CertificateAuthority, TACertificateAuthority
+        from .sigobj import RouteOriginAttestation, RpkiGhostbusters
+        # create CAs
+        ta = TACertificateAuthority(as_resources=args.ta_as_resources,
+                                    ip_resources=args.ta_ip_resources)
+        ca = CertificateAuthority(issuer=ta,
+                                  as_resources=args.ca_as_resources,
+                                  ip_resources=args.ca_ip_resources)
+        # create ROA
+        RouteOriginAttestation(issuer=ca,
+                               as_id=args.roa_asid,
+                               ip_address_blocks=args.roa_networks)
+        # create GBR
+        RpkiGhostbusters(issuer=ca,
+                         full_name=args.gbr_full_name,
+                         org=args.gbr_org,
+                         email=args.gbr_email)
+        # publish objects
+        ta.publish(pub_path=os.path.join(args.output_dir, PUB_SUB_DIR),
+                   tal_path=os.path.join(args.output_dir, TAL_SUB_DIR))
+    except KeyboardInterrupt:
+        log.error("Interrupted by Ctrl+C")
+        return 2
+    except Exception as e:
+        log.error(f"{e!r}", exc_info=(args.verbosity >= 3))
+        return 1
     return None

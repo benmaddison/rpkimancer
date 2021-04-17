@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import contextlib
 import glob
+import logging
 import os
 import typing
 
@@ -21,6 +22,8 @@ import pycrate_asn1c.asnproc as _asn1_compile
 import pycrate_asn1c.generator as _asn1_generate
 
 from .types import ASN1Obj, ASN1ObjData
+
+log = logging.getLogger(__name__)
 
 
 ContentSubclass = typing.TypeVar("ContentSubclass",

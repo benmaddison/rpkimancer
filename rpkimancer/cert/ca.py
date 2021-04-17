@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import base64
 import datetime
+import logging
 import os
 import typing
 
@@ -27,6 +28,8 @@ from .base import (BaseResourceCertificate,
                    ResourceCertificates)
 from .oid import AIA_CA_ISSUERS_OID, SIA_CA_REPOSITORY_OID, SIA_MFT_ACCESS_OID
 from ..sigobj import RpkiManifest
+
+log = logging.getLogger(__name__)
 
 
 class CertificateAuthority(BaseResourceCertificate):

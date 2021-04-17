@@ -13,7 +13,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from . import ca, ee
+
+log = logging.getLogger(__name__)
 
 CertificateAuthority = ca.CertificateAuthority
 TACertificateAuthority = ca.TACertificateAuthority

@@ -13,7 +13,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from . import base, gbr, mft, roa
+
+log = logging.getLogger(__name__)
 
 SignedObject = base.SignedObject
 RpkiGhostbusters = gbr.RpkiGhostbusters

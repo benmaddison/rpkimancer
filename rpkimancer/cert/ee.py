@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import typing
 
@@ -23,6 +24,8 @@ from .base import BaseResourceCertificate, ManifestEntryInfo
 from .ca import CertificateAuthority
 from .oid import SIA_OBJ_ACCESS_OID
 from ..sigobj import SignedObject
+
+log = logging.getLogger(__name__)
 
 
 class EECertificate(BaseResourceCertificate):
