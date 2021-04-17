@@ -17,7 +17,7 @@ import logging
 import typing
 
 from .base import EncapsulatedContent, SignedObject
-from ..asn1 import RPKIGhostbusters
+from ..asn1.mod import RPKIGhostbusters
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
 
 log = logging.getLogger(__name__)

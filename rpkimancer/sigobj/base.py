@@ -17,7 +17,8 @@ import logging
 import typing
 
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
-from ..asn1 import Content, PKIXAlgs_2009
+from ..asn1 import Content
+from ..asn1.mod import PKIXAlgs_2009
 from ..asn1.types import OID
 from ..cms import ContentInfo, SignedAttributes, SignedData
 from ..resources import AsResourcesInfo, IpResourcesInfo

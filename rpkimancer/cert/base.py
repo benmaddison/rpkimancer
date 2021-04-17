@@ -25,7 +25,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 
 from .extensions import AsResources, IpResources
 from .oid import RPKI_CERT_POLICY_OID
-from ..asn1 import Content, PKIX1Explicit_2009
+from ..asn1 import Content
+from ..asn1.mod import PKIX1Explicit_2009
 from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:

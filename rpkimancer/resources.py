@@ -17,7 +17,8 @@ import ipaddress
 import logging
 import typing
 
-from .asn1 import Content, IPAddrAndASCertExtn
+from .asn1 import Content
+from .asn1.mod import IPAddrAndASCertExtn
 
 log = logging.getLogger(__name__)
 

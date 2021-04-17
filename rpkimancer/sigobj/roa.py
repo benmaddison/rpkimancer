@@ -17,7 +17,7 @@ import logging
 import typing
 
 from .base import EncapsulatedContent, SignedObject
-from ..asn1 import RPKI_ROA
+from ..asn1.mod import RPKI_ROA
 from ..resources import (AFI, IPNetwork, IPNetworkBits,
                          IpResourcesInfo, net_to_bitstring)
 

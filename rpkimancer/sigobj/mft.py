@@ -19,7 +19,7 @@ import typing
 
 from .base import EncapsulatedContent, SignedObject
 from ..algorithms import SHA256
-from ..asn1 import RPKIManifest
+from ..asn1.mod import RPKIManifest
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
 
 log = logging.getLogger(__name__)
