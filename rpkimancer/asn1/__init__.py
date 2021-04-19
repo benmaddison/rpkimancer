@@ -21,16 +21,7 @@ from ..utils import LogWriter
 
 log = logging.getLogger(__name__)
 
-
-def log_level_parser(line: str) -> int:
-    """Determine the correct log level by parsing the message."""
-    if line.startswith("WNG:"):
-        return logging.WARNING
-    else:
-        return logging.INFO
-
-
-log_writer = LogWriter(log, level_cb=log_level_parser)
+log_writer = LogWriter(log, level=logging.INFO)
 
 ContentSubclass = typing.TypeVar("ContentSubclass",
                                  bound="Content")

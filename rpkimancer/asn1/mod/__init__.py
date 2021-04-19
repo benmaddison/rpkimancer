@@ -42,4 +42,5 @@ def _compile_modules() -> None:
 
 
 _compile_modules()
-from ._mod import *  # noqa
+with log_writer.redirect_stdout():
+    from ._mod import *  # noqa
