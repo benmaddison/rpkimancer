@@ -1,3 +1,9 @@
 tox>=3.23.0, <4.0
+
+# install test environment requirements
+-r requirements-lint.txt
+-r requirements-typecheck.txt
 -r requirements-test.txt
+
+# install package in development mode
 -e .
