@@ -11,7 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Demo script to show rpkimancer library usage."""
+"""Conjure a fully populated RPKI repository from thin air."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ import argparse
 import ipaddress
 import logging
 import os
+import sys
 import typing
 
 import argcomplete
@@ -51,10 +52,13 @@ ROA_IP_META = f"{IP_META}[-maxlen]"
 NAME_META = "<name>"
 ADDR_META = "<addr>"
 
+ArgvType = typing.List[str]
 
-def parse_args() -> argparse.Namespace:
+
+def parse_args(argv: ArgvType) -> argparse.Namespace:
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     usage="%(prog)s [options]")
     parser.add_argument("--output-dir", "-o",
                         default=DEFAULT_OUTPUT_DIR,
                         metavar=PATH_META,
@@ -115,7 +119,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-v", action="count", default=0, dest="verbosity",
                         help="Increase logging verbosity")
     argcomplete.autocomplete(parser, always_complete_options="long")
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 def roa_network(input_str: str) -> RoaNetworkInfo:
@@ -133,11 +137,13 @@ def set_log_level(verbosity: int) -> None:
     logging.basicConfig(level=level)
 
 
-def main() -> typing.Optional[int]:
+def main(argv: typing.Optional[ArgvType] = None) -> typing.Optional[int]:
     """Generate demo RPKI artifacts."""
     try:
         # get command line args
-        args = parse_args()
+        if argv is None:
+            argv = sys.argv[1:]
+        args = parse_args(argv)
         set_log_level(args.verbosity)
         # import rpkimancer types
         from .cert import CertificateAuthority, TACertificateAuthority

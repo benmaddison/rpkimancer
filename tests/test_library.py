@@ -11,7 +11,17 @@
 # the License.
 """rpkimancer package tests."""
 
+from __future__ import annotations
+
+import pytest
+
 import rpkimancer
+
+
+@pytest.fixture(scope="session")
+def target_directory(tmpdir_factory):
+    """Set up a tmp directory for writing artifacts."""
+    return tmpdir_factory.mktemp("target")
 
 
 class TestLibrary:
@@ -20,3 +30,14 @@ class TestLibrary:
     def test_dummy(self):
         """Dummy test."""
         assert rpkimancer
+
+
+class TestCli:
+    """Test cases for rpkimancer CLI tools."""
+
+    def test_conjure(self, target_directory):
+        """Test the rpki-conjure CLI tool."""
+        from rpkimancer.demo import main
+        argv = ["--output-dir", f"{target_directory}"]
+        retval = main(argv)
+        assert retval is None
