@@ -39,6 +39,7 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
                  tel: typing.Optional[str] = None,
                  email: typing.Optional[str] = None) -> None:
         """Initialise the encapContentInfo."""
+        log.info(f"preparing data for {self}")
         vcard = "BEGIN:VCARD\r\n"
         vcard += "VERSION:4.0\r\n"
         vcard += f"FN:{full_name}\r\n"

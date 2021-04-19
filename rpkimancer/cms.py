@@ -35,6 +35,7 @@ class ContentInfo(Content):
 
     def __init__(self, content: ContentData) -> None:
         """Initialise the instance from contained ContentData."""
+        log.info(f"preparing data for {self}")
         content_type_oid = content.content_type.get_val()
         content_type_name = content.content_syntax.fullname()
         content_data = content.content_data
@@ -57,6 +58,7 @@ class SignedAttributes(Content):
 
     def __init__(self, content_type: OID, message_digest: bytes) -> None:
         """Initialise the instance from an eContentType and eContent digest."""
+        log.info(f"preparing data for {self}")
         ct_attr_oid = CryptographicMessageSyntax_2009.id_contentType.get_val()
         md_attr_oid = CryptographicMessageSyntax_2009.id_messageDigest.get_val()  # noqa: E501
         data = [

@@ -34,21 +34,21 @@ class Content:
 
     def __init__(self, data: typing.Any) -> None:
         """Initialise the instance from python data."""
-        log.debug(f"starting initialisation of {self}")
+        log.info(f"starting initialisation of {self} ASN.1 content")
         with self.constructed(data) as instance:
             self._content_data = instance.get_val()
-        log.debug(f"finished initialisation of {self}")
+        log.info(f"finished initialisation of {self} ASN.1 content")
 
     @classmethod
     def from_der(cls: typing.Type[ContentSubclass],
                  der_data: bytes) -> ContentSubclass:
         """Construct an instance from DER encoded data."""
-        log.debug(f"deserialising {cls} object from DER data.")
+        log.info(f"deserialising {cls} object from DER data.")
         with log_writer.redirect_stdout():
             cls.content_syntax.from_der(der_data)
         data = cls.content_syntax.get_val()
         cls.content_syntax.reset_val()
-        log.debug(f"finished deserialising {cls} object")
+        log.info(f"finished deserialising {cls} object")
         return cls(data)
 
     @property
@@ -62,6 +62,7 @@ class Content:
         """Provide a context manager to mediate the global pycrates object."""
         if data is None:
             data = self.content_data
+        log.debug(f"instantiating ASN1Obj from data: {data}")
         try:
             self.content_syntax.set_val(data)
             yield self.content_syntax
@@ -71,17 +72,17 @@ class Content:
     def to_asn1(self) -> str:
         """Serialize as ASN.1 data."""
         with self.constructed() as instance:
-            log.debug(f"serialising object {self} to ASN.1 data encoding")
+            log.info(f"serialising object {self} to ASN.1 data encoding")
             with log_writer.redirect_stdout():
                 val = instance.to_asn1()
-            log.debug(f"finished serialising object {self}")
+            log.info(f"finished serialising object {self}")
         return typing.cast(str, val)
 
     def to_der(self) -> bytes:
         """Serialize as DER."""
         with self.constructed() as instance:
-            log.debug(f"serialising object {self} to DER")
+            log.info(f"serialising object {self} to DER")
             with log_writer.redirect_stdout():
                 val = instance.to_der()
-            log.debug(f"finished serialising object {self}")
+            log.info(f"finished serialising object {self}")
         return typing.cast(bytes, val)

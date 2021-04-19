@@ -39,6 +39,7 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
                  as_id: int,
                  ip_address_blocks: typing.List[RoaNetworkInfo]) -> None:
         """Initialise the encapContentInfo."""
+        log.info(f"preparing data for {self}")
         entry_type = typing.Dict[str, typing.Union[IPNetworkBits, int]]
         def address_entry(network: IPNetwork,
                           maxlen: typing.Optional[int] = None) -> entry_type:

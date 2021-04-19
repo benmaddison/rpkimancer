@@ -73,6 +73,7 @@ class SignedObject(ContentInfo):
                  *args: typing.Any,
                  **kwargs: typing.Any) -> None:
         """Initialise the SignedObject."""
+        log.info(f"preparing data for {self}")
         # set object file name
         self._file_name = file_name
         # construct econtent

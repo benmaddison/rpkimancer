@@ -58,6 +58,7 @@ class BaseResourceCertificate:
                  ip_resources: typing.Optional[IpResourcesInfo] = None,
                  as_resources: typing.Optional[AsResourcesInfo] = None) -> None:  # noqa: E501
         """Initialise the Resource Certificate."""
+        log.info(f"doing base initialisation of {self}")
         self._issuer = issuer
         self._base_uri = urllib.parse.urlparse(base_uri)
 
@@ -237,6 +238,7 @@ class Certificate(Content):
     @property
     def subject_public_key_info(self) -> SubjectPublicKeyInfo:
         """Get the subjectPublicKeyInfo of the Certificate."""
+        log.info(f"trying to get subjectPublicKeyInfo data from {self}")
         with self.constructed() as instance:
             data = instance.get_val_at(["toBeSigned", "subjectPublicKeyInfo"])
         return SubjectPublicKeyInfo(data)

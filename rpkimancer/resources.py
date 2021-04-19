@@ -45,6 +45,7 @@ AsResourcesInfo = typing.Union[Inherit,
 
 def net_to_bitstring(network: IPNetwork) -> IPNetworkBits:
     """Convert an IPNetwork to an ASN.1 BIT STRING representation."""
+    log.debug(f"converting {network} to rfc3779 bit string")
     netbits = network.prefixlen
     hostbits = network.max_prefixlen - netbits
     value = int(network.network_address) >> hostbits
@@ -56,6 +57,7 @@ class SeqOfIPAddressFamily(Content):
 
     def __init__(self, ip_resources: IpResourcesInfo) -> None:
         """Initialise instance from python data."""
+        log.info(f"preparing data for {self}")
         net_data_type = typing.Union[Inherit,
                                      typing.Tuple[str, IPNetworkBits]]
         entry_type = typing.Tuple[int, net_data_type]
@@ -101,6 +103,7 @@ class ASIdOrRange(Content):
 
     def __init__(self, a: ASIdOrRangeInfo) -> None:
         """Initialise instance from python data."""
+        log.info(f"preparing data for {self}")
         data: typing.Union[typing.Tuple[str, int],
                            typing.Tuple[str, typing.Dict[str, int]]]
         if isinstance(a, int):

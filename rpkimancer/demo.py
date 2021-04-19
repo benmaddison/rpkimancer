@@ -146,24 +146,30 @@ def main(argv: typing.Optional[ArgvType] = None) -> typing.Optional[int]:
         args = parse_args(argv)
         set_log_level(args.verbosity)
         # import rpkimancer types
+        log.info("setting up rpkimancer library objects")
         from .cert import CertificateAuthority, TACertificateAuthority
         from .sigobj import RouteOriginAttestation, RpkiGhostbusters
         # create CAs
+        log.info("creating TA certificate authority")
         ta = TACertificateAuthority(as_resources=args.ta_as_resources,
                                     ip_resources=args.ta_ip_resources)
+        log.info("creating suboridinate certificate authority")
         ca = CertificateAuthority(issuer=ta,
                                   as_resources=args.ca_as_resources,
                                   ip_resources=args.ca_ip_resources)
         # create ROA
+        log.info("creating ROA object")
         RouteOriginAttestation(issuer=ca,
                                as_id=args.roa_asid,
                                ip_address_blocks=args.roa_networks)
         # create GBR
+        log.info("creating ghostbusters record object")
         RpkiGhostbusters(issuer=ca,
                          full_name=args.gbr_full_name,
                          org=args.gbr_org,
                          email=args.gbr_email)
         # publish objects
+        log.info(f"publishing in-memory objects to {args.output_dir}")
         ta.publish(pub_path=os.path.join(args.output_dir, PUB_SUB_DIR),
                    tal_path=os.path.join(args.output_dir, TAL_SUB_DIR))
     except KeyboardInterrupt:

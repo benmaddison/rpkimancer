@@ -46,6 +46,7 @@ class RpkiManifestEContent(EncapsulatedContent):
                  next_update: datetime.datetime,
                  file_list: _file_list_type) -> None:
         """Initialise the encapContentInfo."""
+        log.info(f"preparing data for {self}")
         data = {"version": version,
                 "manifestNumber": manifest_number,
                 "thisUpdate": self.generalized_time(this_update),

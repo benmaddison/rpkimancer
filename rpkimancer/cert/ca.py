@@ -41,6 +41,7 @@ class CertificateAuthority(BaseResourceCertificate):
                  mft_days: int = 7,
                  **kwargs: typing.Any) -> None:
         """Initialise the Certificate Authority."""
+        log.info(f"doing initialisation of {self} as CertificateAuthority")
         self._issued: ResourceCertificateList = list()
         self.next_serial_number = 1
         super().__init__(common_name=common_name, ca=True, **kwargs)
@@ -218,6 +219,7 @@ class TACertificateAuthority(CertificateAuthority):
                  base_uri: str = "rsync://rpki.example.net/rpki",
                  **kwargs: typing.Any) -> None:
         """Initialise the Certificate Authority."""
+        log.info(f"doing initialisation of {self} as TACertificateAuthority")
         super().__init__(common_name=common_name, issuer=None, **kwargs)
 
     @property
