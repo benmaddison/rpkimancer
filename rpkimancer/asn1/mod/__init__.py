@@ -19,11 +19,10 @@ import os
 import pycrate_asn1c.asnproc as _asn1_compile
 import pycrate_asn1c.generator as _asn1_generate
 
-from .. import log_level_parser
 from ...utils import LogWriter
 
 log = logging.getLogger(__name__)
-log_writer = LogWriter(log, level_cb=log_level_parser)
+log_writer = LogWriter(log, level=logging.INFO)
 
 
 def _compile_modules() -> None:
