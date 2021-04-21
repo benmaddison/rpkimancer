@@ -25,7 +25,7 @@ import typing
 import argcomplete
 
 if typing.TYPE_CHECKING:
-    from .sigobj.roa import RoaNetworkInfo
+    from ..sigobj.roa import RoaNetworkInfo
 
 log = logging.getLogger(__name__)
 
@@ -147,8 +147,8 @@ def main(argv: typing.Optional[ArgvType] = None) -> typing.Optional[int]:
         set_log_level(args.verbosity)
         # import rpkimancer types
         log.info("setting up rpkimancer library objects")
-        from .cert import CertificateAuthority, TACertificateAuthority
-        from .sigobj import RouteOriginAttestation, RpkiGhostbusters
+        from ..cert import CertificateAuthority, TACertificateAuthority
+        from ..sigobj import RouteOriginAttestation, RpkiGhostbusters
         # create CAs
         log.info("creating TA certificate authority")
         ta = TACertificateAuthority(as_resources=args.ta_as_resources,

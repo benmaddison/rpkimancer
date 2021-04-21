@@ -20,7 +20,10 @@ from ..algorithms import DIGEST_ALGORITHMS, SHA256
 from ..asn1 import Content
 from ..asn1.mod import PKIXAlgs_2009
 from ..asn1.types import OID
-from ..cms import ContentInfo, SignedAttributes, SignedData
+from ..cms import (ContentInfo,
+                   EncapsulatedContentInfo,
+                   SignedAttributes,
+                   SignedData)
 from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:
@@ -132,6 +135,12 @@ class SignedObject(ContentInfo):
     @property
     def econtent(self) -> EncapsulatedContent:
         """Get the Signed Object's encapContentInfo."""
+        try:
+            return self._econtent
+        except AttributeError:
+            # TODO: there must be a better way to do this!
+            eci = EncapsulatedContentInfo.from_content_info(self)
+            self._econtent = self.econtent_cls.from_der(eci.econtent_bytes)
         return self._econtent
 
     @property

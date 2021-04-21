@@ -49,7 +49,9 @@ class Content:
         data = cls.content_syntax.get_val()
         cls.content_syntax.reset_val()
         log.info(f"finished deserialising {cls} object")
-        return cls(data)
+        self: ContentSubclass = cls.__new__(cls)
+        Content.__init__(self, data)
+        return self
 
     @property
     def content_data(self) -> ASN1ObjData:
@@ -86,3 +88,12 @@ class Content:
                 val = instance.to_der()
             log.info(f"finished serialising object {self}")
         return typing.cast(bytes, val)
+
+    def to_json(self) -> str:
+        """Serialize as JSON."""
+        with self.constructed() as instance:
+            log.info(f"serialising object {self} to JSON")
+            with log_writer.redirect_stdout():
+                val = instance.to_json()
+            log.info(f"finished serialising object {self}")
+        return typing.cast(str, val)

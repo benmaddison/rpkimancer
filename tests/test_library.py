@@ -37,7 +37,16 @@ class TestCli:
 
     def test_conjure(self, target_directory):
         """Test the rpki-conjure CLI tool."""
-        from rpkimancer.demo import main
+        from rpkimancer.cli.conjure import main
         argv = ["--output-dir", f"{target_directory}"]
+        retval = main(argv)
+        assert retval is None
+
+    def test_augur(self, target_directory):
+        """Test the rpki-augur CLI tool."""
+        from rpkimancer.cli.augur import main
+        path = target_directory.join("repo", "rpki.example.net",
+                                     "rpki", "TA", "manifest.mft")
+        argv = [str(path)]
         retval = main(argv)
         assert retval is None

@@ -72,3 +72,27 @@ class SignedAttributes(Content):
             },
         ]
         super().__init__(data)
+
+
+class EncapsulatedContentInfo(Content):
+    """CMS ASN.1 EncapsulatedContentInfo type - RFC5911."""
+
+    content_syntax = CryptographicMessageSyntax_2009.EncapsulatedContentInfo
+
+    @classmethod
+    def from_content_info(cls,
+                          content_info: ContentInfo) -> EncapsulatedContentInfo:  # noqa: E501
+        """De-encapsulate from ContentInfo instance."""
+        val_path = ["content", "SignedData", "encapContentInfo"]
+        with content_info.constructed() as instance:
+            data = instance.get_val_at(val_path)
+        return cls(data)
+
+    @property
+    def econtent_bytes(self) -> bytes:
+        """Recover eContent OCTET STRING."""
+        with self.constructed() as instance:
+            econtent = instance.get_internals()["cont"]["eContent"]
+            log.debug(f"{econtent.to_der()}")
+            econtent_bytes: bytes = econtent.get_const()["cont"].to_der()
+        return econtent_bytes

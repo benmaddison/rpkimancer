@@ -14,12 +14,29 @@
 from __future__ import annotations
 
 import logging
+import typing
 
 from . import base, gbr, mft, roa
 
 log = logging.getLogger(__name__)
 
 SignedObject = base.SignedObject
+
+SignedObjectSubclass = typing.TypeVar("SignedObjectSubclass",
+                                      bound=SignedObject)
+
 RpkiGhostbusters = gbr.RpkiGhostbusters
 RpkiManifest = mft.RpkiManifest
 RouteOriginAttestation = roa.RouteOriginAttestation
+
+object_types = (RpkiGhostbusters, RpkiManifest, RouteOriginAttestation)
+
+
+def from_ext(ext: str) -> typing.Type[SignedObject]:
+    """Get a SignedObject by file extension."""
+    lookup_map = {cls.econtent_cls.file_ext: cls
+                  for cls in object_types}
+    try:
+        return lookup_map[ext]
+    except KeyError:
+        return lookup_map[ext.lstrip(".")]
