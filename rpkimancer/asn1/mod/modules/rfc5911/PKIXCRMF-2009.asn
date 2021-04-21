@@ -210,7 +210,7 @@ BEGIN
   --
 
   ct-encKeyWithID CONTENT-TYPE ::=
-      { EncKeyWithID IDENTIFIED BY id-ct-encKeyWithID }
+      { TYPE EncKeyWithID IDENTIFIED BY id-ct-encKeyWithID }
 
   id-ct-encKeyWithID OBJECT IDENTIFIER ::= {id-ct 21}
 

@@ -17,7 +17,7 @@ BEGIN
    ContentTypes CONTENT-TYPE ::= {ct-authEnvelopedData, ... }
 
    ct-authEnvelopedData CONTENT-TYPE ::= {
-      AuthEnvelopedData IDENTIFIED BY id-ct-authEnvelopedData
+      TYPE AuthEnvelopedData IDENTIFIED BY id-ct-authEnvelopedData
    }
 
    id-ct-authEnvelopedData OBJECT IDENTIFIER ::=

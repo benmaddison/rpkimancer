@@ -81,7 +81,7 @@ BEGIN
       us(840) rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) id-aa(2) 7}
 
   ct-receipt CONTENT-TYPE ::=
-      { Receipt IDENTIFIED BY id-ct-receipt }
+      { TYPE Receipt IDENTIFIED BY id-ct-receipt }
   id-ct-receipt OBJECT IDENTIFIER ::=
       { iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs-9(9)
       smime(16) id-ct(1) 1}

@@ -78,7 +78,7 @@ BEGIN
   -- This is the content type for a request message in the protocol
 
   ct-PKIData CONTENT-TYPE ::=
-      { PKIData IDENTIFIED BY id-cct-PKIData }
+      { TYPE PKIData IDENTIFIED BY id-cct-PKIData }
   id-cct-PKIData OBJECT IDENTIFIER ::= { id-cct 2 }
 
   PKIData ::= SEQUENCE {
@@ -171,7 +171,7 @@ BEGIN
   --  This defines the response message in the protocol
 
   ct-PKIResponse CONTENT-TYPE ::=
-      { PKIResponse IDENTIFIED BY id-cct-PKIResponse }
+      { TYPE PKIResponse IDENTIFIED BY id-cct-PKIResponse }
   id-cct-PKIResponse OBJECT IDENTIFIER ::= { id-cct 3 }
 
   ResponseBody ::= PKIResponse

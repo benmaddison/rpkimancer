@@ -34,7 +34,7 @@ BEGIN
   -- Firmware Package Content Type and Object Identifier
 
   ct-firmwarePackage CONTENT-TYPE ::=
-          { FirmwarePkgData IDENTIFIED BY id-ct-firmwarePackage }
+          { TYPE FirmwarePkgData IDENTIFIED BY id-ct-firmwarePackage }
 
   id-ct-firmwarePackage OBJECT IDENTIFIER ::= {
       iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs9(9)
@@ -159,7 +159,7 @@ BEGIN
   -- Firmware Package Load Receipt Content Type and Object Identifier
 
   ct-firmwareLoadReceipt CONTENT-TYPE ::=
-      { FirmwarePackageLoadReceipt IDENTIFIED BY
+      { TYPE FirmwarePackageLoadReceipt IDENTIFIED BY
           id-ct-firmwareLoadReceipt }
   id-ct-firmwareLoadReceipt OBJECT IDENTIFIER ::= {
       iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs9(9)
@@ -179,7 +179,7 @@ BEGIN
   -- and Object Identifier
 
   ct-firmwareLoadError CONTENT-TYPE ::=
-      { FirmwarePackageLoadError
+      { TYPE FirmwarePackageLoadError
           IDENTIFIED BY id-ct-firmwareLoadError }
   id-ct-firmwareLoadError OBJECT IDENTIFIER ::= {
       iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs9(9)

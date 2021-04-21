@@ -51,7 +51,12 @@ BEGIN
   --   Version 4 = RFC 3369
   --   Version 5 = RFC 3852
 
-  CONTENT-TYPE ::= TYPE-IDENTIFIER
+  CONTENT-TYPE ::= CLASS {
+      &id OBJECT IDENTIFIER UNIQUE,
+      &Type OPTIONAL
+  } WITH SYNTAX {
+      [TYPE &Type] IDENTIFIED BY &id
+  }
   
   ContentType ::= CONTENT-TYPE.&id
 
@@ -352,37 +357,37 @@ BEGIN
   id-ct-contentInfo OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs9(9) smime(16) ct(1) 6 }
 
-  ct-Data CONTENT-TYPE ::= {OCTET STRING IDENTIFIED BY id-data}
+  ct-Data CONTENT-TYPE ::= {IDENTIFIED BY id-data}
 
   id-data OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs7(7) 1 }
 
   ct-SignedData CONTENT-TYPE ::=
-      { SignedData IDENTIFIED BY id-signedData}
+      { TYPE SignedData IDENTIFIED BY id-signedData}
 
   id-signedData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs7(7) 2 }
 
   ct-EnvelopedData CONTENT-TYPE ::=
-      { EnvelopedData IDENTIFIED BY id-envelopedData}
+      { TYPE EnvelopedData IDENTIFIED BY id-envelopedData}
 
   id-envelopedData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs7(7) 3 }
 
   ct-DigestedData CONTENT-TYPE ::=
-      { DigestedData IDENTIFIED BY id-digestedData}
+      { TYPE DigestedData IDENTIFIED BY id-digestedData}
 
   id-digestedData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs7(7) 5 }
 
   ct-EncryptedData CONTENT-TYPE ::=
-      { EncryptedData IDENTIFIED BY id-encryptedData}
+      { TYPE EncryptedData IDENTIFIED BY id-encryptedData}
 
   id-encryptedData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs7(7) 6 }
 
   ct-AuthenticatedData CONTENT-TYPE ::=
-      { AuthenticatedData IDENTIFIED BY id-ct-authData}
+      { TYPE AuthenticatedData IDENTIFIED BY id-ct-authData}
 
   id-ct-authData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
      us(840) rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) ct(1) 2 }
