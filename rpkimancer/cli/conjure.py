@@ -20,7 +20,7 @@ import logging
 import os
 import typing
 
-from . import Args, BaseCommand, OptionalArgv, Return
+from . import Args, BaseCommand, Return
 
 if typing.TYPE_CHECKING:
     from ..sigobj.roa import RoaNetworkInfo
