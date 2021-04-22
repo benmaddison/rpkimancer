@@ -11,18 +11,16 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Conjure a fully populated RPKI repository from thin air."""
+"""rpki-conjure command implementation."""
 
 from __future__ import annotations
 
-import argparse
 import ipaddress
 import logging
 import os
-import sys
 import typing
 
-import argcomplete
+from . import Args, BaseCommand, OptionalArgv, Return
 
 if typing.TYPE_CHECKING:
     from ..sigobj.roa import RoaNetworkInfo
@@ -52,100 +50,74 @@ ROA_IP_META = f"{IP_META}[-maxlen]"
 NAME_META = "<name>"
 ADDR_META = "<addr>"
 
-ArgvType = typing.List[str]
 
+class Conjure(BaseCommand):
+    """Conjure a fully populated RPKI repository from thin air."""
 
-def parse_args(argv: ArgvType) -> argparse.Namespace:
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     usage="%(prog)s [options]")
-    parser.add_argument("--output-dir", "-o",
-                        default=DEFAULT_OUTPUT_DIR,
-                        metavar=PATH_META,
-                        help="Directory to write generated artifacts to "
-                             "(default: %(default)s)")
-    parser.add_argument("--ta-as-resources",
-                        nargs="+", type=int,
-                        default=DEFAULT_TA_AS_RESOURCES,
-                        metavar=AS_META,
-                        help="ASN(s) to include in TA certificate "
-                             "(default: %(default)s)")
-    parser.add_argument("--ta-ip-resources",
-                        nargs="+", type=ipaddress.ip_network,
-                        default=DEFAULT_TA_IP_RESOURCES,
-                        metavar=IP_META,
-                        help="IP addresses to include in TA certificate "
-                             "(default: %(default)s)")
-    parser.add_argument("--ca-as-resources",
-                        nargs="+", type=int,
-                        default=DEFAULT_CA_AS_RESOURCES,
-                        metavar=AS_META,
-                        help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
-                             "(default: %(default)s)")
-    parser.add_argument("--ca-ip-resources",
-                        nargs="+", type=ipaddress.ip_network,
-                        default=DEFAULT_CA_IP_RESOURCES,
-                        metavar=IP_META,
-                        help="IP addresses to include in suboridinate CA certificate "  # noqa: E501
-                             "(default: %(default)s)")
-    parser.add_argument("--roa-asid",
-                        type=int,
-                        default=DEFAULT_CA_AS_RESOURCES[0],
-                        metavar=AS_META,
-                        help="ASN to include in ROA asID "
-                             "(default: %(default)s)")
-    parser.add_argument("--roa-networks",
-                        nargs="+", type=roa_network,
-                        default=[(ipaddress.ip_network(net), None)
-                                 for net in DEFAULT_CA_IP_RESOURCES],
-                        metavar=ROA_IP_META,
-                        help="IP prefixes to include in ROA "
-                             "(default: %(default)s)")
-    parser.add_argument("--gbr-full-name",
-                        default=DEFAULT_GBR_FULLNAME,
-                        metavar=NAME_META,
-                        help="Full name to include in GBR "
-                             "(default: %(default)s)")
-    parser.add_argument("--gbr-org",
-                        default=DEFAULT_GBR_ORG,
-                        metavar=NAME_META,
-                        help="Organisation name to include in GBR "
-                             "(default: %(default)s)")
-    parser.add_argument("--gbr-email",
-                        default=DEFAULT_GBR_EMAIL,
-                        metavar=ADDR_META,
-                        help="Email address to include in GBR "
-                             "(default: %(default)s)")
-    parser.add_argument("-v", action="count", default=0, dest="verbosity",
-                        help="Increase logging verbosity")
-    argcomplete.autocomplete(parser, always_complete_options="long")
-    return parser.parse_args(argv)
+    subcommand = "conjure"
 
+    def init_parser(self) -> None:
+        """Set up command line argument parser."""
+        self.parser.add_argument("--output-dir", "-o",
+                                 default=DEFAULT_OUTPUT_DIR,
+                                 metavar=PATH_META,
+                                 help="Directory to write generated artifacts to "  # noqa: E501
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--ta-as-resources",
+                                 nargs="+", type=int,
+                                 default=DEFAULT_TA_AS_RESOURCES,
+                                 metavar=AS_META,
+                                 help="ASN(s) to include in TA certificate "
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--ta-ip-resources",
+                                 nargs="+", type=ipaddress.ip_network,
+                                 default=DEFAULT_TA_IP_RESOURCES,
+                                 metavar=IP_META,
+                                 help="IP addresses to include in TA certificate "  # noqa: E501
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--ca-as-resources",
+                                 nargs="+", type=int,
+                                 default=DEFAULT_CA_AS_RESOURCES,
+                                 metavar=AS_META,
+                                 help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--ca-ip-resources",
+                                 nargs="+", type=ipaddress.ip_network,
+                                 default=DEFAULT_CA_IP_RESOURCES,
+                                 metavar=IP_META,
+                                 help="IP addresses to include in suboridinate CA certificate "  # noqa: E501
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--roa-asid",
+                                 type=int,
+                                 default=DEFAULT_CA_AS_RESOURCES[0],
+                                 metavar=AS_META,
+                                 help="ASN to include in ROA asID "
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--roa-networks",
+                                 nargs="+", type=self._roa_network,
+                                 default=[(ipaddress.ip_network(net), None)
+                                          for net in DEFAULT_CA_IP_RESOURCES],
+                                 metavar=ROA_IP_META,
+                                 help="IP prefixes to include in ROA "
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--gbr-full-name",
+                                 default=DEFAULT_GBR_FULLNAME,
+                                 metavar=NAME_META,
+                                 help="Full name to include in GBR "
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--gbr-org",
+                                 default=DEFAULT_GBR_ORG,
+                                 metavar=NAME_META,
+                                 help="Organisation name to include in GBR "
+                                      "(default: %(default)s)")
+        self.parser.add_argument("--gbr-email",
+                                 default=DEFAULT_GBR_EMAIL,
+                                 metavar=ADDR_META,
+                                 help="Email address to include in GBR "
+                                      "(default: %(default)s)")
 
-def roa_network(input_str: str) -> RoaNetworkInfo:
-    """Convert input string to RoaNetworkInfo tuple."""
-    try:
-        network, maxlen = input_str.split("-", 1)
-        return (ipaddress.ip_network(network), int(maxlen))
-    except ValueError:
-        return (ipaddress.ip_network(input_str), None)
-
-
-def set_log_level(verbosity: int) -> None:
-    """Set logging verbosity."""
-    level = logging.WARNING - (10 * verbosity)
-    logging.basicConfig(level=level)
-
-
-def main(argv: typing.Optional[ArgvType] = None) -> typing.Optional[int]:
-    """Generate demo RPKI artifacts."""
-    try:
-        # get command line args
-        if argv is None:
-            argv = sys.argv[1:]
-        args = parse_args(argv)
-        set_log_level(args.verbosity)
-        # import rpkimancer types
+    def run(self, args: Args) -> Return:
+        """Run with the given arguments."""
         log.info("setting up rpkimancer library objects")
         from ..cert import CertificateAuthority, TACertificateAuthority
         from ..sigobj import RouteOriginAttestation, RpkiGhostbusters
@@ -172,10 +144,13 @@ def main(argv: typing.Optional[ArgvType] = None) -> typing.Optional[int]:
         log.info(f"publishing in-memory objects to {args.output_dir}")
         ta.publish(pub_path=os.path.join(args.output_dir, PUB_SUB_DIR),
                    tal_path=os.path.join(args.output_dir, TAL_SUB_DIR))
-    except KeyboardInterrupt:
-        log.error("Interrupted by Ctrl+C")
-        return 2
-    except Exception as e:
-        log.error(f"{e!r}", exc_info=(args.verbosity >= 3))
-        return 1
-    return None
+        return None
+
+    @staticmethod
+    def _roa_network(input_str: str) -> RoaNetworkInfo:
+        """Convert input string to RoaNetworkInfo tuple."""
+        try:
+            network, maxlen = input_str.split("-", 1)
+            return (ipaddress.ip_network(network), int(maxlen))
+        except ValueError:
+            return (ipaddress.ip_network(input_str), None)
