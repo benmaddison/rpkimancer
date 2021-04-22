@@ -71,6 +71,10 @@ class Content:
         finally:
             self.content_syntax.reset_val()
 
+    def to_txt(self) -> str:
+        """Default text serialization."""
+        return self.to_asn1()
+
     def to_asn1(self) -> str:
         """Serialize as ASN.1 data."""
         with self.constructed() as instance:
