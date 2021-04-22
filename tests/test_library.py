@@ -42,11 +42,15 @@ class TestCli:
         retval = main(argv)
         assert retval is None
 
-    def test_augur(self, target_directory):
+    @pytest.mark.parametrize("fmt", (None, "-A", "-J"))
+    def test_augur(self, target_directory, fmt):
         """Test the rpki-augur CLI tool."""
         from rpkimancer.cli.__main__ import main
         path = target_directory.join("repo", "rpki.example.net",
                                      "rpki", "TA", "manifest.mft")
-        argv = ["augur", str(path)]
+        argv = ["augur", str(path), "--signed-data",
+                "--output", "/dev/null"]
+        if fmt is not None:
+            argv.append(fmt)
         retval = main(argv)
         assert retval is None

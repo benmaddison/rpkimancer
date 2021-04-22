@@ -127,7 +127,7 @@ class ASIdentifiers(Content):
         elif isinstance(as_resources, list):
             asnum = ("asIdsOrRanges",
                      [ASIdOrRange(a).content_data for a in as_resources])
-        else:
+        else:  # pragma: no cover
             raise ValueError
         data = {"asnum": asnum}
         super().__init__(data)

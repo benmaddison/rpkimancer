@@ -65,7 +65,7 @@ class BaseCommand:
         else:
             argcomplete.autocomplete(self.parser,
                                      always_complete_options="long")
-            if args_or_argv is None:
+            if args_or_argv is None:  # pragma: no cover
                 argv = sys.argv[1:]
             else:
                 argv = args_or_argv
@@ -73,10 +73,10 @@ class BaseCommand:
             set_log_level(args.verbosity)
         try:
             return self.run(args)
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # pragma: no cover
             log.error("Interrupted by Ctrl+C")
             return 2
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             log.error(f"{e!r}", exc_info=(args.verbosity >= 3))
             return 1
 

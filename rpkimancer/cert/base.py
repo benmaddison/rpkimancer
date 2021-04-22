@@ -203,14 +203,6 @@ class BaseResourceCertificate:
         return self._cn
 
     @property
-    def issuer_cn(self) -> str:
-        """Get the common_name component of the issuerName."""
-        if self.issuer is not None:
-            return self.issuer.subject_cn
-        else:
-            return self.subject_cn
-
-    @property
     def ski_digest(self) -> bytes:
         """Get the message digest of the SKI extension."""
         return self._ski_digest

@@ -15,8 +15,11 @@
 
 from __future__ import annotations
 
+import contextlib
+import functools
 import logging
 import os
+import sys
 import typing
 
 from . import Args, BaseCommand, Return
@@ -25,6 +28,10 @@ if typing.TYPE_CHECKING:
     from rpkimancer.asn1 import Content
 
 log = logging.getLogger(__name__)
+
+WriteGenerator = typing.Generator[typing.Callable[["Content", str], None],
+                                  None,
+                                  None]
 
 
 class Augur(BaseCommand):
@@ -38,6 +45,11 @@ class Augur(BaseCommand):
         self.parser.add_argument("path",
                                  metavar="<file-path>",
                                  help="Path to the signed object")
+        self.parser.add_argument("--output", "-o",
+                                 metavar="<output-path>",
+                                 type=self._output, default=self._output(),
+                                 help="Path to output file "
+                                      "(default: STDOUT)")
         self.parser.add_argument("--signed-data", "-S",
                                  action="store_true", default=False,
                                  help="Print decoded SignedData structure")
@@ -65,13 +77,23 @@ class Augur(BaseCommand):
         object_cls = from_ext(ext)
         log.info(f"trying to deserialise to {object_cls}")
         obj = object_cls.from_der(data)
-        if args.signed_data:
-            print(self._output(obj, args.fmt_method))
-        if not args.no_econtent:
-            print(self._output(obj.econtent, args.fmt_method))
+        with args.output as write:
+            if args.signed_data:
+                write(obj, args.fmt_method)
+            if not args.no_econtent:
+                write(obj.econtent, args.fmt_method)
         return None
 
     @staticmethod
-    def _output(obj: Content, fmt_method: str) -> str:
-        func = getattr(obj, fmt_method)
-        return typing.cast(str, func())
+    @contextlib.contextmanager
+    def _output(path: typing.Optional[str] = None) -> WriteGenerator:
+
+        def _write(obj: Content, fmt_method: str, f: typing.TextIO) -> None:
+            func = getattr(obj, fmt_method)
+            f.write(func())
+
+        if path is None:
+            yield functools.partial(_write, f=sys.stdout)
+        else:
+            with open(path, "w") as f:
+                yield functools.partial(_write, f=f)
