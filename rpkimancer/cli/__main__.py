@@ -11,7 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Main CLI tool entrypoint."""
+"""rpkincant CLI tool entrypoint."""
 
 from __future__ import annotations
 
@@ -26,10 +26,10 @@ log = logging.getLogger(__name__)
 class Cli(BaseCommand):
     """Command-line tools based on the rpkimancer library."""
 
-    from .augur import Augur
+    from .perceive import Perceive
     from .conjure import Conjure
 
-    default_subcommands = (Augur, Conjure)
+    default_subcommands = (Conjure, Perceive)
 
     def init_parser(self) -> None:
         """Set up command line argument parser."""

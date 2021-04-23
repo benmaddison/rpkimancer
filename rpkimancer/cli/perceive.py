@@ -1,5 +1,3 @@
-# PYTHON_ARGCOMPLETE_OK
-#
 # Copyright (c) 2021 Ben Maddison. All rights reserved.
 #
 # The contents of this file are licensed under the MIT License
@@ -11,7 +9,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""rpki-augur command implementation."""
+"""rpkincant perceive command implementation."""
 
 from __future__ import annotations
 
@@ -34,10 +32,10 @@ WriteGenerator = typing.Generator[typing.Callable[["Content", str], None],
                                   None]
 
 
-class Augur(BaseCommand):
+class Perceive(BaseCommand):
     """Learn of the secrets carried within an RPKI signed object."""
 
-    subcommand = "augur"
+    subcommand = "perceive"
     usage = None
 
     def init_parser(self) -> None:

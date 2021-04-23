@@ -39,7 +39,7 @@ class TestCli:
     """Test cases for rpkimancer CLI tools."""
 
     def test_conjure(self, target_directory):
-        """Test the rpki-conjure CLI tool."""
+        """Test the conjure subcommand."""
         from rpkimancer.cli.__main__ import main
         argv = ["conjure", "--output-dir", f"{target_directory}"]
         retval = main(argv)
@@ -47,13 +47,13 @@ class TestCli:
 
     @pytest.mark.parametrize("fmt", (None, "-A", "-j", "-J", "-R"))
     @pytest.mark.parametrize("ext", ("gbr", "mft", "roa"))
-    def test_augur(self, target_directory, ext, fmt):
-        """Test the rpki-augur CLI tool."""
+    def test_perceive(self, target_directory, ext, fmt):
+        """Test the perceive subcommand."""
         from rpkimancer.cli.__main__ import main
         repo_path = target_directory.join("repo")
         pattern = os.path.join(str(repo_path), "**", f"*.{ext}")
         paths = glob.glob(pattern, recursive=True)
-        argv = ["augur",
+        argv = ["perceive",
                 "--signed-data",
                 "--output", os.devnull]
         if fmt is not None:

@@ -1,5 +1,3 @@
-# PYTHON_ARGCOMPLETE_OK
-#
 # Copyright (c) 2021 Ben Maddison. All rights reserved.
 #
 # The contents of this file are licensed under the MIT License
