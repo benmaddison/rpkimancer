@@ -13,6 +13,9 @@
 
 from __future__ import annotations
 
+import glob
+import os
+
 import pytest
 
 import rpkimancer
@@ -42,15 +45,19 @@ class TestCli:
         retval = main(argv)
         assert retval is None
 
-    @pytest.mark.parametrize("fmt", (None, "-A", "-J"))
-    def test_augur(self, target_directory, fmt):
+    @pytest.mark.parametrize("fmt", (None, "-A", "-j", "-J", "-R"))
+    @pytest.mark.parametrize("ext", ("gbr", "mft", "roa"))
+    def test_augur(self, target_directory, ext, fmt):
         """Test the rpki-augur CLI tool."""
         from rpkimancer.cli.__main__ import main
-        path = target_directory.join("repo", "rpki.example.net",
-                                     "rpki", "TA", "manifest.mft")
-        argv = ["augur", str(path), "--signed-data",
-                "--output", "/dev/null"]
+        repo_path = target_directory.join("repo")
+        pattern = os.path.join(str(repo_path), "**", f"*.{ext}")
+        paths = glob.glob(pattern, recursive=True)
+        argv = ["augur",
+                "--signed-data",
+                "--output", os.devnull]
         if fmt is not None:
             argv.append(fmt)
+        argv.extend(paths)
         retval = main(argv)
         assert retval is None

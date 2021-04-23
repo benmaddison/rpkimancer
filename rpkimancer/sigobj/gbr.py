@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import typing
 
@@ -54,6 +55,21 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
         vcard += "END:VCARD"
         data = vcard.encode()
         super().__init__(data)
+
+    def to_txt(self) -> str:
+        """Get default text serialization."""
+        return typing.cast(str, self.content_data.decode())
+
+    def to_json(self) -> str:
+        """Serialize as JSON."""
+        vcard = self.to_txt()
+        data = dict()
+        for line in vcard.splitlines():
+            key, val = line.split(":", 1)
+            if key in ("BEGIN", "END"):
+                continue
+            data[key.lower()] = val
+        return json.dumps(data, indent=2)
 
 
 class RpkiGhostbusters(SignedObject):

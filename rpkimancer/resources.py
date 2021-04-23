@@ -52,6 +52,15 @@ def net_to_bitstring(network: IPNetwork) -> IPNetworkBits:
     return (value, netbits)
 
 
+def bitstring_to_net(bits: IPNetworkBits, version: int) -> IPNetwork:
+    """Convert an ASN.1 BIT STRING representation to an IPNetwork."""
+    len_map = {4: ipaddress.IPV4LENGTH, 6: ipaddress.IPV6LENGTH}
+    value, netbits = bits
+    hostbits = len_map[version] - netbits
+    net = ipaddress.ip_network((value << hostbits, netbits))
+    return typing.cast(IPNetwork, net)
+
+
 class SeqOfIPAddressFamily(Content):
     """Base class for ASN.1 SEQUENCE OF IPAddressFamily types."""
 

@@ -13,13 +13,15 @@
 
 from __future__ import annotations
 
+import copy
+import json
 import logging
 import typing
 
 from .base import EncapsulatedContent, SignedObject
 from ..asn1.mod import RPKI_ROA
-from ..resources import (AFI, IPNetwork, IPNetworkBits,
-                         IpResourcesInfo, net_to_bitstring)
+from ..resources import (AFI, IPNetwork, IPNetworkBits, IpResourcesInfo,
+                         bitstring_to_net, net_to_bitstring)
 
 log = logging.getLogger(__name__)
 
@@ -41,6 +43,7 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
         """Initialise the encapContentInfo."""
         log.info(f"preparing data for {self}")
         entry_type = typing.Dict[str, typing.Union[IPNetworkBits, int]]
+
         def address_entry(network: IPNetwork,
                           maxlen: typing.Optional[int] = None) -> entry_type:
             entry: entry_type = {"address": net_to_bitstring(network)}
@@ -61,6 +64,24 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
     def ip_resources(self) -> IpResourcesInfo:
         """Get the IP Address Resources covered by this ROA."""
         return self._ip_resources
+
+    def to_txt(self) -> str:
+        """Get default text serialization."""
+        return self.to_json()
+
+    def to_json(self) -> str:
+        """Serialize as JSON."""
+        data = copy.deepcopy(self.content_data)
+        afi_bytes_version_map = {v: k for k, v in AFI.items()}
+        for i, addr_block in enumerate(self.content_data["ipAddrBlocks"]):
+            data_addr_block = data["ipAddrBlocks"][i]
+            version = afi_bytes_version_map[addr_block["addressFamily"]]
+            data_addr_block["addressFamily"] = f"ipv{version}"
+            for j, addr in enumerate(addr_block["addresses"]):
+                data_addr = data_addr_block["addresses"][j]
+                network = bitstring_to_net(addr["address"], version)
+                data_addr["address"] = str(network)
+        return json.dumps(data, indent=2)
 
 
 class RouteOriginAttestation(SignedObject):

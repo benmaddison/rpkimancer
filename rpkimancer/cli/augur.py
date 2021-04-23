@@ -62,9 +62,15 @@ class Augur(BaseCommand):
         fmt.add_argument("--asn1", "-A", dest="fmt_method",
                          action="store_const", const="to_asn1",
                          help="Output ASN.1 data syntax")
-        fmt.add_argument("--json", "-J", dest="fmt_method",
+        fmt.add_argument("--json", "-j", dest="fmt_method",
                          action="store_const", const="to_json",
-                         help="Output JSON/JER encoded data")
+                         help="Output JSON encoded data")
+        fmt.add_argument("--jer", "-J", dest="fmt_method",
+                         action="store_const", const="to_jer",
+                         help="Output JER encoded data")
+        fmt.add_argument("--raw", "-R", dest="fmt_method",
+                         action="store_const", const="to_internal",
+                         help="Output internal python data representation")
 
     def run(self, args: Args) -> Return:
         """Run with the given arguments."""

@@ -72,7 +72,7 @@ class Content:
             self.content_syntax.reset_val()
 
     def to_txt(self) -> str:
-        """Default text serialization."""
+        """Get default text serialization."""
         return self.to_asn1()
 
     def to_asn1(self) -> str:
@@ -93,11 +93,19 @@ class Content:
             log.info(f"finished serialising object {self}")
         return typing.cast(bytes, val)
 
-    def to_json(self) -> str:
-        """Serialize as JSON."""
+    def to_jer(self) -> str:
+        """Serialize as JER."""
         with self.constructed() as instance:
             log.info(f"serialising object {self} to JSON")
             with log_writer.redirect_stdout():
-                val = instance.to_json()
+                val = instance.to_jer()
             log.info(f"finished serialising object {self}")
         return typing.cast(str, val)
+
+    def to_json(self) -> str:
+        """Serialize as JSON."""
+        return self.to_jer()
+
+    def to_internal(self) -> str:
+        """Serialize using internal python repr."""
+        return f"{self.content_data!r}"
