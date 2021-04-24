@@ -21,4 +21,6 @@ log = logging.getLogger(__name__)
 
 
 SHA256: typing.Final = (2, 16, 840, 1, 101, 3, 4, 2, 1)
-DIGEST_ALGORITHMS: typing.Final = {SHA256: hashlib.sha256}
+DIGEST_ALGORITHMS: typing.Final[typing.Dict[typing.Tuple[int, ...]]] = {
+    SHA256: hashlib.sha256
+}
