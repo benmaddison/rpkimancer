@@ -36,7 +36,7 @@ class Cli(BaseCommand):
         """Set up command line argument parser."""
         subcommands = self.default_subcommands
         log.info("trying to load plugins")
-        entry_point_name = "rpkimancer.cli-plugin"
+        entry_point_name = "rpkimancer.cli"
         entry_points = importlib.metadata.entry_points()
         for entry_point in entry_points.get(entry_point_name, []):
             cls = entry_point.load()

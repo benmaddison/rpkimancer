@@ -83,14 +83,14 @@ components to `rpkimancer` using the following entry points:
     The entry point is used to map file extensions to implementations by tools
     like `rpkincant perceive`.
 
--   `rpkimancer.cli-plugin`:
+-   `rpkimancer.cli`:
 
     Used to add additional subcommands to the `rpkincant` CLI tool.
 
     The target should be a `class` inheriting from `rpkimancer.cli.BaseCommand`,
     and implementing the `.init_parser(...)` and `.run(...)` methods.
 
--   `rpkimancer.cli.conjure-plugin`:
+-   `rpkimancer.cli.conjure`:
 
     Used to add CLI arguments and object construction code to the `rpkincant conjure`
     subcommand.

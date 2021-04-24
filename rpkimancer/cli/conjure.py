@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import argparse
 import importlib.metadata
 import ipaddress
 import logging
@@ -43,12 +44,12 @@ DEFAULT_GBR_FULLNAME = "Jane Doe"
 DEFAULT_GBR_ORG = "Example Org"
 DEFAULT_GBR_EMAIL = "jane@example.net"
 
-PATH_META = "<path>"
-AS_META = "<asn>"
-IP_META = "<prefix>/<length>"
-ROA_IP_META = f"{IP_META}[-maxlen]"
-NAME_META = "<name>"
-ADDR_META = "<addr>"
+META_PATH = "<path>"
+META_AS = "<asn>"
+META_IP = "<prefix>/<length>"
+META_IP_MAXLEN = f"{META_IP}[-maxlen]"
+META_NAME = "<name>"
+META_ADDR = "<addr>"
 
 
 class Conjure(BaseCommand):
@@ -61,7 +62,7 @@ class Conjure(BaseCommand):
         super().__init__(*args, **kwargs)
         log.info("trying to load plugins")
         self._plugins = list()
-        entry_point_name = "rpkimancer.cli.conjure-plugin"
+        entry_point_name = "rpkimancer.cli.conjure"
         entry_points = importlib.metadata.entry_points()
         for entry_point in entry_points.get(entry_point_name, []):
             cls = entry_point.load()
@@ -73,59 +74,59 @@ class Conjure(BaseCommand):
         """Set up command line argument parser."""
         self.parser.add_argument("--output-dir", "-o",
                                  default=DEFAULT_OUTPUT_DIR,
-                                 metavar=PATH_META,
+                                 metavar=META_PATH,
                                  help="Directory to write generated artifacts to "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ta-as-resources",
                                  nargs="+", type=int,
                                  default=DEFAULT_TA_AS_RESOURCES,
-                                 metavar=AS_META,
+                                 metavar=META_AS,
                                  help="ASN(s) to include in TA certificate "
                                       "(default: %(default)s)")
         self.parser.add_argument("--ta-ip-resources",
                                  nargs="+", type=ipaddress.ip_network,
                                  default=DEFAULT_TA_IP_RESOURCES,
-                                 metavar=IP_META,
+                                 metavar=META_IP,
                                  help="IP addresses to include in TA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ca-as-resources",
                                  nargs="+", type=int,
                                  default=DEFAULT_CA_AS_RESOURCES,
-                                 metavar=AS_META,
+                                 metavar=META_AS,
                                  help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ca-ip-resources",
                                  nargs="+", type=ipaddress.ip_network,
                                  default=DEFAULT_CA_IP_RESOURCES,
-                                 metavar=IP_META,
+                                 metavar=META_IP,
                                  help="IP addresses to include in suboridinate CA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--roa-asid",
                                  type=int,
                                  default=DEFAULT_CA_AS_RESOURCES[0],
-                                 metavar=AS_META,
+                                 metavar=META_AS,
                                  help="ASN to include in ROA asID "
                                       "(default: %(default)s)")
         self.parser.add_argument("--roa-networks",
                                  nargs="+", type=self._roa_network,
                                  default=[(ipaddress.ip_network(net), None)
                                           for net in DEFAULT_CA_IP_RESOURCES],
-                                 metavar=ROA_IP_META,
+                                 metavar=META_IP_MAXLEN,
                                  help="IP prefixes to include in ROA "
                                       "(default: %(default)s)")
         self.parser.add_argument("--gbr-full-name",
                                  default=DEFAULT_GBR_FULLNAME,
-                                 metavar=NAME_META,
+                                 metavar=META_NAME,
                                  help="Full name to include in GBR "
                                       "(default: %(default)s)")
         self.parser.add_argument("--gbr-org",
                                  default=DEFAULT_GBR_ORG,
-                                 metavar=NAME_META,
+                                 metavar=META_NAME,
                                  help="Organisation name to include in GBR "
                                       "(default: %(default)s)")
         self.parser.add_argument("--gbr-email",
                                  default=DEFAULT_GBR_EMAIL,
-                                 metavar=ADDR_META,
+                                 metavar=META_ADDR,
                                  help="Email address to include in GBR "
                                       "(default: %(default)s)")
 
@@ -159,7 +160,7 @@ class Conjure(BaseCommand):
         # run plugins
         log.info("running plugins")
         for plugin in self._plugins:
-            log.info("running plugin {plugin}")
+            log.info(f"running plugin {plugin}")
             plugin(parsed_args, ca)
         # publish objects
         log.info(f"publishing in-memory objects to {parsed_args.output_dir}")
@@ -177,13 +178,30 @@ class Conjure(BaseCommand):
             return (ipaddress.ip_network(input_str), None)
 
 
-class ConjurePlugin(BaseCommand):
+class ConjurePlugin:
     """Base class for conjure subcommand plugins."""
+
+    def __init__(self, parent: argparse.ArgumentParser) -> None:
+        """Initialise the plugin."""
+        self.parser = parent
+        self.init_parser()
+
+    def __call__(self,
+                 parsed_args: argparse.Namespace,
+                 ca: CertificateAuthority,
+                 *args: typing.Any,
+                 **kwargs: typing.Any) -> None:
+        """Run the plugin."""
+        return self.run(parsed_args, ca, *args, **kwargs)
+
+    def init_parser(self) -> None:
+        """Set up command line argument parser."""
+        raise NotImplementedError
 
     def run(self,
             parsed_args: Args,
-            ca: typing.Optional[CertificateAuthority] = None,
+            ca: CertificateAuthority,
             *args: typing.Any,
-            **kwargs: typing.Any) -> Return:
+            **kwargs: typing.Any) -> None:
         """Run with the given arguments."""
         raise NotImplementedError
