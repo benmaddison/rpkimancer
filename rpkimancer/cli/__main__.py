@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+import importlib.metadata
 import logging
 import typing
 
@@ -29,21 +30,31 @@ class Cli(BaseCommand):
     from .perceive import Perceive
     from .conjure import Conjure
 
-    default_subcommands = (Conjure, Perceive)
+    default_subcommands = [Conjure, Perceive]
 
     def init_parser(self) -> None:
         """Set up command line argument parser."""
         subcommands = self.default_subcommands
+        log.info("trying to load plugins")
+        entry_point_name = "rpkimancer.cli-plugin"
+        entry_points = importlib.metadata.entry_points()
+        for entry_point in entry_points.get(entry_point_name, []):
+            cls = entry_point.load()
+            if issubclass(cls, BaseCommand):
+                subcommands.append(cls)
         subparsers = self.parser.add_subparsers(title="sub-commands",
                                                 metavar="<command>",
                                                 dest="cmd", required=True)
         for cls in subcommands:
             cls(parent=subparsers)
 
-    def run(self, args: Args) -> Return:
+    def run(self,
+            parsed_args: Args,
+            *args: typing.Any,
+            **kwargs: typing.Any) -> Return:
         """Run with the given arguments."""
-        log.info("running sub-command {args.cmd}")
-        rc = args.run(args)
+        log.info("running sub-command {parsed_args.cmd}")
+        rc = parsed_args.run(parsed_args)
         return typing.cast(Return, rc)
 
 

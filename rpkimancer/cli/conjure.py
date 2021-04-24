@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import importlib.metadata
 import ipaddress
 import logging
 import os
@@ -21,6 +22,7 @@ import typing
 from . import Args, BaseCommand, Return
 
 if typing.TYPE_CHECKING:
+    from ..cert import CertificateAuthority
     from ..sigobj.roa import RoaNetworkInfo
 
 log = logging.getLogger(__name__)
@@ -53,6 +55,19 @@ class Conjure(BaseCommand):
     """Conjure a fully populated RPKI repository from thin air."""
 
     subcommand = "conjure"
+
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        """Initialise subcommand."""
+        super().__init__(*args, **kwargs)
+        log.info("trying to load plugins")
+        self._plugins = list()
+        entry_point_name = "rpkimancer.cli.conjure-plugin"
+        entry_points = importlib.metadata.entry_points()
+        for entry_point in entry_points.get(entry_point_name, []):
+            cls = entry_point.load()
+            if issubclass(cls, ConjurePlugin):
+                plugin = cls(self.parser)
+                self._plugins.append(plugin)
 
     def init_parser(self) -> None:
         """Set up command line argument parser."""
@@ -114,34 +129,42 @@ class Conjure(BaseCommand):
                                  help="Email address to include in GBR "
                                       "(default: %(default)s)")
 
-    def run(self, args: Args) -> Return:
+    def run(self,
+            parsed_args: Args,
+            *args: typing.Any,
+            **kwargs: typing.Any) -> Return:
         """Run with the given arguments."""
         log.info("setting up rpkimancer library objects")
         from ..cert import CertificateAuthority, TACertificateAuthority
         from ..sigobj import RouteOriginAttestation, RpkiGhostbusters
         # create CAs
         log.info("creating TA certificate authority")
-        ta = TACertificateAuthority(as_resources=args.ta_as_resources,
-                                    ip_resources=args.ta_ip_resources)
+        ta = TACertificateAuthority(as_resources=parsed_args.ta_as_resources,
+                                    ip_resources=parsed_args.ta_ip_resources)
         log.info("creating suboridinate certificate authority")
         ca = CertificateAuthority(issuer=ta,
-                                  as_resources=args.ca_as_resources,
-                                  ip_resources=args.ca_ip_resources)
+                                  as_resources=parsed_args.ca_as_resources,
+                                  ip_resources=parsed_args.ca_ip_resources)
         # create ROA
         log.info("creating ROA object")
         RouteOriginAttestation(issuer=ca,
-                               as_id=args.roa_asid,
-                               ip_address_blocks=args.roa_networks)
+                               as_id=parsed_args.roa_asid,
+                               ip_address_blocks=parsed_args.roa_networks)
         # create GBR
         log.info("creating ghostbusters record object")
         RpkiGhostbusters(issuer=ca,
-                         full_name=args.gbr_full_name,
-                         org=args.gbr_org,
-                         email=args.gbr_email)
+                         full_name=parsed_args.gbr_full_name,
+                         org=parsed_args.gbr_org,
+                         email=parsed_args.gbr_email)
+        # run plugins
+        log.info("running plugins")
+        for plugin in self._plugins:
+            log.info("running plugin {plugin}")
+            plugin(parsed_args, ca)
         # publish objects
-        log.info(f"publishing in-memory objects to {args.output_dir}")
-        ta.publish(pub_path=os.path.join(args.output_dir, PUB_SUB_DIR),
-                   tal_path=os.path.join(args.output_dir, TAL_SUB_DIR))
+        log.info(f"publishing in-memory objects to {parsed_args.output_dir}")
+        ta.publish(pub_path=os.path.join(parsed_args.output_dir, PUB_SUB_DIR),
+                   tal_path=os.path.join(parsed_args.output_dir, TAL_SUB_DIR))
         return None
 
     @staticmethod
@@ -152,3 +175,15 @@ class Conjure(BaseCommand):
             return (ipaddress.ip_network(network), int(maxlen))
         except ValueError:
             return (ipaddress.ip_network(input_str), None)
+
+
+class ConjurePlugin(BaseCommand):
+    """Base class for conjure subcommand plugins."""
+
+    def run(self,
+            parsed_args: Args,
+            ca: typing.Optional[CertificateAuthority] = None,
+            *args: typing.Any,
+            **kwargs: typing.Any) -> Return:
+        """Run with the given arguments."""
+        raise NotImplementedError

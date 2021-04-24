@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import importlib.metadata
 import logging
 import typing
 
@@ -29,11 +30,19 @@ RpkiGhostbusters = gbr.RpkiGhostbusters
 RpkiManifest = mft.RpkiManifest
 RouteOriginAttestation = roa.RouteOriginAttestation
 
-object_types = (RpkiGhostbusters, RpkiManifest, RouteOriginAttestation)
-
 
 def from_ext(ext: str) -> typing.Type[SignedObject]:
     """Get a SignedObject by file extension."""
+    object_types = [RpkiGhostbusters, RpkiManifest, RouteOriginAttestation]
+    entry_point_name = "rpkimancer.sigobj"
+    entry_points = importlib.metadata.entry_points()
+    for entry_point in entry_points.get(entry_point_name, []):
+        log.info(f"trying to load signed object {entry_point.value}")
+        cls = entry_point.load()
+        if issubclass(cls, SignedObject):
+            object_types.append(cls)
+        else:
+            log.warning(f"signed objects must inherit from {SignedObject}")
     lookup_map = {cls.econtent_cls.file_ext: cls
                   for cls in object_types}
     try:

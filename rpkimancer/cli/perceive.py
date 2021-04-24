@@ -70,12 +70,15 @@ class Perceive(BaseCommand):
                          action="store_const", const="to_internal",
                          help="Output internal python data representation")
 
-    def run(self, args: Args) -> Return:
+    def run(self,
+            parsed_args: Args,
+            *args: typing.Any,
+            **kwargs: typing.Any) -> Return:
         """Run with the given arguments."""
         log.info("setting up rpkimancer library objects")
         from ..sigobj import from_ext
         objects = list()
-        for path in args.paths:
+        for path in parsed_args.paths:
             log.info(f"deciphering {path}")
             _, ext = os.path.splitext(path)
             if not ext:
@@ -92,12 +95,12 @@ class Perceive(BaseCommand):
             log.info(f"trying to deserialise to {object_cls}")
             obj = object_cls.from_der(data)
             objects.append(obj)
-        with args.output as write:
+        with parsed_args.output as write:
             for obj in objects:
-                if args.signed_data:
-                    write(obj, args.fmt_method)
-                if not args.no_econtent:
-                    write(obj.econtent, args.fmt_method)
+                if parsed_args.signed_data:
+                    write(obj, parsed_args.fmt_method)
+                if not parsed_args.no_econtent:
+                    write(obj.econtent, parsed_args.fmt_method)
         return None
 
     @staticmethod

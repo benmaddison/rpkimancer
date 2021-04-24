@@ -58,10 +58,13 @@ class BaseCommand:
         self.parser = parser
         self.init_parser()
 
-    def __call__(self, args_or_argv: OptionalArgs = None) -> Return:
+    def __call__(self,
+                 args_or_argv: OptionalArgs = None,
+                 *args: typing.Any,
+                 **kwargs: typing.Any) -> Return:
         """Run the command."""
         if isinstance(args_or_argv, Args):
-            args = args_or_argv
+            parsed_args = args_or_argv
         else:
             argcomplete.autocomplete(self.parser,
                                      always_complete_options="long")
@@ -69,21 +72,24 @@ class BaseCommand:
                 argv = sys.argv[1:]
             else:
                 argv = args_or_argv
-            args = self.parser.parse_args(argv)
-            set_log_level(args.verbosity)
+            parsed_args = self.parser.parse_args(argv)
+            set_log_level(parsed_args.verbosity)
         try:
-            return self.run(args)
+            return self.run(parsed_args, *args, **kwargs)
         except KeyboardInterrupt:  # pragma: no cover
             log.error("Interrupted by Ctrl+C")
             return 2
         except Exception as e:  # pragma: no cover
-            log.error(f"{e!r}", exc_info=(args.verbosity >= 3))
+            log.error(f"{e!r}", exc_info=(parsed_args.verbosity >= 3))
             return 1
 
     def init_parser(self) -> None:
         """Set up command line argument parser."""
         raise NotImplementedError
 
-    def run(self, args: Args) -> Return:
+    def run(self,
+            parsed_args: Args,
+            *args: typing.Any,
+            **kwargs: typing.Any) -> Return:
         """Run with the given arguments."""
         raise NotImplementedError

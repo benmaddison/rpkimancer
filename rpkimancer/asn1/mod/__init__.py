@@ -13,6 +13,8 @@
 from __future__ import annotations
 
 import glob
+import importlib.metadata
+import importlib.resources
 import logging
 import os
 
@@ -31,10 +33,24 @@ def _compile_modules() -> None:
     mods_dir = os.path.join(pkg_dir, "modules")
     output_path = os.path.join(pkg_dir, "_mod.py")
     mods = list()
+    log.info("reading local distribution modules")
     for path in glob.glob(os.path.join(mods_dir, "**", "*.asn")):
         log.debug(f"Reading {path}")
         with open(path) as f:
             mods.append(f.read())
+    log.info("trying to find plugin provided modules")
+    entry_point_name = "rpkimancer.asn1.modules"
+    entry_points = importlib.metadata.entry_points()
+    for entry_point in entry_points.get(entry_point_name, []):
+        mod = entry_point.load()
+        for item in importlib.resources.contents(mod):
+            if not importlib.resources.is_resource(mod, item):
+                continue
+            if not item.endswith(".asn"):
+                continue
+            log.info(f"Reading {mod}.{item}")
+            with importlib.resources.open_text(mod, item) as f:
+                mods.append(f.read())
     with log_writer.redirect_stdout():
         _asn1_compile.compile_text(mods)
         _asn1_generate.PycrateGenerator(dest=output_path)
