@@ -6,6 +6,8 @@
 > necessary for the creation or interpretation of the mystical artifacts of the
 > RPKI."*
 
+[![Build Status](https://travis-ci.com/benmaddison/rpkimancer.svg?branch=main)](https://travis-ci.com/benmaddison/rpkimancer)
+
 ## About
 
 A library and associated command line utility for quickly creating and reading
