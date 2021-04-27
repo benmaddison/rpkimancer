@@ -20,6 +20,7 @@ from ..algorithms import DIGEST_ALGORITHMS, SHA256
 from ..asn1 import Content
 from ..asn1.mod import PKIXAlgs_2009
 from ..asn1.types import OID
+from ..cert import EECertificate
 from ..cms import (ContentInfo,
                    EncapsulatedContentInfo,
                    SignedAttributes,
@@ -69,6 +70,7 @@ class SignedObject(ContentInfo):
     """Base CMS ASN.1 ContentInfo for RPKI Signed Objects - RFC5911/RFC6488."""
 
     econtent_cls: typing.Type[EncapsulatedContent]
+    ee_cert_cls: typing.Type[EECertificate] = EECertificate
 
     def __init__(self,
                  issuer: CertificateAuthority,
@@ -82,11 +84,10 @@ class SignedObject(ContentInfo):
         # construct econtent
         self._econtent = self.econtent_cls(*args, **kwargs)
         # construct certificate
-        from ..cert import EECertificate
-        ee_cert = EECertificate(signed_object=self,
-                                issuer=issuer,
-                                as_resources=self.econtent.as_resources,
-                                ip_resources=self.econtent.ip_resources)
+        ee_cert = self.ee_cert_cls(signed_object=self,
+                                   issuer=issuer,
+                                   as_resources=self.econtent.as_resources,
+                                   ip_resources=self.econtent.ip_resources)
         # construct signedAttrs
         signed_attrs = self.econtent.signed_attrs()
         # construct signature

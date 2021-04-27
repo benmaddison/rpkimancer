@@ -43,12 +43,6 @@ class BaseResourceCertificate:
     # rfc6487 section 4.3
     HASH_ALGORITHM = hashes.SHA256()
 
-    # rfc6487 section 4.8.9
-    CPS = x509.CertificatePolicies([
-        x509.PolicyInformation(RPKI_CERT_POLICY_OID,
-                               policy_qualifiers=None),
-    ])
-
     def __init__(self, *,  # noqa: R701
                  common_name: str,
                  days: int = 365,
@@ -117,15 +111,17 @@ class BaseResourceCertificate:
                                   decipher_only=False)
         builder = builder.add_extension(key_usage, critical=True)
         # rfc6487 section 4.8.6
-        if self.issuer is not None:
+        if self.issuer is not None and self.issuer.crldp is not None:
             builder = builder.add_extension(self.issuer.crldp, critical=False)
         # rfc6487 section 4.8.7
-        if self.issuer is not None:
+        if self.issuer is not None and self.issuer.aia is not None:
             builder = builder.add_extension(self.issuer.aia, critical=False)
         # rfc6487 section 4.8.8
-        builder = builder.add_extension(self.sia, critical=False)
+        if self.sia is not None:
+            builder = builder.add_extension(self.sia, critical=False)
         # rfc6487 section 4.8.9
-        builder = builder.add_extension(self.CPS, critical=True)
+        if self.cps is not None:
+            builder = builder.add_extension(self.cps, critical=True)
         # rfc6487 section 4.8.10
         if ip_resources is not None:
             ip_resources_ext = IpResources(ip_resources)
@@ -143,12 +139,21 @@ class BaseResourceCertificate:
             self._cert = self.issuer.issue_cert(self)
 
     @property
-    def sia(self) -> x509.SubjectInformationAccess:
+    def sia(self) -> typing.Optional[x509.SubjectInformationAccess]:
         """Construct the SIA extension."""
         raise NotImplementedError
 
     @property
-    def mft_entry(self) -> ManifestEntryInfo:
+    def cps(self) -> typing.Optional[x509.CertificatePolicies]:
+        """Construct the CPS extension."""
+        cps = x509.CertificatePolicies([
+            x509.PolicyInformation(RPKI_CERT_POLICY_OID,
+                                   policy_qualifiers=None),
+        ])
+        return cps
+
+    @property
+    def mft_entry(self) -> typing.Optional[ManifestEntryInfo]:
         """Get an entry for inclusion in the issuer's manifest."""
         raise NotImplementedError
 

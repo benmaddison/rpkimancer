@@ -27,7 +27,9 @@ from .base import (BaseResourceCertificate,
                    ResourceCertificateList,
                    ResourceCertificates)
 from .oid import AIA_CA_ISSUERS_OID, SIA_CA_REPOSITORY_OID, SIA_MFT_ACCESS_OID
-from ..sigobj import RpkiManifest
+
+if typing.TYPE_CHECKING:
+    from ..sigobj import RpkiManifest
 
 log = logging.getLogger(__name__)
 
@@ -79,7 +81,7 @@ class CertificateAuthority(BaseResourceCertificate):
                             f"{self.subject_cn}.cer")
 
     @property
-    def mft_entry(self) -> ManifestEntryInfo:
+    def mft_entry(self) -> typing.Optional[ManifestEntryInfo]:
         """Get an entry for inclusion in the issuer's manifest."""
         return (os.path.basename(self.cert_path), self.cert_der)
 
@@ -100,7 +102,7 @@ class CertificateAuthority(BaseResourceCertificate):
             yield cert
 
     @property
-    def crldp(self) -> x509.CRLDistributionPoints:
+    def crldp(self) -> typing.Optional[x509.CRLDistributionPoints]:
         """Get the CRLDistributionPoint extension for the certificate."""
         crldp_uri = f"{self.base_uri}/{self.crl_path}"
         crldp = x509.CRLDistributionPoints([
@@ -112,7 +114,7 @@ class CertificateAuthority(BaseResourceCertificate):
         return crldp
 
     @property
-    def aia(self) -> x509.AuthorityInformationAccess:
+    def aia(self) -> typing.Optional[x509.AuthorityInformationAccess]:
         """Get the AuthorityInformationAccess extension for the certificate."""
         aia_uri = f"{self.base_uri}/{self.cert_path}"
         aia = x509.AuthorityInformationAccess([
@@ -122,7 +124,7 @@ class CertificateAuthority(BaseResourceCertificate):
         return aia
 
     @property
-    def sia(self) -> x509.SubjectInformationAccess:
+    def sia(self) -> typing.Optional[x509.SubjectInformationAccess]:
         """Get the SubjectInformationAccess extension for the certificate."""
         sia_repo_uri = f"{self.base_uri}/{self.repo_path}"
         sia_mft_uri = f"{self.base_uri}/{self.mft_path}"
@@ -177,6 +179,7 @@ class CertificateAuthority(BaseResourceCertificate):
         """Issue a new manifest for this CA."""
         now = datetime.datetime.utcnow()
         next_update = now + datetime.timedelta(days=self.mft_days)
+        from ..sigobj import RpkiManifest
         self._mft = RpkiManifest(issuer=self,
                                  file_name=os.path.basename(self.mft_path),
                                  manifest_number=self.next_mft_number,
@@ -203,7 +206,8 @@ class CertificateAuthority(BaseResourceCertificate):
                               self.crl_der))
         for issuee in self.issued:
             if issuee is not self:
-                mft_file_list.append(issuee.mft_entry)
+                if issuee.mft_entry is not None:
+                    mft_file_list.append(issuee.mft_entry)
                 if recursive is True:
                     issuee.publish(pub_path=pub_path, recursive=recursive)
         self.issue_mft(mft_file_list)

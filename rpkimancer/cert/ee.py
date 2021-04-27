@@ -23,7 +23,9 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from .base import BaseResourceCertificate, ManifestEntryInfo
 from .ca import CertificateAuthority
 from .oid import SIA_OBJ_ACCESS_OID
-from ..sigobj import SignedObject
+
+if typing.TYPE_CHECKING:
+    from ..sigobj import SignedObject
 
 log = logging.getLogger(__name__)
 
@@ -52,13 +54,13 @@ class EECertificate(BaseResourceCertificate):
                             self.signed_object.file_name)
 
     @property
-    def mft_entry(self) -> ManifestEntryInfo:
+    def mft_entry(self) -> typing.Optional[ManifestEntryInfo]:
         """Get an entry for inclusion in the issuer's manifest."""
         return (os.path.basename(self.object_path),
                 self.signed_object.to_der())
 
     @property
-    def sia(self) -> x509.SubjectInformationAccess:
+    def sia(self) -> typing.Optional[x509.SubjectInformationAccess]:
         """Get the SubjectInformationAccess extension for the certificate."""
         sia_obj_uri = f"{self.base_uri}/{self.object_path}"
         sia = x509.SubjectInformationAccess([
