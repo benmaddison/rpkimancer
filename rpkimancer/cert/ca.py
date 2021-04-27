@@ -193,7 +193,10 @@ class CertificateAuthority(BaseResourceCertificate):
         """Get the last manifest issued by this CA."""
         return self._mft
 
-    def publish(self, *, pub_path: str, recursive: bool = True) -> None:
+    def publish(self, *,
+                pub_path: str,
+                recursive: bool = True,
+                **kwargs: typing.Any) -> None:
         """Publish this CA's artifacts as DER files in the PP."""
         mft_file_list = list()
         full_pub_path = os.path.join(pub_path, self.uri_path)
@@ -209,7 +212,9 @@ class CertificateAuthority(BaseResourceCertificate):
                 if issuee.mft_entry is not None:
                     mft_file_list.append(issuee.mft_entry)
                 if recursive is True:
-                    issuee.publish(pub_path=pub_path, recursive=recursive)
+                    issuee.publish(pub_path=pub_path,
+                                   recursive=recursive,
+                                   **kwargs)
         self.issue_mft(mft_file_list)
         with open(os.path.join(full_pub_path, self.mft_path), "wb") as f:
             f.write(self.mft.to_der())
@@ -251,9 +256,10 @@ class TACertificateAuthority(CertificateAuthority):
     def publish(self, *,
                 pub_path: str,
                 tal_path: typing.Optional[str] = None,
-                recursive: bool = True) -> None:
+                recursive: bool = True,
+                **kwargs: typing.Any) -> None:
         """Publish this CA's artifacts and TAL."""
-        super().publish(pub_path=pub_path, recursive=recursive)
+        super().publish(pub_path=pub_path, recursive=recursive, **kwargs)
         if tal_path is not None:
             os.makedirs(tal_path, exist_ok=True)
             with open(os.path.join(tal_path, self.tal_path), "wb") as f:

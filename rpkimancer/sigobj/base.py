@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import typing
 
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
@@ -151,3 +152,13 @@ class SignedObject(ContentInfo):
             return f"{self.econtent.signed_attrs_digest()}.{self.econtent.file_ext}"  # noqa: E501
         else:
             return self._file_name
+
+    def publish(self, *,
+                pub_path: str,
+                uri_path: str,
+                repo_path: str,
+                **kwargs: typing.Any) -> None:
+        """Publish the SignedObject artifact as a DER file in the PP."""
+        with open(os.path.join(pub_path, uri_path, repo_path, self.file_name),
+                  "wb") as f:
+            f.write(self.to_der())

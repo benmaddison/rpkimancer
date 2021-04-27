@@ -14,7 +14,6 @@
 from __future__ import annotations
 
 import logging
-import os
 import typing
 
 from cryptography import x509
@@ -47,22 +46,22 @@ class EECertificate(BaseResourceCertificate):
         return self._signed_object
 
     @property
-    def object_path(self) -> str:
-        """Get the filesystem path to the SignedObject in the issuer publication point."""  # noqa: E501
-        return os.path.join(typing.cast(CertificateAuthority,
-                                        self.issuer).repo_path,
-                            self.signed_object.file_name)
+    def issuer_repo_path(self) -> str:
+        """Get the filesystem path to the the issuer publication point."""
+        return typing.cast(CertificateAuthority, self.issuer).repo_path
 
     @property
     def mft_entry(self) -> typing.Optional[ManifestEntryInfo]:
         """Get an entry for inclusion in the issuer's manifest."""
-        return (os.path.basename(self.object_path),
+        return (self.signed_object.file_name,
                 self.signed_object.to_der())
 
     @property
     def sia(self) -> typing.Optional[x509.SubjectInformationAccess]:
         """Get the SubjectInformationAccess extension for the certificate."""
-        sia_obj_uri = f"{self.base_uri}/{self.object_path}"
+        sia_obj_uri = f"{self.base_uri}/" \
+                      f"{self.issuer_repo_path}/" \
+                      f"{self.signed_object.file_name}"
         sia = x509.SubjectInformationAccess([
             x509.AccessDescription(SIA_OBJ_ACCESS_OID,
                                    x509.UniformResourceIdentifier(sia_obj_uri)),  # noqa: E501
@@ -77,8 +76,9 @@ class EECertificate(BaseResourceCertificate):
                                           algorithm=self.HASH_ALGORITHM)
         return signature
 
-    def publish(self, pub_path: str, recursive: bool = True) -> None:
+    def publish(self, *, pub_path: str, **kwargs: typing.Any) -> None:
         """Publish the SignedObject artifact as a DER file in the PP."""
-        with open(os.path.join(pub_path, self.uri_path, self.object_path),
-                  "wb") as f:
-            f.write(self.signed_object.to_der())
+        self.signed_object.publish(pub_path=pub_path,
+                                   uri_path=self.uri_path,
+                                   repo_path=self.issuer_repo_path,
+                                   **kwargs)

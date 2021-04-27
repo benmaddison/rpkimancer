@@ -157,7 +157,10 @@ class BaseResourceCertificate:
         """Get an entry for inclusion in the issuer's manifest."""
         raise NotImplementedError
 
-    def publish(self, *, pub_path: str, recursive: bool = True) -> None:
+    def publish(self, *,
+                pub_path: str,
+                recursive: bool = True,
+                **kwargs: typing.Any) -> None:
         """Publish artifact files in the PP."""
         raise NotImplementedError
 
