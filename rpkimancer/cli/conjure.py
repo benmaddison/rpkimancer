@@ -159,13 +159,17 @@ class Conjure(BaseCommand):
                          email=parsed_args.gbr_email)
         # run plugins
         log.info("running plugins")
+        plugin_publish_kwargs = dict()
         for plugin in self._plugins:
             log.info(f"running plugin {plugin}")
-            plugin(parsed_args, ca)
+            if (kwargs := plugin(parsed_args, ca)) is not None:
+                log.debug(f"{plugin} returned kwargs for publish: {kwargs}")
+                plugin_publish_kwargs.update(kwargs)
         # publish objects
         log.info(f"publishing in-memory objects to {parsed_args.output_dir}")
         ta.publish(pub_path=os.path.join(parsed_args.output_dir, PUB_SUB_DIR),
-                   tal_path=os.path.join(parsed_args.output_dir, TAL_SUB_DIR))
+                   tal_path=os.path.join(parsed_args.output_dir, TAL_SUB_DIR),
+                   **plugin_publish_kwargs)
         return None
 
     @staticmethod
@@ -176,6 +180,9 @@ class Conjure(BaseCommand):
             return (ipaddress.ip_network(network), int(maxlen))
         except ValueError:
             return (ipaddress.ip_network(input_str), None)
+
+
+PluginReturn = typing.Optional[typing.Mapping[str, str]]
 
 
 class ConjurePlugin:
@@ -190,7 +197,7 @@ class ConjurePlugin:
                  parsed_args: argparse.Namespace,
                  ca: CertificateAuthority,
                  *args: typing.Any,
-                 **kwargs: typing.Any) -> None:
+                 **kwargs: typing.Any) -> PluginReturn:
         """Run the plugin."""
         return self.run(parsed_args, ca, *args, **kwargs)
 
@@ -202,6 +209,6 @@ class ConjurePlugin:
             parsed_args: Args,
             ca: CertificateAuthority,
             *args: typing.Any,
-            **kwargs: typing.Any) -> None:
-        """Run with the given arguments."""
+            **kwargs: typing.Any) -> PluginReturn:
+        """Run with the given arguments, returning extra publish kwargs."""
         raise NotImplementedError
