@@ -1,6 +1,9 @@
 # generated source code
 rpkimancer/asn1/mod/_mod.py
 
+# generated documentation sources
+docs/generated/
+
 # build outputs
 *.egg-info/
 build/
