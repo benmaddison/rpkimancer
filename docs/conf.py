@@ -13,6 +13,8 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+import importlib.metadata
+
 import sphinx_readable_theme
 
 # -- Project information -----------------------------------------------------
@@ -22,7 +24,7 @@ copyright = '2021, Ben Maddison'
 author = 'Ben Maddison'
 
 # The full version, including alpha/beta/rc tags
-release = 'rev_foo'
+release = importlib.metadata.version(project)
 
 
 # -- General configuration ---------------------------------------------------
@@ -57,7 +59,11 @@ html_theme = 'readable'
 
 html_sidebars = {
     "**": [
+        "localtoc.html",
+        "relations.html",
+        "sourcelink.html",
         "versions.html",
+        "searchbox.html",
     ],
 }
 
@@ -84,3 +90,8 @@ myst_enable_extensions = [
 
 # set_type_checking_flag = True
 always_document_param_types = True
+
+smv_prebuild_command = "sphinx-apidoc --separate " \
+                                     "--force " \
+                                     "--output-dir docs/generated/ " \
+                                     "rpkimancer/"
