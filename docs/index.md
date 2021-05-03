@@ -6,8 +6,8 @@
 API Reference <generated/modules>
 :::
 
-:::{include} ../../README.md
-:::
+%:::{include} ../README.md
+%:::
 
 ## Indices and tables
 
