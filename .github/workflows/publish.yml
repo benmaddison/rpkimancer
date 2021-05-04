@@ -10,7 +10,7 @@ jobs:
           python-version: 3.9
       - run: pip install -r packaging/requirements-pkg.txt
       - run: python -m build --sdist --wheel
-      - uses: pypa/gh-action-pypi-publish@v1
+      - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.TEST_PYPI_TOKEN }}
