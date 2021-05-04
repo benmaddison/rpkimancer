@@ -1,0 +1,16 @@
+on:
+  - push
+jobs:
+  tox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - run: pip install -r packaging/requirements-pkg.txt
+      - run: python -m build --sdist --wheel
+      - uses: pypa/gh-action-pypi-publish@v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
