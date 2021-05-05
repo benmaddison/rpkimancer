@@ -2,11 +2,17 @@ name: "CI/CD"
 on:
   - push
   - pull_request
+env:
+  DEFAULT_OS: ubuntu-latest
+  DEFAULT_PYTHON: 3.9
 jobs:
   tox:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
         python-version:
           - 3.8
           - 3.9
@@ -14,6 +20,7 @@ jobs:
           - lint
           - typecheck
           - test
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -23,3 +30,18 @@ jobs:
       - run: tox
         env:
           TOX_JOB: ${{ matrix.tox-job }}
+  docs:
+    if: ${{ github.event_name == "push" }}
+    needs: [tox]
+    runs-on: ${{ env.DEFAULT_OS }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+      - run: pip install tox
+      - run: tox -e docs
+      - uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: build/docs/html
