@@ -31,7 +31,7 @@ jobs:
         env:
           TOX_JOB: ${{ matrix.tox-job }}
   docs:
-    if: ${{ github.event_name == "push" }}
+    if: ${{ github.event_name == 'push' }}
     needs: [tox]
     runs-on: ${{ env.DEFAULT_OS }}
     steps:
