@@ -6,7 +6,7 @@
 > necessary for the creation or interpretation of the mystical artifacts of the
 > RPKI."*
 
-[![.github/workflows/test.yml](https://github.com/benmaddison/rpkimancer/actions/workflows/test.yml/badge.svg)](https://github.com/benmaddison/rpkimancer/actions/workflows/test.yml)
+[![CI/CD](https://github.com/benmaddison/rpkimancer/actions/workflows/cicd.yml/badge.svg?event=push)](https://github.com/benmaddison/rpkimancer/actions/workflows/cicd.yml)
 
 ## About
 
