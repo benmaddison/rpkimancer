@@ -44,3 +44,4 @@ jobs:
         with:
           branch: gh-pages
           folder: build/docs/html
+          clean-exclude: index.html
