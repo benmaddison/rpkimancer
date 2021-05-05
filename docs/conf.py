@@ -16,9 +16,9 @@ from __future__ import annotations
 import datetime
 import importlib.metadata
 
-import sphinx_readable_theme
-
 import rpkimancer
+
+import sphinx_readable_theme
 
 _dist = importlib.metadata.distribution(rpkimancer.__name__)
 _buildtime = datetime.datetime.utcnow()
