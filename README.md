@@ -6,7 +6,7 @@
 > necessary for the creation or interpretation of the mystical artifacts of the
 > RPKI."*
 
-[![Build Status](https://travis-ci.com/benmaddison/rpkimancer.svg?branch=main)](https://travis-ci.com/benmaddison/rpkimancer)
+[![CI/CD](https://github.com/benmaddison/rpkimancer/actions/workflows/cicd.yml/badge.svg?event=push)](https://github.com/benmaddison/rpkimancer/actions/workflows/cicd.yml)
 
 ## About
 
