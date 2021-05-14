@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import contextlib
 import logging
+import threading
 import typing
 
 from .types import ASN1Obj, ASN1ObjData
@@ -31,6 +32,13 @@ class Content:
     """Generic base ASN.1 type wrapping pycrates API."""
 
     content_syntax: ASN1Obj
+    _lock = threading.Lock()
+
+    @classmethod
+    def __init_subclass__(cls, /, **kwargs: typing.Any) -> None:
+        """Create a new lock for each subclass."""
+        super().__init_subclass__(**kwargs)
+        cls._lock = threading.Lock()
 
     def __init__(self, data: typing.Any) -> None:
         """Initialise the instance from python data."""
@@ -43,12 +51,14 @@ class Content:
     def from_der(cls: typing.Type[ContentSubclass],
                  der_data: bytes) -> ContentSubclass:
         """Construct an instance from DER encoded data."""
-        log.info(f"deserialising {cls} object from DER data.")
-        with log_writer.redirect_stdout():
-            cls.content_syntax.from_der(der_data)
-        data = cls.content_syntax.get_val()
-        cls.content_syntax.reset_val()
-        log.info(f"finished deserialising {cls} object")
+        log.info(f"trying to acquire lock for {cls}")
+        with cls._lock:
+            log.info(f"deserialising {cls} object from DER data.")
+            with log_writer.redirect_stdout():
+                cls.content_syntax.from_der(der_data)
+            data = cls.content_syntax.get_val()
+            cls.content_syntax.reset_val()
+            log.info(f"finished deserialising {cls} object")
         self: ContentSubclass = cls.__new__(cls)
         Content.__init__(self, data)
         return self
@@ -64,12 +74,14 @@ class Content:
         """Provide a context manager to mediate the global pycrates object."""
         if data is None:
             data = self.content_data
-        log.debug(f"instantiating ASN1Obj from data: {data}")
-        try:
-            self.content_syntax.set_val(data)
-            yield self.content_syntax
-        finally:
-            self.content_syntax.reset_val()
+        log.info(f"trying to acquire lock for {self.__class__}")
+        with self._lock:
+            log.debug(f"instantiating ASN1Obj from data: {data}")
+            try:
+                self.content_syntax.set_val(data)
+                yield self.content_syntax
+            finally:
+                self.content_syntax.reset_val()
 
     def to_txt(self) -> str:
         """Get default text serialization."""
