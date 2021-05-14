@@ -73,7 +73,7 @@ class EECertificate(BaseResourceCertificate):
         message = self.signed_object.econtent.signed_attrs().to_der()
         signature = self.private_key.sign(data=message,
                                           padding=padding.PKCS1v15(),
-                                          algorithm=self.HASH_ALGORITHM)
+                                          algorithm=self.hash_algorithm())
         return signature
 
     def publish(self, *, pub_path: str, **kwargs: typing.Any) -> None:

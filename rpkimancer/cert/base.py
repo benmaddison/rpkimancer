@@ -41,7 +41,7 @@ class BaseResourceCertificate:
     """Base RPKI Resource Certificate class - RFC6487."""
 
     # rfc6487 section 4.3
-    HASH_ALGORITHM = hashes.SHA256()
+    hash_algorithm = hashes.SHA256
 
     def __init__(self, *,  # noqa: R701
                  common_name: str,
@@ -218,6 +218,8 @@ class BaseResourceCertificate:
     @property
     def asn1_cert(self) -> Certificate:
         """Get an ASN.1 Certificate for the certificate."""
+        log.info(f"Constructing ASN.1 Certificate from {self}")
+        log.debug(f"Using DER bytes:\n{self.cert_der.hex()}")
         return Certificate.from_der(self.cert_der)
 
     @property

@@ -142,7 +142,7 @@ class CertificateAuthority(BaseResourceCertificate):
         if subject is None:
             subject = self
         cert = subject.cert_builder.sign(private_key=self.private_key,
-                                         algorithm=self.HASH_ALGORITHM)
+                                         algorithm=self.hash_algorithm())
         self._issued.append(subject)
         self.next_serial_number += 1
         return cert
@@ -172,7 +172,7 @@ class CertificateAuthority(BaseResourceCertificate):
                 rc_builder = rc_builder.serial_number(c.cert.serial_number)
                 revoked_cert = rc_builder.build()
                 crl_builder = crl_builder.add_revoked_certificate(revoked_cert)
-        self._crl = crl_builder.sign(self.private_key, self.HASH_ALGORITHM)
+        self._crl = crl_builder.sign(self.private_key, self.hash_algorithm())
         self.next_crl_number += 1
 
     def issue_mft(self, file_list: typing.List[ManifestEntryInfo]) -> None:
