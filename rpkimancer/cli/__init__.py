@@ -44,17 +44,23 @@ class BaseCommand:
     def __init__(self, parent: OptionalSubParser = None) -> None:
         """Initialise the command."""
         description = self.__doc__
+        help_fmt = argparse.RawTextHelpFormatter
         if parent is None:
             parser = argparse.ArgumentParser(description=description,
-                                             usage=self.usage)
-            parser.add_argument("-v", dest="verbosity",
-                                action="count", default=0,
-                                help="Increase logging verbosity")
+                                             usage=self.usage,
+                                             formatter_class=help_fmt)
         else:
             parser = parent.add_parser(self.subcommand,
                                        description=description,
-                                       help=description)
+                                       help=description,
+                                       formatter_class=help_fmt)
             parser.set_defaults(run=self)
+        parser.add_argument("-v", dest="verbosity",
+                            action="count", default=0,
+                            help="Increase logging verbosity:\n"
+                                 "-v: INFO level logging\n"
+                                 "-vv: DEBUG level logging\n"
+                                 "-vvv: DEBUG logging and tracebacks")
         self.parser = parser
         self.init_parser()
 
