@@ -7,7 +7,15 @@ BEGIN
 
 -- EXPORTS ALL --
 
--- IMPORTS NOTHING --
+IMPORTS
+    CONTENT-TYPE FROM CryptographicMessageSyntax-2009
+        { iso(1) member-body(2) us(840) rsadsi(113549)
+          pkcs(1) pkcs-9(9) smime(16) modules(0) id-mod-cms-2004-02(41) } ;
+
+-- Manifest Content Type
+
+ct-rpkiManifest CONTENT-TYPE ::=
+    { TYPE Manifest IDENTIFIED BY id-ct-rpkiManifest }
 
 -- Manifest Content Type: OID
 

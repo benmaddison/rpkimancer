@@ -3,6 +3,16 @@ RPKI-ROA { iso(1) member-body(2) us(840) rsadsi(113549)
 
 DEFINITIONS EXPLICIT TAGS ::= BEGIN
 
+IMPORTS
+    CONTENT-TYPE FROM CryptographicMessageSyntax-2009
+        { iso(1) member-body(2) us(840) rsadsi(113549)
+          pkcs(1) pkcs-9(9) smime(16) modules(0) id-mod-cms-2004-02(41) } ;
+
+-- ROA Content Type
+
+ct-routeOriginAuthz CONTENT-TYPE ::=
+   { TYPE RouteOriginAttestation IDENTIFIED BY id-ct-routeOriginAuthz}
+
 -- ROA Content Type: OID
 
 id-smime OBJECT IDENTIFIER ::= { iso(1) member-body(2)
