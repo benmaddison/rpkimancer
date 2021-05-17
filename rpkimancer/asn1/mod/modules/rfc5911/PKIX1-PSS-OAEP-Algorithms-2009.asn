@@ -30,7 +30,14 @@ BEGIN
    --
 
    PublicKeys PUBLIC-KEY ::= { pk-rsaSSA-PSS | pk-rsaES-OAEP, ... }
-   SignatureAlgs SIGNATURE-ALGORITHM ::= { sa-rsaSSA-PSS, ...}
+   SignatureAlgs SIGNATURE-ALGORITHM ::= {
+       sa-rsaSSA-PSS |
+       sa-sha224WithRSAEncryption |
+       sa-sha256WithRSAEncryption |
+       sa-sha384WithRSAEncryption |
+       sa-sha512WithRSAEncryption,
+       ...
+    }
    KeyTransportAlgs KEY-TRANSPORT ::= { kta-rsaES-OAEP, ... }
    HashAlgs DIGEST-ALGORITHM ::= { mda-sha224 | mda-sha256 | mda-sha384
                                       | mda-sha512, ... }
