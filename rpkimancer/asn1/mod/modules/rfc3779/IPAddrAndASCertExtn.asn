@@ -19,7 +19,17 @@ IMPORTS
 -- PKIX specific OIDs and arcs --
     id-pe FROM PKIX1Explicit88 { iso(1) identified-organization(3)
               dod(6) internet(1) security(5) mechanisms(5) pkix(7)
-              id-mod(0) id-pkix1-explicit(18) };
+              id-mod(0) id-pkix1-explicit(18) }
+
+    EXTENSION FROM PKIX-CommonTypes-2009 { iso(1) identified-organization(3)
+              dod(6) internet(1) security(5) mechanisms(5) pkix(7)
+              id-mod(0) id-mod-pkixCommon-02(57) };
+
+-- IP Address Delegation Extension --
+
+ext-IPAddrBlocks EXTENSION ::=
+  { SYNTAX IPAddrBlocks
+    IDENTIFIED BY id-pe-ipAddrBlocks }
 
 -- IP Address Delegation Extension OID --
 
@@ -46,6 +56,12 @@ IPAddressRange      ::= SEQUENCE {
   max                  IPAddress }
 
 IPAddress           ::= BIT STRING
+
+-- Autonomous System Identifier Delegation Extension --
+
+ext-ASIdentifiers EXTENSION ::=
+  { SYNTAX ASIdentifiers
+    IDENTIFIED BY id-pe-autonomousSysIds }
 
 -- Autonomous System Identifier Delegation Extension OID --
 
