@@ -22,7 +22,7 @@ from ..utils import LogWriter
 
 log = logging.getLogger(__name__)
 
-log_writer = LogWriter(log, level=logging.INFO)
+log_writer = LogWriter(log, level=logging.WARNING)
 
 ContentSubclass = typing.TypeVar("ContentSubclass",
                                  bound="Content")
@@ -46,6 +46,14 @@ class Content:
         with self.constructed(data) as instance:
             self._content_data = instance.get_val()
         log.info(f"finished initialisation of {self} ASN.1 content")
+
+    @classmethod
+    def from_data(cls, data: typing.Any) -> ContentSubclass:
+        """Construct an instance from python data."""
+        log.info(f"creating new {cls} object")
+        self: ContentSubclass = cls.__new__(cls)
+        Content.__init__(self, data)
+        return self
 
     @classmethod
     def from_der(cls: typing.Type[ContentSubclass],
