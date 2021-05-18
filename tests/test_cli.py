@@ -23,8 +23,6 @@ import sys
 
 import pytest
 
-import rpkimancer
-
 log = logging.getLogger(__name__)
 
 
@@ -58,11 +56,13 @@ def patch_meta_path():
         def locate_file(self, path):
             raise NotImplementedError
 
+    dummy_finder_ctx = importlib.metadata.DistributionFinder.Context()
+
     class DummyMetaPathFinder(importlib.abc.MetaPathFinder):
         def find_spec(self, fullname, path, target=None):
             return None
 
-        def find_distributions(self, context=importlib.metadata.DistributionFinder.Context()):  # noqa: E501
+        def find_distributions(self, context=dummy_finder_ctx):
             yield DummyDistribution()
 
     try:
