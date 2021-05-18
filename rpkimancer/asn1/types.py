@@ -17,9 +17,11 @@ import typing
 
 import pycrate_asn1rt.asnobj as _asn1_object_types
 import pycrate_asn1rt.asnobj_basic as _asn1_basic_types
+import pycrate_asn1rt.asnobj_class as _asn1_class_types
 
 log = logging.getLogger(__name__)
 
 ASN1Obj = _asn1_object_types.ASN1Obj
 ASN1ObjData = typing.Any
 OID = _asn1_basic_types.OID
+ASN1Class = _asn1_class_types.CLASS

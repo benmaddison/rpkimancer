@@ -17,7 +17,9 @@ import logging
 import threading
 import typing
 
-from .types import ASN1Obj, ASN1ObjData
+import pycrate_asn1rt.init
+
+from .types import ASN1Class, ASN1Obj, ASN1ObjData
 from ..utils import LogWriter
 
 log = logging.getLogger(__name__)
@@ -26,6 +28,15 @@ log_writer = LogWriter(log, level=logging.WARNING)
 
 ContentSubclass = typing.TypeVar("ContentSubclass",
                                  bound="Content")
+
+
+def append_info_object_set(obj_set: ASN1Class, *obj_ins: ASN1Class) -> None:
+    """Append an instance to an existing object information set at runtime."""
+    for ins in obj_ins:
+        log.info(f"Adding {obj_ins} to constraining object info set {obj_set}")
+        obj_set.get_val().root.append(ins.get_val())
+    log.info(f"re-building lookup table for {obj_set}")
+    pycrate_asn1rt.init.build_classset_dict(obj_set)
 
 
 class Content:
@@ -37,7 +48,7 @@ class Content:
     @classmethod
     def __init_subclass__(cls, /, **kwargs: typing.Any) -> None:
         """Create a new lock for each subclass."""
-        super().__init_subclass__(**kwargs)
+        super().__init_subclass__(**kwargs)  # type: ignore[call-arg]
         cls._lock = threading.Lock()
 
     def __init__(self, data: typing.Any) -> None:
