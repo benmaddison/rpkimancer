@@ -1,5 +1,7 @@
 # rpkimancer
 
+![animated rpkimancer](rpkimancer.png)
+
 > **rpkimancer** /ɑː-piː-keɪ-aɪ-mænsə/
 >
 > *"One who may be called upon to perform those secret rites and incantations
