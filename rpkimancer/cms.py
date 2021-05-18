@@ -116,12 +116,3 @@ class EncapsulatedContentInfo(Content):
             return val[1][1]
         else:
             return val
-
-    @property
-    def econtent_bytes(self) -> bytes:
-        """Recover eContent OCTET STRING."""
-        with self.constructed() as instance:
-            econtent = instance.get_internals()["cont"]["eContent"]
-            log.info(f"{econtent.get_const()['cont'].get_internals()=}")
-            econtent_bytes: bytes = econtent.get_const()["cont"].to_der()
-        return econtent_bytes
