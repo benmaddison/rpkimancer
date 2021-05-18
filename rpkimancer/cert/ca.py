@@ -22,11 +22,7 @@ import typing
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization
 
-from .base import (BaseResourceCertificate,
-                   ManifestEntryInfo,
-                   ResourceCertificateList,
-                   ResourceCertificates)
-from .oid import AIA_CA_ISSUERS_OID, SIA_CA_REPOSITORY_OID, SIA_MFT_ACCESS_OID
+from . import base, oid
 
 if typing.TYPE_CHECKING:
     from ..sigobj import RpkiManifest
@@ -34,7 +30,7 @@ if typing.TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
-class CertificateAuthority(BaseResourceCertificate):
+class CertificateAuthority(base.BaseResourceCertificate):
     """RPKI Certificate Authority - RFC6487."""
 
     def __init__(self, *,
@@ -44,7 +40,7 @@ class CertificateAuthority(BaseResourceCertificate):
                  **kwargs: typing.Any) -> None:
         """Initialise the Certificate Authority."""
         log.info(f"doing initialisation of {self} as CertificateAuthority")
-        self._issued: ResourceCertificateList = list()
+        self._issued: base.ResourceCertificateList = list()
         self.next_serial_number = 1
         super().__init__(common_name=common_name, ca=True, **kwargs)
         # rfc 6487 section 5
@@ -81,7 +77,7 @@ class CertificateAuthority(BaseResourceCertificate):
                             f"{self.subject_cn}.cer")
 
     @property
-    def mft_entry(self) -> typing.Optional[ManifestEntryInfo]:
+    def mft_entry(self) -> typing.Optional[base.ManifestEntryInfo]:
         """Get an entry for inclusion in the issuer's manifest."""
         return (os.path.basename(self.cert_path), self.cert_der)
 
@@ -96,7 +92,7 @@ class CertificateAuthority(BaseResourceCertificate):
         return os.path.join(self.repo_path, "manifest.mft")
 
     @property
-    def issued(self) -> ResourceCertificates:
+    def issued(self) -> base.ResourceCertificates:
         """Get a generator over the certifactes issued by this CA."""
         for cert in self._issued:
             yield cert
@@ -118,7 +114,7 @@ class CertificateAuthority(BaseResourceCertificate):
         """Get the AuthorityInformationAccess extension for the certificate."""
         aia_uri = f"{self.base_uri}/{self.cert_path}"
         aia = x509.AuthorityInformationAccess([
-            x509.AccessDescription(AIA_CA_ISSUERS_OID,
+            x509.AccessDescription(oid.AIA_CA_ISSUERS_OID,
                                    x509.UniformResourceIdentifier(aia_uri)),
         ])
         return aia
@@ -129,15 +125,15 @@ class CertificateAuthority(BaseResourceCertificate):
         sia_repo_uri = f"{self.base_uri}/{self.repo_path}"
         sia_mft_uri = f"{self.base_uri}/{self.mft_path}"
         sia = x509.SubjectInformationAccess([
-            x509.AccessDescription(SIA_CA_REPOSITORY_OID,
+            x509.AccessDescription(oid.SIA_CA_REPOSITORY_OID,
                                    x509.UniformResourceIdentifier(sia_repo_uri)),  # noqa: E501
-            x509.AccessDescription(SIA_MFT_ACCESS_OID,
+            x509.AccessDescription(oid.SIA_MFT_ACCESS_OID,
                                    x509.UniformResourceIdentifier(sia_mft_uri)),  # noqa: E501
         ])
         return sia
 
     def issue_cert(self,
-                   subject: typing.Optional[BaseResourceCertificate] = None) -> x509.Certificate:  # noqa: E501
+                   subject: typing.Optional[base.BaseResourceCertificate] = None) -> x509.Certificate:  # noqa: E501
         """Issue a new Resource Certificate with this CA."""
         if subject is None:
             subject = self
@@ -148,7 +144,7 @@ class CertificateAuthority(BaseResourceCertificate):
         return cert
 
     def issue_crl(self,
-                  to_revoke: typing.Optional[ResourceCertificates] = None) -> None:  # noqa: E501
+                  to_revoke: typing.Optional[base.ResourceCertificates] = None) -> None:  # noqa: E501
         """Issue a new CRL for this CA."""
         now = datetime.datetime.utcnow()
         next_update = now + datetime.timedelta(days=self.crl_days)
@@ -175,7 +171,8 @@ class CertificateAuthority(BaseResourceCertificate):
         self._crl = crl_builder.sign(self.private_key, self.hash_algorithm())
         self.next_crl_number += 1
 
-    def issue_mft(self, file_list: typing.List[ManifestEntryInfo]) -> None:
+    def issue_mft(self,
+                  file_list: typing.List[base.ManifestEntryInfo]) -> None:
         """Issue a new manifest for this CA."""
         now = datetime.datetime.utcnow()
         next_update = now + datetime.timedelta(days=self.mft_days)

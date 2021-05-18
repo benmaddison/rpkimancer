@@ -13,30 +13,48 @@
 from __future__ import annotations
 
 import logging
+import typing
 
 from cryptography import x509
 
-from .oid import AS_RESOURCES_OID, IP_RESOURCES_OID
+from . import asn1, oid
+from ..asn1.mod import IPAddrAndASCertExtn
+from ..asn1.types import ASN1Class
 from ..resources import (ASIdentifiers, AsResourcesInfo,
                          IPAddrBlocks, IpResourcesInfo)
 
 log = logging.getLogger(__name__)
 
 
-class IpResources(x509.UnrecognizedExtension):
+class X509CertificateExtension(x509.UnrecognizedExtension):
+    """Custom certificate extension with ASN.1 handling."""
+
+    @classmethod
+    def __init_subclass__(cls,
+                          ext_type: typing.Optional[ASN1Class] = None,
+                          **kwargs: typing.Any) -> None:
+        """Register the EXTENSION instance for DER encoding/decoding."""
+        super().__init_subclass__(**kwargs)  # type: ignore[call-arg]
+        if ext_type is not None:
+            asn1.Certificate.register_ext_type(ext_type)
+
+
+class IpResources(X509CertificateExtension,
+                  ext_type=IPAddrAndASCertExtn.ext_IPAddrBlocks):
     """IP Address Resources X.509 certificate extension - RFC3779."""
 
     # TODO: IPAddressRange support
     def __init__(self, ip_resources: IpResourcesInfo) -> None:
         """Initialise the certificate extension."""
         ip_address_blocks_data = IPAddrBlocks(ip_resources).to_der()
-        super().__init__(IP_RESOURCES_OID, ip_address_blocks_data)
+        super().__init__(oid.IP_RESOURCES_OID, ip_address_blocks_data)
 
 
-class AsResources(x509.UnrecognizedExtension):
+class AsResources(X509CertificateExtension,
+                  ext_type=IPAddrAndASCertExtn.ext_ASIdentifiers):
     """AS Number Resources X.509 certificate extension - RFC3779."""
 
     def __init__(self, as_resources: AsResourcesInfo) -> None:
         """Initialise the certificate extension."""
         as_identifiers_data = ASIdentifiers(as_resources).to_der()
-        super().__init__(AS_RESOURCES_OID, as_identifiers_data)
+        super().__init__(oid.AS_RESOURCES_OID, as_identifiers_data)

@@ -19,9 +19,7 @@ import typing
 from cryptography import x509
 from cryptography.hazmat.primitives.asymmetric import padding
 
-from .base import BaseResourceCertificate, ManifestEntryInfo
-from .ca import CertificateAuthority
-from .oid import SIA_OBJ_ACCESS_OID
+from . import base, ca, oid
 
 if typing.TYPE_CHECKING:
     from ..sigobj import SignedObject
@@ -29,7 +27,7 @@ if typing.TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
-class EECertificate(BaseResourceCertificate):
+class EECertificate(base.BaseResourceCertificate):
     """RPKI EE Certificate - RFC6487."""
 
     def __init__(self, *,
@@ -48,10 +46,10 @@ class EECertificate(BaseResourceCertificate):
     @property
     def issuer_repo_path(self) -> str:
         """Get the filesystem path to the the issuer publication point."""
-        return typing.cast(CertificateAuthority, self.issuer).repo_path
+        return typing.cast(ca.CertificateAuthority, self.issuer).repo_path
 
     @property
-    def mft_entry(self) -> typing.Optional[ManifestEntryInfo]:
+    def mft_entry(self) -> typing.Optional[base.ManifestEntryInfo]:
         """Get an entry for inclusion in the issuer's manifest."""
         return (self.signed_object.file_name,
                 self.signed_object.to_der())
@@ -63,7 +61,7 @@ class EECertificate(BaseResourceCertificate):
                       f"{self.issuer_repo_path}/" \
                       f"{self.signed_object.file_name}"
         sia = x509.SubjectInformationAccess([
-            x509.AccessDescription(SIA_OBJ_ACCESS_OID,
+            x509.AccessDescription(oid.SIA_OBJ_ACCESS_OID,
                                    x509.UniformResourceIdentifier(sia_obj_uri)),  # noqa: E501
         ])
         return sia

@@ -23,10 +23,7 @@ from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from .extensions import AsResources, IpResources
-from .oid import RPKI_CERT_POLICY_OID
-from ..asn1 import Content
-from ..asn1.mod import PKIX1Explicit_2009
+from . import asn1, extensions, oid
 from ..resources import AsResourcesInfo, IpResourcesInfo
 
 if typing.TYPE_CHECKING:
@@ -124,11 +121,11 @@ class BaseResourceCertificate:
             builder = builder.add_extension(self.cps, critical=True)
         # rfc6487 section 4.8.10
         if ip_resources is not None:
-            ip_resources_ext = IpResources(ip_resources)
+            ip_resources_ext = extensions.IpResources(ip_resources)
             builder = builder.add_extension(ip_resources_ext, critical=True)
         # rfc6487 section 4.8.11
         if as_resources is not None:
-            as_resources_ext = AsResources(as_resources)
+            as_resources_ext = extensions.AsResources(as_resources)
             builder = builder.add_extension(as_resources_ext, critical=True)
 
         self._cert_builder = builder
@@ -147,7 +144,7 @@ class BaseResourceCertificate:
     def cps(self) -> typing.Optional[x509.CertificatePolicies]:
         """Construct the CPS extension."""
         cps = x509.CertificatePolicies([
-            x509.PolicyInformation(RPKI_CERT_POLICY_OID,
+            x509.PolicyInformation(oid.RPKI_CERT_POLICY_OID,
                                    policy_qualifiers=None),
         ])
         return cps
@@ -216,37 +213,17 @@ class BaseResourceCertificate:
         return self._ski_digest
 
     @property
-    def asn1_cert(self) -> Certificate:
+    def asn1_cert(self) -> asn1.Certificate:
         """Get an ASN.1 Certificate for the certificate."""
         log.info(f"Constructing ASN.1 Certificate from {self}")
         log.debug(f"Using DER bytes:\n{self.cert_der.hex()}")
-        return Certificate.from_der(self.cert_der)
+        return asn1.Certificate.from_der(self.cert_der)
 
     @property
-    def subject_public_key_info(self) -> SubjectPublicKeyInfo:
+    def subject_public_key_info(self) -> asn1.SubjectPublicKeyInfo:
         """Get the subjectPublicKeyInfo for the certificate."""
         return self.asn1_cert.subject_public_key_info
 
 
 ResourceCertificates = typing.Iterable[BaseResourceCertificate]
 ResourceCertificateList = typing.List[BaseResourceCertificate]
-
-
-class Certificate(Content):
-    """X.509 ASN.1 Certificate type - RFC5912."""
-
-    content_syntax = PKIX1Explicit_2009.Certificate
-
-    @property
-    def subject_public_key_info(self) -> SubjectPublicKeyInfo:
-        """Get the subjectPublicKeyInfo of the Certificate."""
-        log.info(f"trying to get subjectPublicKeyInfo data from {self}")
-        with self.constructed() as instance:
-            data = instance.get_val_at(["toBeSigned", "subjectPublicKeyInfo"])
-        return SubjectPublicKeyInfo(data)
-
-
-class SubjectPublicKeyInfo(Content):
-    """X.509 ASN.1 SubjectPublicKeyInfo type - RFC5912."""
-
-    content_syntax = PKIX1Explicit_2009.SubjectPublicKeyInfo
