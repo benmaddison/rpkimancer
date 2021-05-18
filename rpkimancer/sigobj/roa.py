@@ -84,7 +84,8 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
         return json.dumps(data, indent=2)
 
 
-class RouteOriginAttestation(SignedObject):
+class RouteOriginAttestation(SignedObject,
+                             econtent_type=RPKI_ROA.ct_routeOriginAuthz):
     """CMS ASN.1 ContentInfo for RPKI ROAs."""
 
     econtent_cls = RouteOriginAttestationEContent

@@ -71,7 +71,8 @@ class RpkiManifestEContent(EncapsulatedContent):
         return (hash_bits, hash_len)
 
 
-class RpkiManifest(SignedObject):
+class RpkiManifest(SignedObject,
+                   econtent_type=RPKIManifest.ct_rpkiManifest):
     """CMS ASN.1 ContentInfo for RPKI Manifests."""
 
     econtent_cls = RpkiManifestEContent

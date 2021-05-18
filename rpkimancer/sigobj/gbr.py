@@ -72,7 +72,8 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
         return json.dumps(data, indent=2)
 
 
-class RpkiGhostbusters(SignedObject):
+class RpkiGhostbusters(SignedObject,
+                       econtent_type=RPKIGhostbusters.ct_rpkiGhostbusters):
     """CMS ASN.1 ContentInfo for RPKI Ghostbusters Records."""
 
     econtent_cls = RpkiGhostbustersEContent
