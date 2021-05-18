@@ -14,12 +14,16 @@
 from __future__ import annotations
 
 import logging
+import typing
 
-from .asn1 import Content
+from .asn1 import Content, append_info_object_set
 from .asn1.mod import CryptographicMessageSyntax_2009
-from .asn1.types import OID
+from .asn1.types import ASN1Class, OID
 
 log = logging.getLogger(__name__)
+
+ContentDataSubclass = typing.TypeVar("ContentDataSubclass",
+                                     bound="ContentData")
 
 
 class ContentData(Content):
@@ -42,6 +46,21 @@ class ContentInfo(Content):
         data = {"contentType": content_type_oid,
                 "content": (content_type_name, content_data)}
         super().__init__(data)
+
+    @classmethod
+    def register_econtent_type(cls,
+                               content_type: typing.Type[ContentDataSubclass],
+                               econtent_type: ASN1Class) -> None:
+        """Add CONTENT-TYPE instance to eContentType constraint set."""
+        content = cls.content_syntax.get_internals()["cont"]["content"]
+        content_const_set = content.get_const()["tab"].get_val()
+        content_type_oid = content_type.content_type.get_val()
+        content_data_inst = list(filter(lambda item: item["id"] == content_type_oid,  # noqa: E501
+                                        content_const_set.getv()))[0]["Type"]
+        encap_content_info = content_data_inst.get_internals()["cont"]["encapContentInfo"]  # noqa: E501
+        econtent_open_type = encap_content_info.get_internals()["cont"]["eContentType"]  # noqa: E501
+        econtent_const_set = econtent_open_type.get_const()["tab"]
+        append_info_object_set(econtent_const_set, econtent_type)
 
 
 class SignedData(ContentData):
@@ -89,10 +108,20 @@ class EncapsulatedContentInfo(Content):
         return cls(data)
 
     @property
+    def econtent_val(self) -> typing.Any:
+        """Extract the eContent value."""
+        with self.constructed() as instance:
+            val = instance.get_val_at(["eContent"])
+        if isinstance(val, tuple):
+            return val[1][1]
+        else:
+            return val
+
+    @property
     def econtent_bytes(self) -> bytes:
         """Recover eContent OCTET STRING."""
         with self.constructed() as instance:
             econtent = instance.get_internals()["cont"]["eContent"]
-            log.debug(f"{econtent.to_der()}")
+            log.info(f"{econtent.get_const()['cont'].get_internals()=}")
             econtent_bytes: bytes = econtent.get_const()["cont"].to_der()
         return econtent_bytes

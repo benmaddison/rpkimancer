@@ -20,7 +20,7 @@ import typing
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
 from ..asn1 import Content
 from ..asn1.mod import PKIXAlgs_2009
-from ..asn1.types import OID
+from ..asn1.types import ASN1Class, OID
 from ..cert import EECertificate
 from ..cms import (ContentInfo,
                    EncapsulatedContentInfo,
@@ -72,6 +72,16 @@ class SignedObject(ContentInfo):
 
     econtent_cls: typing.Type[EncapsulatedContent]
     ee_cert_cls: typing.Type[EECertificate] = EECertificate
+
+    @classmethod
+    def __init_subclass__(cls,
+                          econtent_type: typing.Optional[ASN1Class] = None,
+                          **kwargs: typing.Any) -> None:
+        """Register EncapsulatedContentInfo CONTENT-TYPE for DER encoding."""
+        super().__init_subclass__(**kwargs)
+        if econtent_type is not None:
+            log.info(f"Adding {econtent_type} to constraining object info set")
+            cls.register_econtent_type(SignedData, econtent_type)
 
     def __init__(self,
                  issuer: CertificateAuthority,
@@ -135,14 +145,23 @@ class SignedObject(ContentInfo):
         super().__init__(content=SignedData(data))
 
     @property
-    def econtent(self) -> EncapsulatedContent:
+    def econtent_info(self) -> EncapsulatedContentInfo:
         """Get the Signed Object's encapContentInfo."""
+        try:
+            return self._econtent_info
+        except AttributeError:
+            eci = EncapsulatedContentInfo.from_content_info(self)
+            self._econtent_info: EncapsulatedContentInfo = eci
+        return self._econtent_info
+
+    @property
+    def econtent(self) -> EncapsulatedContent:
+        """Get the Signed Object's eContent."""
         try:
             return self._econtent
         except AttributeError:
-            # TODO: there must be a better way to do this!
-            eci = EncapsulatedContentInfo.from_content_info(self)
-            self._econtent = self.econtent_cls.from_der(eci.econtent_bytes)
+            econtent_data = self.econtent_info.econtent_val
+            self._econtent = self.econtent_cls.from_data(econtent_data)
         return self._econtent
 
     @property
