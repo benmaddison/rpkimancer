@@ -48,12 +48,18 @@ class Perceive(BaseCommand):
                                  type=self._output, default=self._output(),
                                  help="Path to output file "
                                       "(default: STDOUT)")
-        self.parser.add_argument("--signed-data", "-S",
-                                 action="store_true", default=False,
-                                 help="Print decoded SignedData structure")
-        self.parser.add_argument("--no-econtent", "-E",
-                                 action="store_true", default=False,
-                                 help="Don't print decoded eContent")
+        info_group = self.parser.add_argument_group("output options")
+        info = info_group.add_mutually_exclusive_group()
+        self.parser.set_defaults(info_property="econtent")
+        info.add_argument("--signed-data", "-S", dest="info_property",
+                          action="store_const", const=None,
+                          help="Print decoded SignedData")
+        info.add_argument("--econtent-info", "-I", dest="info_property",
+                          action="store_const", const="econtent_info",
+                          help="Print decoded EncapsulatedContentInfo")
+        info.add_argument("--econtent", "-E", dest="info_property",
+                          action="store_const", const="econtent",
+                          help="Print decoded eContent (default)")
         fmt_group = self.parser.add_argument_group("format options")
         fmt = fmt_group.add_mutually_exclusive_group()
         self.parser.set_defaults(fmt_method="to_txt")
@@ -97,17 +103,19 @@ class Perceive(BaseCommand):
             objects.append(obj)
         with parsed_args.output as write:
             for obj in objects:
-                if parsed_args.signed_data:
-                    write(obj, parsed_args.fmt_method)
-                if not parsed_args.no_econtent:
-                    write(obj.econtent, parsed_args.fmt_method)
+                write(obj, parsed_args.info_property, parsed_args.fmt_method)
         return None
 
     @staticmethod
     @contextlib.contextmanager
     def _output(path: typing.Optional[str] = None) -> WriteGenerator:
 
-        def _write(obj: Content, fmt_method: str, f: typing.TextIO) -> None:
+        def _write(obj: Content,
+                   info_property: typing.Optional[str],
+                   fmt_method: str,
+                   f: typing.TextIO) -> None:
+            if info_property is not None:
+                obj = getattr(obj, info_property)
             func = getattr(obj, fmt_method)
             f.write(f"{func()}\n")
 
