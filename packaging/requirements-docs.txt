@@ -6,4 +6,4 @@ sphinx-autodoc-typehints
 sphinx-multiversion @ git+https://github.com/samtygier-stfc/sphinx-multiversion.git@prebuild_command#egg=sphinx-multiversion
 
 # sphinx theme
-sphinx-readable-theme
+sphinx-readable-theme==1.3.0
