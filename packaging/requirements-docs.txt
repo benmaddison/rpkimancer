@@ -1,7 +1,7 @@
 sphinx>=3.5.4, <4.0
 
 # sphinx extensions
-myst-parser
+myst-parser==0.14.0
 sphinx-autodoc-typehints
 sphinx-multiversion @ git+https://github.com/samtygier-stfc/sphinx-multiversion.git@prebuild_command#egg=sphinx-multiversion
 
