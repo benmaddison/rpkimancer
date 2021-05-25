@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rpkimancer.cli.conjure module &#8212; rpkimancer 0.1.dev1 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/readable.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rpkimancer.cli.perceive module" href="rpkimancer.cli.perceive.html" />
+    <link rel="prev" title="rpkimancer.cli package" href="rpkimancer.cli.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cli.perceive.html" title="rpkimancer.cli.perceive module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cli.html" title="rpkimancer.cli package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.dev1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="rpkimancer.cli.html" accesskey="U">rpkimancer.cli package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rpkimancer.cli.conjure module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-rpkimancer.cli.conjure">
+<span id="rpkimancer-cli-conjure-module"></span><h1>rpkimancer.cli.conjure module<a class="headerlink" href="#module-rpkimancer.cli.conjure" title="Permalink to this headline">¶</a></h1>
+<p>rpki-conjure command implementation.</p>
+<dl class="py class">
+<dt id="rpkimancer.cli.conjure.Conjure">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.cli.conjure.</span></code><code class="sig-name descname"><span class="pre">Conjure</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.conjure.Conjure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.cli.html#rpkimancer.cli.BaseCommand" title="rpkimancer.cli.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cli.BaseCommand</span></code></a></p>
+<p>Conjure a fully populated RPKI repository from thin air.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+<li><p><strong>kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rpkimancer.cli.conjure.Conjure.subcommand">
+<code class="sig-name descname"><span class="pre">subcommand</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'conjure'</span></em><a class="headerlink" href="#rpkimancer.cli.conjure.Conjure.subcommand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.cli.conjure.Conjure.init_parser">
+<code class="sig-name descname"><span class="pre">init_parser</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.conjure.Conjure.init_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up command line argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.cli.conjure.Conjure.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.conjure.Conjure.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run with the given arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parsed_args</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – </p></li>
+<li><p><strong>args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+<li><p><strong>kwargs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.cli.conjure.ConjurePlugin">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.cli.conjure.</span></code><code class="sig-name descname"><span class="pre">ConjurePlugin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.conjure.ConjurePlugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for conjure subcommand plugins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="rpkimancer.cli.conjure.ConjurePlugin.init_parser">
+<code class="sig-name descname"><span class="pre">init_parser</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.conjure.ConjurePlugin.init_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up command line argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.cli.conjure.ConjurePlugin.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.conjure.ConjurePlugin.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run with the given arguments, returning extra publish kwargs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parsed_args</strong> (<em>Args</em>) – </p></li>
+<li><p><strong>ca</strong> (<a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority" title="rpkimancer.cert.ca.CertificateAuthority"><em>CertificateAuthority</em></a>) – </p></li>
+<li><p><strong>args</strong> (<em>typing.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>typing.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>PluginReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation index</a><ul>
+  <li><a href="modules.html">rpkimancer</a><ul>
+  <li><a href="rpkimancer.html">rpkimancer package</a><ul>
+  <li><a href="rpkimancer.cli.html">rpkimancer.cli package</a><ul>
+      <li>Previous: <a href="rpkimancer.cli.html" title="previous chapter">rpkimancer.cli package</a></li>
+      <li>Next: <a href="rpkimancer.cli.perceive.html" title="next chapter">rpkimancer.cli.perceive module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+<h3>Branches</h3>
+<ul>
+    <li><a href="rpkimancer.cli.conjure.html">pyup-pin-sphinx-autodoc-typehints-1.12.0</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021, Ben Maddison.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.
+  </div>
+  
+  </body>
+</html>
