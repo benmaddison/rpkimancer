@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rpkimancer.cert.asn1 module &#8212; rpkimancer 0.1.dev1 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/readable.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rpkimancer.cert.base module" href="rpkimancer.cert.base.html" />
+    <link rel="prev" title="rpkimancer.cert package" href="rpkimancer.cert.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cert.base.html" title="rpkimancer.cert.base module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cert.html" title="rpkimancer.cert package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.dev1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="rpkimancer.cert.html" accesskey="U">rpkimancer.cert package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rpkimancer.cert.asn1 module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-rpkimancer.cert.asn1">
+<span id="rpkimancer-cert-asn1-module"></span><h1>rpkimancer.cert.asn1 module<a class="headerlink" href="#module-rpkimancer.cert.asn1" title="Permalink to this headline">¶</a></h1>
+<p>X.509 ASN.1 Types - RFC5912.</p>
+<dl class="py class">
+<dt id="rpkimancer.cert.asn1.Certificate">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.cert.asn1.</span></code><code class="sig-name descname"><span class="pre">Certificate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.asn1.Certificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
+<p>X.509 ASN.1 Certificate type - RFC5912.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rpkimancer.cert.asn1.Certificate.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Certificate</span> <span class="pre">([SIGNED]</span> <span class="pre">SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cert.asn1.Certificate.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.cert.asn1.Certificate.subject_public_key_info">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">subject_public_key_info</span></code><a class="headerlink" href="#rpkimancer.cert.asn1.Certificate.subject_public_key_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the subjectPublicKeyInfo of the Certificate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rpkimancer.cert.asn1.SubjectPublicKeyInfo" title="rpkimancer.cert.asn1.SubjectPublicKeyInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubjectPublicKeyInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.cert.asn1.Certificate.register_ext_type">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">register_ext_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.asn1.Certificate.register_ext_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add EXTENSION instance to extnID constraint set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ext_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">CLASS</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.cert.asn1.SubjectPublicKeyInfo">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.cert.asn1.</span></code><code class="sig-name descname"><span class="pre">SubjectPublicKeyInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.asn1.SubjectPublicKeyInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
+<p>X.509 ASN.1 SubjectPublicKeyInfo type - RFC5912.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="rpkimancer.cert.asn1.SubjectPublicKeyInfo.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SubjectPublicKeyInfo</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cert.asn1.SubjectPublicKeyInfo.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation index</a><ul>
+  <li><a href="modules.html">rpkimancer</a><ul>
+  <li><a href="rpkimancer.html">rpkimancer package</a><ul>
+  <li><a href="rpkimancer.cert.html">rpkimancer.cert package</a><ul>
+      <li>Previous: <a href="rpkimancer.cert.html" title="previous chapter">rpkimancer.cert package</a></li>
+      <li>Next: <a href="rpkimancer.cert.base.html" title="next chapter">rpkimancer.cert.base module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+<h3>Branches</h3>
+<ul>
+    <li><a href="rpkimancer.cert.asn1.html">pyup-pin-pycrate-0.0.0</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021, Ben Maddison.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.
+  </div>
+  
+  </body>
+</html>
