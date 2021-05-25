@@ -40,7 +40,6 @@ jobs:
         with:
           files: coverage.xml
           env_vars: OS,PYTHON
-          verbose: true
         env:
           OS: ${{ matrix.os }}
           PYTHON: ${{ matrix.python-version }}
