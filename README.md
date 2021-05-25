@@ -9,6 +9,7 @@
 > RPKI."*
 
 [![CI/CD](https://github.com/benmaddison/rpkimancer/actions/workflows/cicd.yml/badge.svg?event=push)](https://github.com/benmaddison/rpkimancer/actions/workflows/cicd.yml)
+[![codecov](https://codecov.io/gh/benmaddison/rpkimancer/branch/main/graph/badge.svg?token=RkTp3eCsOd)](https://codecov.io/gh/benmaddison/rpkimancer)
 
 ## About
 
