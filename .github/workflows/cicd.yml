@@ -22,12 +22,16 @@ jobs:
           - test
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install tox tox-gh-actions
-      - run: tox
+      - name: install ${{ matrix.tox-job }} job runner
+        run: python -m pip install tox tox-gh-actions
+      - name: run ${{ matrix.tox-job }} job
+        run: tox
         env:
           TOX_JOB: ${{ matrix.tox-job }}
   build:
@@ -60,13 +64,18 @@ jobs:
     needs: [tox]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup python ${{ env.DEFAULT_PYTHON }}
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-      - run: pip install tox
-      - run: tox -e docs
-      - uses: JamesIves/github-pages-deploy-action@4.1.1
+      - name: install job runner
+        run: python -m pip install tox
+      - name: generate html docs
+        run: tox -e docs
+      - name: deploy to github-pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
           folder: build/docs/html
