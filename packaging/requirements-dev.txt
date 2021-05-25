@@ -1,4 +1,5 @@
-tox>=3.23.0, <4.0
+# install tox test runner
+-r requirements-tox.txt
 
 # install test environment requirements
 -r requirements-lint.txt
