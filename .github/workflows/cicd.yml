@@ -34,6 +34,16 @@ jobs:
         run: tox
         env:
           TOX_JOB: ${{ matrix.tox-job }}
+      - name: upload coverage report
+        if: ${{ matrix.tox-job == 'test' }}
+        uses: codecov/codecov-action@v1
+        with:
+          files: coverage.xml
+          env_vars: OS,PYTHON
+          verbose: true
+        env:
+          OS: ${{ matrix.os }}
+          PYTHON: ${{ matrix.python-version }}
   build:
     runs-on: ubuntu-latest
     strategy:
