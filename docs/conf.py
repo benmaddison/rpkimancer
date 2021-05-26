@@ -45,7 +45,6 @@ version = ".".join(release.split(".")[:2])
 extensions = [
     "sphinx.ext.autodoc",
     "myst_parser",
-    "sphinx_autodoc_typehints",
     "sphinx_multiversion",
 ]
 source_suffix = {
@@ -72,16 +71,14 @@ html_sidebars = {
 # -- Autodoc configuration
 
 autodoc_member_order = "bysource"
+autodoc_typehints = "description"
+autodoc_typehints_description_target = "all"
 
 # -- Markdown processing
 
 myst_enable_extensions = [
     "colon_fence",
 ]
-
-# -- Typehint processing
-
-always_document_param_types = True
 
 # -- Multiversion processing
 

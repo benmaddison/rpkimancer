@@ -7,6 +7,8 @@ API Reference <generated/modules>
 :::
 
 :::{include} ../README.md
+:relative-docs: docs/
+:relative-images:
 :::
 
 ## Indices and tables
