@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rpkimancer.sigobj.gbr module &#8212; rpkimancer 0.1.0rc2.dev5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/readable.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rpkimancer.sigobj.mft module" href="rpkimancer.sigobj.mft.html" />
+    <link rel="prev" title="rpkimancer.sigobj.base module" href="rpkimancer.sigobj.base.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.sigobj.mft.html" title="rpkimancer.sigobj.mft module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.sigobj.base.html" title="rpkimancer.sigobj.base module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.0rc2.dev5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="rpkimancer.sigobj.html" accesskey="U">rpkimancer.sigobj package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rpkimancer.sigobj.gbr module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-rpkimancer.sigobj.gbr">
+<span id="rpkimancer-sigobj-gbr-module"></span><h1>rpkimancer.sigobj.gbr module<a class="headerlink" href="#module-rpkimancer.sigobj.gbr" title="Permalink to this headline">¶</a></h1>
+<p>RPKI Ghostbusters Record implementation - RFC6493.</p>
+<dl class="py class">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.gbr.</span></code><code class="sig-name descname"><span class="pre">RpkiGhostbustersEContent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.EncapsulatedContent" title="rpkimancer.sigobj.base.EncapsulatedContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.EncapsulatedContent</span></code></a></p>
+<p>encapContentInfo for RPKI Ghostbusters Record - RFC6493.</p>
+<dl class="py attribute">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.content_type">
+<code class="sig-name descname"><span class="pre">content_type</span></code><em class="property"><span class="pre">:</span> <span class="pre">OID</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;id-ct-rpkiGhostbusters</span> <span class="pre">(OBJECT</span> <span class="pre">IDENTIFIER):</span> <span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">840,</span> <span class="pre">113549,</span> <span class="pre">1,</span> <span class="pre">9,</span> <span class="pre">16,</span> <span class="pre">1,</span> <span class="pre">35)&gt;</span></em><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.content_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;GhostbustersRecord</span> <span class="pre">(OCTET</span> <span class="pre">STRING)&gt;</span></em><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.file_ext">
+<code class="sig-name descname"><span class="pre">file_ext</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'gbr'</span></em><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.file_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.as_resources">
+<code class="sig-name descname"><span class="pre">as_resources</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'INHERIT'</span></em><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.as_resources" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.ip_resources">
+<code class="sig-name descname"><span class="pre">ip_resources</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[(4,</span> <span class="pre">'INHERIT'),</span> <span class="pre">(6,</span> <span class="pre">'INHERIT')]</span></em><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.ip_resources" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.to_txt">
+<code class="sig-name descname"><span class="pre">to_txt</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.to_txt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get default text serialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.to_json">
+<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize as JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbusters">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.gbr.</span></code><code class="sig-name descname"><span class="pre">RpkiGhostbusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.SignedObject" title="rpkimancer.sigobj.base.SignedObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.SignedObject</span></code></a></p>
+<p>CMS ASN.1 ContentInfo for RPKI Ghostbusters Records.</p>
+<dl class="py attribute">
+<dt id="rpkimancer.sigobj.gbr.RpkiGhostbusters.econtent_cls">
+<code class="sig-name descname"><span class="pre">econtent_cls</span></code><a class="headerlink" href="#rpkimancer.sigobj.gbr.RpkiGhostbusters.econtent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#rpkimancer.sigobj.gbr.RpkiGhostbustersEContent" title="rpkimancer.sigobj.gbr.RpkiGhostbustersEContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.gbr.RpkiGhostbustersEContent</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation index</a><ul>
+  <li><a href="modules.html">rpkimancer</a><ul>
+  <li><a href="rpkimancer.html">rpkimancer package</a><ul>
+  <li><a href="rpkimancer.sigobj.html">rpkimancer.sigobj package</a><ul>
+      <li>Previous: <a href="rpkimancer.sigobj.base.html" title="previous chapter">rpkimancer.sigobj.base module</a></li>
+      <li>Next: <a href="rpkimancer.sigobj.mft.html" title="next chapter">rpkimancer.sigobj.mft module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+<h3>Branches</h3>
+<ul>
+    <li><a href="../../release-prep/index.html">release-prep</a></li>
+    <li><a href="../../main/index.html">main</a></li>
+    <li><a href="../../pyup-pin-pycrate-0.0.0/index.html">pyup-pin-pycrate-0.0.0</a></li>
+    <li><a href="../../pyup-pin-sphinx-4.0.2/index.html">pyup-pin-sphinx-4.0.2</a></li>
+    <li><a href="../../pyup-pin-sphinx-autodoc-typehints-1.12.0/index.html">pyup-pin-sphinx-autodoc-typehints-1.12.0</a></li>
+    <li><a href="../../pyup-pin-sphinx-multiversion-0.2.4/index.html">pyup-pin-sphinx-multiversion-0.2.4</a></li>
+    <li><a href="rpkimancer.sigobj.gbr.html">pyup-update-sphinx-3.5.4-to-4.0.2</a></li>
+</ul>
+
+
+<h3>Tags</h3>
+<ul>
+    <li><a href="../../0.1.0rc1/index.html">0.1.0rc1</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021, Ben Maddison.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.
+  </div>
+  
+  </body>
+</html>

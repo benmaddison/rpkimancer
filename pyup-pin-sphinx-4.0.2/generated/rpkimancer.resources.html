@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rpkimancer.resources module &#8212; rpkimancer 0.1.0rc2.dev5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/readable.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rpkimancer.utils module" href="rpkimancer.utils.html" />
+    <link rel="prev" title="rpkimancer.cms module" href="rpkimancer.cms.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.utils.html" title="rpkimancer.utils module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cms.html" title="rpkimancer.cms module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.0rc2.dev5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="rpkimancer.html" accesskey="U">rpkimancer package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rpkimancer.resources module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-rpkimancer.resources">
+<span id="rpkimancer-resources-module"></span><h1>rpkimancer.resources module<a class="headerlink" href="#module-rpkimancer.resources" title="Permalink to this headline">¶</a></h1>
+<p>Number resource ASN.1 type helpers.</p>
+<dl class="py function">
+<dt id="rpkimancer.resources.net_to_bitstring">
+<code class="sig-prename descclassname"><span class="pre">rpkimancer.resources.</span></code><code class="sig-name descname"><span class="pre">net_to_bitstring</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.resources.net_to_bitstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an IPNetwork to an ASN.1 BIT STRING representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>network</strong> (<em>Union</em><em>[</em><em>ipaddress.IPv4Network</em><em>, </em><em>ipaddress.IPv6Network</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rpkimancer.resources.bitstring_to_net">
+<code class="sig-prename descclassname"><span class="pre">rpkimancer.resources.</span></code><code class="sig-name descname"><span class="pre">bitstring_to_net</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.resources.bitstring_to_net" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an ASN.1 BIT STRING representation to an IPNetwork.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bits</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – </p></li>
+<li><p><strong>version</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[ipaddress.IPv4Network, ipaddress.IPv6Network]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.resources.SeqOfIPAddressFamily">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.resources.</span></code><code class="sig-name descname"><span class="pre">SeqOfIPAddressFamily</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip_resources</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.resources.SeqOfIPAddressFamily" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
+<p>Base class for ASN.1 SEQUENCE OF IPAddressFamily types.</p>
+<dl class="py attribute">
+<dt id="rpkimancer.resources.SeqOfIPAddressFamily.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><a class="headerlink" href="#rpkimancer.resources.SeqOfIPAddressFamily.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.resources.IPAddrBlocks">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.resources.</span></code><code class="sig-name descname"><span class="pre">IPAddrBlocks</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip_resources</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.resources.IPAddrBlocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rpkimancer.resources.SeqOfIPAddressFamily" title="rpkimancer.resources.SeqOfIPAddressFamily"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.resources.SeqOfIPAddressFamily</span></code></a></p>
+<p>ASN.1 IPAddrBlocks type - RFC3779.</p>
+<dl class="py attribute">
+<dt id="rpkimancer.resources.IPAddrBlocks.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;IPAddrBlocks</span> <span class="pre">(SEQUENCE</span> <span class="pre">OF)&gt;</span></em><a class="headerlink" href="#rpkimancer.resources.IPAddrBlocks.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.resources.ASIdOrRange">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.resources.</span></code><code class="sig-name descname"><span class="pre">ASIdOrRange</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.resources.ASIdOrRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
+<p>ASN.1 ASIdOrRange type - RFC3779.</p>
+<dl class="py attribute">
+<dt id="rpkimancer.resources.ASIdOrRange.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ASIdOrRange</span> <span class="pre">(CHOICE)&gt;</span></em><a class="headerlink" href="#rpkimancer.resources.ASIdOrRange.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="rpkimancer.resources.ASIdentifiers">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">rpkimancer.resources.</span></code><code class="sig-name descname"><span class="pre">ASIdentifiers</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_resources</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.resources.ASIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
+<p>ASN.1 ASIdentifiers type - RFC3779.</p>
+<dl class="py attribute">
+<dt id="rpkimancer.resources.ASIdentifiers.content_syntax">
+<code class="sig-name descname"><span class="pre">content_syntax</span></code><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ASIdentifiers</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.resources.ASIdentifiers.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation index</a><ul>
+  <li><a href="modules.html">rpkimancer</a><ul>
+  <li><a href="rpkimancer.html">rpkimancer package</a><ul>
+      <li>Previous: <a href="rpkimancer.cms.html" title="previous chapter">rpkimancer.cms module</a></li>
+      <li>Next: <a href="rpkimancer.utils.html" title="next chapter">rpkimancer.utils module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+<h3>Branches</h3>
+<ul>
+    <li><a href="../../release-prep/index.html">release-prep</a></li>
+    <li><a href="../../main/index.html">main</a></li>
+    <li><a href="../../pyup-pin-pycrate-0.0.0/index.html">pyup-pin-pycrate-0.0.0</a></li>
+    <li><a href="rpkimancer.resources.html">pyup-pin-sphinx-4.0.2</a></li>
+    <li><a href="../../pyup-pin-sphinx-autodoc-typehints-1.12.0/index.html">pyup-pin-sphinx-autodoc-typehints-1.12.0</a></li>
+    <li><a href="../../pyup-pin-sphinx-multiversion-0.2.4/index.html">pyup-pin-sphinx-multiversion-0.2.4</a></li>
+    <li><a href="../../pyup-update-sphinx-3.5.4-to-4.0.2/index.html">pyup-update-sphinx-3.5.4-to-4.0.2</a></li>
+</ul>
+
+
+<h3>Tags</h3>
+<ul>
+    <li><a href="../../0.1.0rc1/index.html">0.1.0rc1</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021, Ben Maddison.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.
+  </div>
+  
+  </body>
+</html>
