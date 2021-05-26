@@ -1,6 +1,6 @@
 # rpkimancer
 
-![animated rpkimancer](rpkimancer.png)
+![animated rpkimancer](docs/_static/rpkimancer.png)
 
 > **rpkimancer** /ɑː-piː-keɪ-aɪ-mænsə/
 >
