@@ -19,7 +19,7 @@ jobs:
       - name: install ${{ env.TOX_JOB }} job runner
         run: python -m pip install -r packaging/requirements-tox.txt
       - name: run ${{ env.TOX_JOB }} job
-        run: tox
+        run: tox -e $TOX_JOB
   lint:
     needs: [safety]
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
       - name: install ${{ env.TOX_JOB }} job runner
         run: python -m pip install -r packaging/requirements-tox.txt
       - name: run ${{ env.TOX_JOB }} job
-        run: tox
+        run: tox -e $TOX_JOB
   typecheck:
     needs: [safety]
     strategy:
@@ -115,7 +115,7 @@ jobs:
       - name: install ${{ env.TOX_JOB }} job runner
         run: python -m pip install -r packaging/requirements-tox.txt
       - name: run ${{ env.TOX_JOB }} job
-        run: tox
+        run: tox -e $TOX_JOB
       - name: deploy to github-pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
