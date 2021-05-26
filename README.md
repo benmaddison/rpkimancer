@@ -39,10 +39,12 @@ Similarly, the de-serialisation code contains no crypto validation at all.
 
 ## Installation
 
-A package will be on pypi at some stage. In the meantime, you can:
+Python version 3.8 or greater is required.
+
+A package is available on PyPI. You can:
 
 ``` sh
-pip install git+https://github.com/benmaddison/rpkimancer.git@main#egg=rpkimancer
+python3 -m pip install rpkimancer
 ```
 
 ## Usage
@@ -103,3 +105,27 @@ components to `rpkimancer` using the following entry points:
 
     The target should be a class inheriting from `rpkimancer.cli.conjure.ConjurePlugin`,
     and implementing the `.init_parser(...)` and `.run(...)` methods.
+
+## Contributing
+
+Both feature contributions and bug fixes are very welcome.
+
+Please open an issue for discussion before expending energy on an implementation.
+
+Pre-standard RPKI object implementations will not be accepted into the main library.
+These should be implemented in a standalone plugin distribution while still in the
+I-D phase.
+
+To set up a development environment:
+
+``` sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install packaging/requirements-dev.txt
+```
+
+And to run the tests and other CI jobs locally:
+
+``` sh
+tox
+```
