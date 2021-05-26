@@ -82,6 +82,7 @@ myst_enable_extensions = [
 
 # -- Multiversion processing
 
+smv_remote_whitelist = r"^origin$"
 smv_prebuild_command = "sphinx-apidoc --separate " \
                                      "--force " \
                                      "--output-dir docs/generated/ " \
