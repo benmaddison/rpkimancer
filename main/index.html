@@ -91,8 +91,9 @@ valid use-case is to create <em>almost</em> valid objects to recreate RP bugs.</
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>A package will be on pypi at some stage. In the meantime, you can:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/benmaddison/rpkimancer.git@main#egg<span class="o">=</span>rpkimancer
+<p>Python version 3.8 or greater is required.</p>
+<p>A package is available on PyPI. You can:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 -m pip install rpkimancer
 </pre></div>
 </div>
 </div>
@@ -146,6 +147,24 @@ and implementing the <code class="docutils literal notranslate"><span class="pre
 </li>
 </ul>
 </div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Both feature contributions and bug fixes are very welcome.</p>
+<p>Please open an issue for discussion before expending energy on an implementation.</p>
+<p>Pre-standard RPKI object implementations will not be accepted into the main library.
+These should be implemented in a standalone plugin distribution while still in the
+I-D phase.</p>
+<p>To set up a development environment:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install packaging/requirements-dev.txt
+</pre></div>
+</div>
+<p>And to run the tests and other CI jobs locally:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tox
+</pre></div>
+</div>
+</div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -171,6 +190,7 @@ and implementing the <code class="docutils literal notranslate"><span class="pre
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#writing-plugins">Writing Plugins</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
@@ -183,7 +203,6 @@ and implementing the <code class="docutils literal notranslate"><span class="pre
 </ul>
 <h3>Branches</h3>
 <ul>
-    <li><a href="../release-prep/index.html">release-prep</a></li>
     <li><a href="index.html">main</a></li>
 </ul>
 
