@@ -1,0 +1,32 @@
+rpkimancer package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   rpkimancer.asn1
+   rpkimancer.cert
+   rpkimancer.cli
+   rpkimancer.sigobj
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   rpkimancer.algorithms
+   rpkimancer.cms
+   rpkimancer.resources
+   rpkimancer.utils
+
+Module contents
+---------------
+
+.. automodule:: rpkimancer
+   :members:
+   :undoc-members:
+   :show-inheritance:

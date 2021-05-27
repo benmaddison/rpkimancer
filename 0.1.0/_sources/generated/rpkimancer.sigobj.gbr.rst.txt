@@ -1,0 +1,7 @@
+rpkimancer.sigobj.gbr module
+============================
+
+.. automodule:: rpkimancer.sigobj.gbr
+   :members:
+   :undoc-members:
+   :show-inheritance:
