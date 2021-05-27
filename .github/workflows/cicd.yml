@@ -93,7 +93,7 @@ jobs:
         with:
           name: coverage-${{ matrix.os }}-python${{ matrix.python-version }}
           path: coverage.xml
-  coverage:
+  coverage-report:
     needs: [test]
     runs-on: ubuntu-latest
     strategy:
@@ -106,6 +106,8 @@ jobs:
           - 3.8
           - 3.9
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - name: download coverage report artifact
         uses: actions/download-artifact@v2
         with:
