@@ -1,7 +1,0 @@
-rpkimancer.asn1.types module
-============================
-
-.. automodule:: rpkimancer.asn1.types
-   :members:
-   :undoc-members:
-   :show-inheritance:

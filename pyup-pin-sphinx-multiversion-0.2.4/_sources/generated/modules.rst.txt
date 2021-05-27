@@ -1,7 +1,0 @@
-rpkimancer
-==========
-
-.. toctree::
-   :maxdepth: 4
-
-   rpkimancer

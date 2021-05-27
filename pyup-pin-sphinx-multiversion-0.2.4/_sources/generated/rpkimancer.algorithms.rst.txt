@@ -1,7 +1,0 @@
-rpkimancer.algorithms module
-============================
-
-.. automodule:: rpkimancer.algorithms
-   :members:
-   :undoc-members:
-   :show-inheritance:
