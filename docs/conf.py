@@ -82,6 +82,7 @@ myst_enable_extensions = [
 
 # -- Multiversion processing
 
+smv_branch_whitelist = r"^(?!pyup-|gh-pages).*$"
 smv_remote_whitelist = r"^origin$"
 smv_prebuild_command = "sphinx-apidoc --separate " \
                                      "--force " \
