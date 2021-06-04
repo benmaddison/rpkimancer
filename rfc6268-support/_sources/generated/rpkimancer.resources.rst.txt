@@ -1,0 +1,7 @@
+rpkimancer.resources module
+===========================
+
+.. automodule:: rpkimancer.resources
+   :members:
+   :undoc-members:
+   :show-inheritance:
