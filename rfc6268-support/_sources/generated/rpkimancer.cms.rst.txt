@@ -1,7 +1,0 @@
-rpkimancer.cms module
-=====================
-
-.. automodule:: rpkimancer.cms
-   :members:
-   :undoc-members:
-   :show-inheritance:
