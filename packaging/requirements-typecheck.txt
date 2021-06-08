@@ -1,4 +1,4 @@
-mypy==0.812
+mypy==0.900
 
 # typehint library stubs
 types-cryptography==0.1.1
