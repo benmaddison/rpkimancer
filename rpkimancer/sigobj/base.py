@@ -18,7 +18,7 @@ import os
 import typing
 
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
-from ..asn1 import Content
+from ..asn1 import Interface
 from ..asn1.mod import PKIXAlgs_2009
 from ..asn1.types import ASN1Class, OID
 from ..cert import EECertificate
@@ -36,7 +36,7 @@ log = logging.getLogger(__name__)
 CMS_VERSION: typing.Final = 3
 
 
-class EncapsulatedContent(Content):
+class EncapsulatedContent(Interface):
     """Base class for encapContentInfo in RPKI Signed Objects - RFC6488."""
 
     digest_algorithm = DIGEST_ALGORITHMS[SHA256]

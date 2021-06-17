@@ -26,8 +26,8 @@ log = logging.getLogger(__name__)
 
 log_writer = LogWriter(log, level=logging.WARNING)
 
-ContentSubclass = typing.TypeVar("ContentSubclass",
-                                 bound="Content")
+InterfaceSubclass = typing.TypeVar("InterfaceSubclass",
+                                   bound="Interface")
 
 
 def append_info_object_set(obj_set: ASN1Class, *obj_ins: ASN1Class) -> None:
@@ -39,7 +39,7 @@ def append_info_object_set(obj_set: ASN1Class, *obj_ins: ASN1Class) -> None:
     pycrate_asn1rt.init.build_classset_dict(obj_set)
 
 
-class Content:
+class Interface:
     """Generic base ASN.1 type wrapping pycrates API."""
 
     content_syntax: ASN1Obj
@@ -59,16 +59,16 @@ class Content:
         log.info(f"finished initialisation of {self} ASN.1 content")
 
     @classmethod
-    def from_data(cls, data: typing.Any) -> ContentSubclass:
+    def from_data(cls, data: typing.Any) -> InterfaceSubclass:
         """Construct an instance from python data."""
         log.info(f"creating new {cls} object")
-        self: ContentSubclass = cls.__new__(cls)
-        Content.__init__(self, data)
+        self: InterfaceSubclass = cls.__new__(cls)
+        Interface.__init__(self, data)
         return self
 
     @classmethod
-    def from_der(cls: typing.Type[ContentSubclass],
-                 der_data: bytes) -> ContentSubclass:
+    def from_der(cls: typing.Type[InterfaceSubclass],
+                 der_data: bytes) -> InterfaceSubclass:
         """Construct an instance from DER encoded data."""
         log.info(f"trying to acquire lock for {cls}")
         with cls._lock:
@@ -78,8 +78,8 @@ class Content:
             data = cls.content_syntax.get_val()
             cls.content_syntax.reset_val()
             log.info(f"finished deserialising {cls} object")
-        self: ContentSubclass = cls.__new__(cls)
-        Content.__init__(self, data)
+        self: InterfaceSubclass = cls.__new__(cls)
+        Interface.__init__(self, data)
         return self
 
     @property

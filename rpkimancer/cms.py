@@ -16,7 +16,7 @@ from __future__ import annotations
 import logging
 import typing
 
-from .asn1 import Content, append_info_object_set
+from .asn1 import Interface, append_info_object_set
 from .asn1.mod import CryptographicMessageSyntax_2009
 from .asn1.types import ASN1Class, OID
 
@@ -26,13 +26,13 @@ ContentDataSubclass = typing.TypeVar("ContentDataSubclass",
                                      bound="ContentData")
 
 
-class ContentData(Content):
+class ContentData(Interface):
     """Generic base class for ASN.1 types idenitied by an OID."""
 
     content_type: OID
 
 
-class ContentInfo(Content):
+class ContentInfo(Interface):
     """CMS ASN.1 ContentInfo type - RFC5911."""
 
     content_syntax = CryptographicMessageSyntax_2009.ContentInfo
@@ -70,7 +70,7 @@ class SignedData(ContentData):
     content_syntax = CryptographicMessageSyntax_2009.SignedData
 
 
-class SignedAttributes(Content):
+class SignedAttributes(Interface):
     """CMS ASN.1 SignedAttributes type - RFC5911."""
 
     content_syntax = CryptographicMessageSyntax_2009.SignedAttributes
@@ -93,7 +93,7 @@ class SignedAttributes(Content):
         super().__init__(data)
 
 
-class EncapsulatedContentInfo(Content):
+class EncapsulatedContentInfo(Interface):
     """CMS ASN.1 EncapsulatedContentInfo type - RFC5911."""
 
     content_syntax = CryptographicMessageSyntax_2009.EncapsulatedContentInfo

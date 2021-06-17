@@ -17,7 +17,7 @@ import ipaddress
 import logging
 import typing
 
-from .asn1 import Content
+from .asn1 import Interface
 from .asn1.mod import IPAddrAndASCertExtn
 
 log = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ def bitstring_to_net(bits: IPNetworkBits, version: int) -> IPNetwork:
     return typing.cast(IPNetwork, net)
 
 
-class SeqOfIPAddressFamily(Content):
+class SeqOfIPAddressFamily(Interface):
     """Base class for ASN.1 SEQUENCE OF IPAddressFamily types."""
 
     def __init__(self, ip_resources: IpResourcesInfo) -> None:
@@ -105,7 +105,7 @@ class IPAddrBlocks(SeqOfIPAddressFamily):
     content_syntax = IPAddrAndASCertExtn.IPAddrBlocks
 
 
-class ASIdOrRange(Content):
+class ASIdOrRange(Interface):
     """ASN.1 ASIdOrRange type - RFC3779."""
 
     content_syntax = IPAddrAndASCertExtn.ASIdOrRange
@@ -122,7 +122,7 @@ class ASIdOrRange(Content):
         super().__init__(data)
 
 
-class ASIdentifiers(Content):
+class ASIdentifiers(Interface):
     """ASN.1 ASIdentifiers type - RFC3779."""
 
     content_syntax = IPAddrAndASCertExtn.ASIdentifiers

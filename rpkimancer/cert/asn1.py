@@ -15,14 +15,14 @@ from __future__ import annotations
 
 import logging
 
-from ..asn1 import Content, append_info_object_set
+from ..asn1 import Interface, append_info_object_set
 from ..asn1.mod import PKIX1Explicit_2009
 from ..asn1.types import ASN1Class
 
 log = logging.getLogger(__name__)
 
 
-class Certificate(Content):
+class Certificate(Interface):
     """X.509 ASN.1 Certificate type - RFC5912."""
 
     content_syntax = PKIX1Explicit_2009.Certificate
@@ -46,7 +46,7 @@ class Certificate(Content):
         append_info_object_set(extn_set, ext_type)
 
 
-class SubjectPublicKeyInfo(Content):
+class SubjectPublicKeyInfo(Interface):
     """X.509 ASN.1 SubjectPublicKeyInfo type - RFC5912."""
 
     content_syntax = PKIX1Explicit_2009.SubjectPublicKeyInfo

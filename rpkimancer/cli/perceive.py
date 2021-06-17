@@ -23,11 +23,11 @@ import typing
 from . import Args, BaseCommand, Return
 
 if typing.TYPE_CHECKING:
-    from rpkimancer.asn1 import Content
+    from rpkimancer.asn1 import Interface
 
 log = logging.getLogger(__name__)
 
-WriteGenerator = typing.Generator[typing.Callable[["Content", str], None],
+WriteGenerator = typing.Generator[typing.Callable[["Interface", str], None],
                                   None,
                                   None]
 
@@ -110,7 +110,7 @@ class Perceive(BaseCommand):
     @contextlib.contextmanager
     def _output(path: typing.Optional[str] = None) -> WriteGenerator:
 
-        def _write(obj: Content,
+        def _write(obj: Interface,
                    info_property: typing.Optional[str],
                    fmt_method: str,
                    f: typing.TextIO) -> None:
