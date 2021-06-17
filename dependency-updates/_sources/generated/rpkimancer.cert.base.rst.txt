@@ -1,7 +1,0 @@
-rpkimancer.cert.base module
-===========================
-
-.. automodule:: rpkimancer.cert.base
-   :members:
-   :undoc-members:
-   :show-inheritance:
