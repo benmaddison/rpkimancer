@@ -22,16 +22,18 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from . import base, ca, oid
 
 if typing.TYPE_CHECKING:
-    from ..sigobj import SignedObject
+    from ..sigobj.base import EncapsulatedContentType, SignedObject
 
 log = logging.getLogger(__name__)
 
+ECT = typing.TypeVar("ECT", bound="EncapsulatedContentType")
 
-class EECertificate(base.BaseResourceCertificate):
+
+class EECertificate(base.BaseResourceCertificate, typing.Generic[ECT]):
     """RPKI EE Certificate - RFC6487."""
 
     def __init__(self, *,
-                 signed_object: SignedObject,
+                 signed_object: SignedObject[ECT],
                  **kwargs: typing.Any) -> None:
         """Initialise the EE Certificate."""
         self._signed_object = signed_object
@@ -39,7 +41,7 @@ class EECertificate(base.BaseResourceCertificate):
         super().__init__(common_name=common_name, **kwargs)
 
     @property
-    def signed_object(self) -> SignedObject:
+    def signed_object(self) -> SignedObject[ECT]:
         """Get the SignedObject that this certificate signs."""
         return self._signed_object
 

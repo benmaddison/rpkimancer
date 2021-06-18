@@ -18,7 +18,7 @@ import json
 import logging
 import typing
 
-from .base import EncapsulatedContent, SignedObject
+from .base import EncapsulatedContentType, SignedObject
 from ..asn1.mod import RPKI_ROA
 from ..resources import (AFI, IPNetwork, IPNetworkBits, IpResourcesInfo,
                          bitstring_to_net, net_to_bitstring)
@@ -28,11 +28,10 @@ log = logging.getLogger(__name__)
 RoaNetworkInfo = typing.Tuple[IPNetwork, typing.Optional[int]]
 
 
-class RouteOriginAttestationEContent(EncapsulatedContent):
+class RouteOriginAttestationContentType(EncapsulatedContentType):
     """encapContentInfo for RPKI ROAs - RFC6482."""
 
-    content_type = RPKI_ROA.id_ct_routeOriginAuthz
-    content_syntax = RPKI_ROA.RouteOriginAttestation
+    asn1_definition = RPKI_ROA.ct_routeOriginAuthz
     file_ext = "roa"
     as_resources = None
 
@@ -84,8 +83,6 @@ class RouteOriginAttestationEContent(EncapsulatedContent):
         return json.dumps(data, indent=2)
 
 
-class RouteOriginAttestation(SignedObject,
-                             econtent_type=RPKI_ROA.ct_routeOriginAuthz):
+class RouteOriginAttestation(SignedObject[RouteOriginAttestationContentType],
+                             econtent_type=RouteOriginAttestationContentType):
     """CMS ASN.1 ContentInfo for RPKI ROAs."""
-
-    econtent_cls = RouteOriginAttestationEContent

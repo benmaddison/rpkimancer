@@ -20,9 +20,8 @@ import typing
 log = logging.getLogger(__name__)
 
 
-AlgorithmDict = typing.Dict[typing.Tuple[int, ...],
-                            typing.Callable[[bytes],
-                                            "hashlib._Hash"]]
+DigestAlgorithm = typing.Callable[[bytes], "hashlib._Hash"]
+AlgorithmDict = typing.Dict[typing.Tuple[int, ...], DigestAlgorithm]
 
 SHA256: typing.Final = (2, 16, 840, 1, 101, 3, 4, 2, 1)
 

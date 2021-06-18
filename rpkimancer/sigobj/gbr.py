@@ -17,18 +17,17 @@ import json
 import logging
 import typing
 
-from .base import EncapsulatedContent, SignedObject
+from .base import EncapsulatedContentType, SignedObject
 from ..asn1.mod import RPKIGhostbusters
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
 
 log = logging.getLogger(__name__)
 
 
-class RpkiGhostbustersEContent(EncapsulatedContent):
+class RpkiGhostbustersContentType(EncapsulatedContentType):
     """encapContentInfo for RPKI Ghostbusters Record - RFC6493."""
 
-    content_type = RPKIGhostbusters.id_ct_rpkiGhostbusters
-    content_syntax = RPKIGhostbusters.GhostbustersRecord
+    asn1_definition = RPKIGhostbusters.ct_rpkiGhostbusters
     file_ext = "gbr"
     as_resources = INHERIT_AS
     ip_resources = [INHERIT_IPV4, INHERIT_IPV6]
@@ -72,8 +71,6 @@ class RpkiGhostbustersEContent(EncapsulatedContent):
         return json.dumps(data, indent=2)
 
 
-class RpkiGhostbusters(SignedObject,
-                       econtent_type=RPKIGhostbusters.ct_rpkiGhostbusters):
+class RpkiGhostbusters(SignedObject[RpkiGhostbustersContentType],
+                       econtent_type=RpkiGhostbustersContentType):
     """CMS ASN.1 ContentInfo for RPKI Ghostbusters Records."""
-
-    econtent_cls = RpkiGhostbustersEContent

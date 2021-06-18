@@ -18,11 +18,10 @@ import os
 import typing
 
 from ..algorithms import DIGEST_ALGORITHMS, SHA256
-from ..asn1 import Interface
 from ..asn1.mod import PKIXAlgs_2009
-from ..asn1.types import ASN1Class, OID
 from ..cert import EECertificate
 from ..cms import (ContentInfo,
+                   ContentType,
                    EncapsulatedContentInfo,
                    SignedAttributes,
                    SignedData)
@@ -35,12 +34,13 @@ log = logging.getLogger(__name__)
 
 CMS_VERSION: typing.Final = 3
 
+ECT = typing.TypeVar("ECT", bound="EncapsulatedContentType")
 
-class EncapsulatedContent(Interface):
-    """Base class for encapContentInfo in RPKI Signed Objects - RFC6488."""
+
+class EncapsulatedContentType(ContentType):
+    """Base for CONTENT-TYPE instance for RPKI Signed Objects - RFC6488."""
 
     digest_algorithm = DIGEST_ALGORITHMS[SHA256]
-    content_type: OID
     file_ext: str
 
     @property
@@ -67,21 +67,22 @@ class EncapsulatedContent(Interface):
         return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
 
 
-class SignedObject(ContentInfo):
+class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):
     """Base CMS ASN.1 ContentInfo for RPKI Signed Objects - RFC5911/RFC6488."""
 
-    econtent_cls: typing.Type[EncapsulatedContent]
-    ee_cert_cls: typing.Type[EECertificate] = EECertificate
+    econtent_type: typing.Type[ECT]
+    ee_cert_cls: typing.Type[EECertificate[ECT]] = EECertificate
 
     @classmethod
     def __init_subclass__(cls,
-                          econtent_type: typing.Optional[ASN1Class] = None,
+                          econtent_type: typing.Type[ECT],
                           **kwargs: typing.Any) -> None:
         """Register EncapsulatedContentInfo CONTENT-TYPE for DER encoding."""
         super().__init_subclass__(**kwargs)
         if econtent_type is not None:
             log.info(f"Adding {econtent_type} to constraining object info set")
             cls.register_econtent_type(SignedData, econtent_type)
+            cls.econtent_type = econtent_type
 
     def __init__(self,
                  issuer: CertificateAuthority,
@@ -93,7 +94,7 @@ class SignedObject(ContentInfo):
         # set object file name
         self._file_name = file_name
         # construct econtent
-        self._econtent = self.econtent_cls(*args, **kwargs)
+        self._econtent = self.econtent_type(*args, **kwargs)
         # construct certificate
         ee_cert = self.ee_cert_cls(signed_object=self,
                                    issuer=issuer,
@@ -112,7 +113,7 @@ class SignedObject(ContentInfo):
             # rfc6488 section 2.1.3
             "encapContentInfo": {
                 # rfc6488 section 2.1.3.1
-                "eContentType": self.econtent.content_type.get_val(),
+                "eContentType": self.econtent.content_type,
                 # rfc6488 section 2.1.3.2
                 "eContent": self.econtent.to_der(),
             },
@@ -145,23 +146,23 @@ class SignedObject(ContentInfo):
         super().__init__(content=SignedData(data))
 
     @property
-    def econtent_info(self) -> EncapsulatedContentInfo:
+    def econtent_info(self) -> EncapsulatedContentInfo[ECT]:
         """Get the Signed Object's encapContentInfo."""
         try:
             return self._econtent_info
         except AttributeError:
-            eci = EncapsulatedContentInfo.from_content_info(self)
-            self._econtent_info: EncapsulatedContentInfo = eci
+            eci = EncapsulatedContentInfo[ECT].from_content_info(self)
+            self._econtent_info: EncapsulatedContentInfo[ECT] = eci
         return self._econtent_info
 
     @property
-    def econtent(self) -> EncapsulatedContent:
+    def econtent(self) -> EncapsulatedContentType:
         """Get the Signed Object's eContent."""
         try:
             return self._econtent
         except AttributeError:
             econtent_data = self.econtent_info.econtent_val
-            self._econtent = self.econtent_cls.from_data(econtent_data)
+            self._econtent = self.econtent_type.from_data(econtent_data)
         return self._econtent
 
     @property

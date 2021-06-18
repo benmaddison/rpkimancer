@@ -17,16 +17,15 @@ import logging
 
 from rpkimancer.asn1.mod import RpkiFoo
 from rpkimancer.resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
-from rpkimancer.sigobj.base import EncapsulatedContent, SignedObject
+from rpkimancer.sigobj.base import EncapsulatedContentType, SignedObject
 
 log = logging.getLogger(__name__)
 
 
-class FooObjectEContent(EncapsulatedContent):
+class FooObjectContentType(EncapsulatedContentType):
     """encapContentInfo for RPKI Foo Objects."""
 
-    content_type = RpkiFoo.id_ct_rpkiFooObject
-    content_syntax = RpkiFoo.RpkiFooObject
+    asn1_definition = RpkiFoo.ct_rpkiFooObject
     file_ext = "foo"
     as_resources = INHERIT_AS
     ip_resources = [INHERIT_IPV4, INHERIT_IPV6]
@@ -37,7 +36,6 @@ class FooObjectEContent(EncapsulatedContent):
         super().__init__(data)
 
 
-class FooObject(SignedObject):
+class FooObject(SignedObject[FooObjectContentType],
+                econtent_type=FooObjectContentType):
     """CMS ASN.1 ContentInfo for RPKI Foo Objects."""
-
-    econtent_cls = FooObjectEContent

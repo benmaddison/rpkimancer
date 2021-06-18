@@ -17,7 +17,7 @@ import datetime
 import logging
 import typing
 
-from .base import EncapsulatedContent, SignedObject
+from .base import EncapsulatedContentType, SignedObject
 from ..algorithms import SHA256
 from ..asn1.mod import RPKIManifest
 from ..resources import INHERIT_AS, INHERIT_IPV4, INHERIT_IPV6
@@ -26,25 +26,23 @@ log = logging.getLogger(__name__)
 
 GeneralizedTimeInfo = typing.Tuple[typing.Optional[str], ...]
 HashInfo = typing.Tuple[int, int]
+FileListInfo = typing.List[typing.Tuple[str, bytes]]
 
 
-class RpkiManifestEContent(EncapsulatedContent):
+class RpkiManifestContentType(EncapsulatedContentType):
     """encapContentInfo for RPKI Manifests - RFC6486."""
 
-    content_type = RPKIManifest.id_ct_rpkiManifest
-    content_syntax = RPKIManifest.Manifest
+    asn1_definition = RPKIManifest.ct_rpkiManifest
     file_ext = "mft"
     as_resources = INHERIT_AS
     ip_resources: typing.Final = (INHERIT_IPV4, INHERIT_IPV6)
-
-    _file_list_type = typing.List[typing.Tuple[str, bytes]]
 
     def __init__(self, *,
                  version: int = 0,
                  manifest_number: int = 0,
                  this_update: datetime.datetime,
                  next_update: datetime.datetime,
-                 file_list: _file_list_type) -> None:
+                 file_list: FileListInfo) -> None:
         """Initialise the encapContentInfo."""
         log.info(f"preparing data for {self}")
         data = {"version": version,
@@ -71,8 +69,6 @@ class RpkiManifestEContent(EncapsulatedContent):
         return (hash_bits, hash_len)
 
 
-class RpkiManifest(SignedObject,
-                   econtent_type=RPKIManifest.ct_rpkiManifest):
+class RpkiManifest(SignedObject[RpkiManifestContentType],
+                   econtent_type=RpkiManifestContentType):
     """CMS ASN.1 ContentInfo for RPKI Manifests."""
-
-    econtent_cls = RpkiManifestEContent
