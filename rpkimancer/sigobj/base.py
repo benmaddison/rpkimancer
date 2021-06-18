@@ -58,7 +58,7 @@ class EncapsulatedContentType(ContentType):
         return self.digest_algorithm(self.to_der()).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
 
     def signed_attrs(self) -> SignedAttributes:
-        """Construct the signedAttrs value from the encapContentInfo."""
+        """Construct the signedAttrs value from the EncapsulatedContentInfo."""
         return SignedAttributes(content_type=self.content_type,
                                 message_digest=self.digest())
 
@@ -74,15 +74,13 @@ class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):
     ee_cert_cls: typing.Type[EECertificate[ECT]] = EECertificate
 
     @classmethod
-    def __init_subclass__(cls,
-                          econtent_type: typing.Type[ECT],
-                          **kwargs: typing.Any) -> None:
+    def __init_subclass__(cls, **kwargs: typing.Any) -> None:
         """Register EncapsulatedContentInfo CONTENT-TYPE for DER encoding."""
         super().__init_subclass__(**kwargs)
-        if econtent_type is not None:
-            log.info(f"Adding {econtent_type} to constraining object info set")
-            cls.register_econtent_type(SignedData, econtent_type)
-            cls.econtent_type = econtent_type
+        econtent_type = typing.get_args(cls.__orig_bases__[0])[0]  # type: ignore[attr-defined] # noqa: E501
+        log.info(f"Adding {econtent_type} to constraining object info set")
+        cls.register_econtent_type(SignedData, econtent_type)
+        cls.econtent_type = econtent_type
 
     def __init__(self,
                  issuer: CertificateAuthority,
@@ -93,8 +91,9 @@ class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):
         log.info(f"preparing data for {self}")
         # set object file name
         self._file_name = file_name
-        # construct econtent
+        # construct encapContentInfo
         self._econtent = self.econtent_type(*args, **kwargs)
+        self._econtent_info = EncapsulatedContentInfo(econtent=self.econtent)
         # construct certificate
         ee_cert = self.ee_cert_cls(signed_object=self,
                                    issuer=issuer,
@@ -111,12 +110,7 @@ class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):
             # rfc6488 section 2.1.2 and rfc7935
             "digestAlgorithms": [{"algorithm": SHA256}],
             # rfc6488 section 2.1.3
-            "encapContentInfo": {
-                # rfc6488 section 2.1.3.1
-                "eContentType": self.econtent.content_type,
-                # rfc6488 section 2.1.3.2
-                "eContent": self.econtent.to_der(),
-            },
+            "encapContentInfo": self.econtent_info.content_data,
             # rfc6488 section 2.1.4
             "certificates": [
                 ("certificate", ee_cert.asn1_cert.content_data),
@@ -152,11 +146,11 @@ class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):
             return self._econtent_info
         except AttributeError:
             eci = EncapsulatedContentInfo[ECT].from_content_info(self)
-            self._econtent_info: EncapsulatedContentInfo[ECT] = eci
+            self._econtent_info = eci
         return self._econtent_info
 
     @property
-    def econtent(self) -> EncapsulatedContentType:
+    def econtent(self) -> ECT:
         """Get the Signed Object's eContent."""
         try:
             return self._econtent

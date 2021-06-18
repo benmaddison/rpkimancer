@@ -60,16 +60,20 @@ class ContentInfo(Interface, typing.Generic[CT]):
 
 
 class ContentTypeIdDescriptor:
+    """Data descriptor for 'content_type' class property."""
 
     def __get__(self, instance: typing.Optional[CT],
                 owner: typing.Type[CT]) -> OID:
+        """Get CONTENT-TYPE.&id."""
         return owner.asn1_definition.get_val()["id"]
 
 
 class ContentTypeSyntaxDescriptor:
+    """Data descriptor for 'content_syntax' class property."""
 
     def __get__(self, instance: typing.Optional[CT],
                 owner: typing.Type[CT]) -> ASN1Obj:
+        """Get CONTENT-TYPE.&Type."""
         return owner.asn1_definition.get_val()["Type"].get_typeref()
 
 

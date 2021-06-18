@@ -83,6 +83,5 @@ class RouteOriginAttestationContentType(EncapsulatedContentType):
         return json.dumps(data, indent=2)
 
 
-class RouteOriginAttestation(SignedObject[RouteOriginAttestationContentType],
-                             econtent_type=RouteOriginAttestationContentType):
+class RouteOriginAttestation(SignedObject[RouteOriginAttestationContentType]):
     """CMS ASN.1 ContentInfo for RPKI ROAs."""
