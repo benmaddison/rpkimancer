@@ -17,9 +17,9 @@
 A library and associated command line utility for quickly creating and reading
 arbitrary RPKI signed objects.
 
-The primary motivation was to be able to construct new object types directly
-from the ASN.1 `EncapsulatedContentInfo` definition with minimal boilerplate
-and zero custom encoding logic.
+The primary motivation was to be able to construct new RPKI signed object types
+directly from an ASN.1 `CONTENT-TYPE` instance definition with minimal
+boilerplate and zero custom encoding logic.
 
 The base distribution comes with the necessary plumbing to read and write the
 currently standardised object types:
@@ -28,9 +28,9 @@ currently standardised object types:
 - ROAs (RFC6482)
 - Ghostbuster Records (RFC6493)
 
-Additional signed objects can be supported via a plugin system.
+Additional signed objects can be supported via a plug-in system.
 
-This **not** an RP or a CA.
+This is **not** an RP or a CA.
 
 Minimal validation is done on object creation. This is intentional, since a
 valid use-case is to create *almost* valid objects to recreate RP bugs.
@@ -68,9 +68,9 @@ The `rpkincant` CLI tool ships with two subcommands:
     The result is written to STDOUT by default, in a variety of selectable
     formats.
 
-## Writing Plugins
+## Writing Plug-ins
 
-Plugins implementing new signed object types can advertise the required
+Plug-ins implementing new signed object types can advertise the required
 components to `rpkimancer` using the following entry points:
 
 -   `rpkimancer.asn1.modules`:
@@ -113,7 +113,7 @@ Both feature contributions and bug fixes are very welcome.
 Please open an issue for discussion before expending energy on an implementation.
 
 Pre-standard RPKI object implementations will not be accepted into the main library.
-These should be implemented in a standalone plugin distribution while still in the
+These should be implemented in a standalone plug-in distribution while still in the
 I-D phase.
 
 To set up a development environment:
