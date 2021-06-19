@@ -74,9 +74,9 @@ RPKI.”</em></p>
 <h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
 <p>A library and associated command line utility for quickly creating and reading
 arbitrary RPKI signed objects.</p>
-<p>The primary motivation was to be able to construct new object types directly
-from the ASN.1 <code class="docutils literal notranslate"><span class="pre">EncapsulatedContentInfo</span></code> definition with minimal boilerplate
-and zero custom encoding logic.</p>
+<p>The primary motivation was to be able to construct new RPKI signed object types
+directly from an ASN.1 <code class="docutils literal notranslate"><span class="pre">CONTENT-TYPE</span></code> instance definition with minimal
+boilerplate and zero custom encoding logic.</p>
 <p>The base distribution comes with the necessary plumbing to read and write the
 currently standardised object types:</p>
 <ul class="simple">
@@ -84,8 +84,8 @@ currently standardised object types:</p>
 <li><p>ROAs (RFC6482)</p></li>
 <li><p>Ghostbuster Records (RFC6493)</p></li>
 </ul>
-<p>Additional signed objects can be supported via a plugin system.</p>
-<p>This <strong>not</strong> an RP or a CA.</p>
+<p>Additional signed objects can be supported via a plug-in system.</p>
+<p>This is <strong>not</strong> an RP or a CA.</p>
 <p>Minimal validation is done on object creation. This is intentional, since a
 valid use-case is to create <em>almost</em> valid objects to recreate RP bugs.</p>
 <p>Similarly, the de-serialisation code contains no crypto validation at all.</p>
@@ -116,9 +116,9 @@ formats.</p>
 </li>
 </ul>
 </section>
-<section id="writing-plugins">
-<h2>Writing Plugins<a class="headerlink" href="#writing-plugins" title="Permalink to this headline">¶</a></h2>
-<p>Plugins implementing new signed object types can advertise the required
+<section id="writing-plug-ins">
+<h2>Writing Plug-ins<a class="headerlink" href="#writing-plug-ins" title="Permalink to this headline">¶</a></h2>
+<p>Plug-ins implementing new signed object types can advertise the required
 components to <code class="docutils literal notranslate"><span class="pre">rpkimancer</span></code> using the following entry points:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">rpkimancer.asn1.modules</span></code>:</p>
@@ -153,7 +153,7 @@ and implementing the <code class="docutils literal notranslate"><span class="pre
 <p>Both feature contributions and bug fixes are very welcome.</p>
 <p>Please open an issue for discussion before expending energy on an implementation.</p>
 <p>Pre-standard RPKI object implementations will not be accepted into the main library.
-These should be implemented in a standalone plugin distribution while still in the
+These should be implemented in a standalone plug-in distribution while still in the
 I-D phase.</p>
 <p>To set up a development environment:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 -m venv .venv
@@ -190,7 +190,7 @@ python -m pip install packaging/requirements-dev.txt
 <li><a class="reference internal" href="#about">About</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#writing-plugins">Writing Plugins</a></li>
+<li><a class="reference internal" href="#writing-plug-ins">Writing Plug-ins</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -204,7 +204,6 @@ python -m pip install packaging/requirements-dev.txt
 </ul>
 <h3>Branches</h3>
 <ul>
-    <li><a href="../refector-content-type/index.html">refector-content-type</a></li>
     <li><a href="index.html">main</a></li>
 </ul>
 

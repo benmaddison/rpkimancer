@@ -93,8 +93,8 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.asn1.</span></span><span class="sig-name descname"><span class="pre">Content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.asn1.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Generic base ASN.1 type wrapping pycrates API.</p>
 <dl class="field-list simple">
@@ -106,47 +106,47 @@
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">pycrate_asn1rt.asnobj.ASN1Obj</span></em><a class="headerlink" href="#rpkimancer.asn1.Content.content_syntax" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.content_syntax">
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">pycrate_asn1rt.asnobj.ASN1Obj</span></em><a class="headerlink" href="#rpkimancer.asn1.Interface.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.from_data">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.from_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.from_data">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.from_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct an instance from python data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>rpkimancer.asn1.ContentSubclass</p>
+<dd class="field-even"><p>rpkimancer.asn1.InterfaceSubclass</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.from_der">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_der</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">der_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.from_der" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.from_der">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_der</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">der_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.from_der" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct an instance from DER encoded data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>der_data</strong> (<em>bytes</em>) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>rpkimancer.asn1.ContentSubclass</p>
+<dd class="field-even"><p>rpkimancer.asn1.InterfaceSubclass</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.content_data">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">content_data</span></span><em class="property"><span class="pre">:</span> <span class="pre">Any</span></em><a class="headerlink" href="#rpkimancer.asn1.Content.content_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.content_data">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">content_data</span></span><em class="property"><span class="pre">:</span> <span class="pre">Any</span></em><a class="headerlink" href="#rpkimancer.asn1.Interface.content_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the underlying python data for this type instance.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.constructed">
-<span class="sig-name descname"><span class="pre">constructed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.constructed" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.constructed">
+<span class="sig-name descname"><span class="pre">constructed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.constructed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provide a context manager to mediate the global pycrates object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -159,8 +159,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.to_txt">
-<span class="sig-name descname"><span class="pre">to_txt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.to_txt" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.to_txt">
+<span class="sig-name descname"><span class="pre">to_txt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get default text serialization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -170,8 +170,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.to_asn1">
-<span class="sig-name descname"><span class="pre">to_asn1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.to_asn1" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.to_asn1">
+<span class="sig-name descname"><span class="pre">to_asn1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_asn1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as ASN.1 data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -181,8 +181,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.to_der">
-<span class="sig-name descname"><span class="pre">to_der</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.to_der" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.to_der">
+<span class="sig-name descname"><span class="pre">to_der</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_der" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as DER.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -192,8 +192,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.to_jer">
-<span class="sig-name descname"><span class="pre">to_jer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.to_jer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.to_jer">
+<span class="sig-name descname"><span class="pre">to_jer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_jer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as JER.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -203,8 +203,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.to_json">
-<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.to_json" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as JSON.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -214,8 +214,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rpkimancer.asn1.Content.to_internal">
-<span class="sig-name descname"><span class="pre">to_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Content.to_internal" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="rpkimancer.asn1.Interface.to_internal">
+<span class="sig-name descname"><span class="pre">to_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_internal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize using internal python repr.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -258,7 +258,6 @@
 </ul>
 <h3>Branches</h3>
 <ul>
-    <li><a href="../../refector-content-type/index.html">refector-content-type</a></li>
     <li><a href="rpkimancer.asn1.html">main</a></li>
 </ul>
 
