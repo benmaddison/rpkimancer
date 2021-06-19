@@ -1,0 +1,7 @@
+rpkimancer.sigobj.mft module
+============================
+
+.. automodule:: rpkimancer.sigobj.mft
+   :members:
+   :undoc-members:
+   :show-inheritance:
