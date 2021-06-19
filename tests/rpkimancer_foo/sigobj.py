@@ -36,6 +36,5 @@ class FooObjectContentType(EncapsulatedContentType):
         super().__init__(data)
 
 
-class FooObject(SignedObject[FooObjectContentType],
-                econtent_type=FooObjectContentType):
+class FooObject(SignedObject[FooObjectContentType]):
     """CMS ASN.1 ContentInfo for RPKI Foo Objects."""
