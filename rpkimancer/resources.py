@@ -61,8 +61,10 @@ def bitstring_to_net(bits: IPNetworkBits, version: int) -> IPNetwork:
     return typing.cast(IPNetwork, net)
 
 
-class SeqOfIPAddressFamily(Interface):
-    """Base class for ASN.1 SEQUENCE OF IPAddressFamily types."""
+class IPAddrBlocks(Interface):
+    """ASN.1 IPAddrBlocks type - RFC3779."""
+
+    content_syntax = IPAddrAndASCertExtn.IPAddrBlocks
 
     def __init__(self, ip_resources: IpResourcesInfo) -> None:
         """Initialise instance from python data."""
@@ -97,12 +99,6 @@ class SeqOfIPAddressFamily(Interface):
         data = [{"addressFamily": afi, "ipAddressChoice": _combine(entries)}
                 for afi, entries in by_afi.items() if entries]
         super().__init__(data)
-
-
-class IPAddrBlocks(SeqOfIPAddressFamily):
-    """ASN.1 IPAddrBlocks type - RFC3779."""
-
-    content_syntax = IPAddrAndASCertExtn.IPAddrBlocks
 
 
 class ASIdOrRange(Interface):
