@@ -121,7 +121,7 @@ To set up a development environment:
 ``` sh
 python3 -m venv .venv
 . .venv/bin/activate
-python -m pip install packaging/requirements-dev.txt
+python -m pip install -r packaging/requirements-dev.txt
 ```
 
 And to run the tests and other CI jobs locally:
