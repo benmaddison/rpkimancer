@@ -1,7 +1,0 @@
-rpkimancer.sigobj.roa module
-============================
-
-.. automodule:: rpkimancer.sigobj.roa
-   :members:
-   :undoc-members:
-   :show-inheritance:

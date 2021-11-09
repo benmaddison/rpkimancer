@@ -1,7 +1,0 @@
-rpkimancer.cert.oid module
-==========================
-
-.. automodule:: rpkimancer.cert.oid
-   :members:
-   :undoc-members:
-   :show-inheritance:
