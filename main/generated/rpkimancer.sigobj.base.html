@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.sigobj.base module &#8212; rpkimancer 0.1.2.dev53 documentation</title>
+    <title>rpkimancer.sigobj.base module &#8212; rpkimancer 0.1.2.dev52 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="rpkimancer.sigobj.html" title="rpkimancer.sigobj package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev53 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev52 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.sigobj.html" accesskey="U">rpkimancer.sigobj package</a> &#187;</li>
@@ -57,7 +57,7 @@
 <p>Base classes for RPKI Signed Object implementations - RFC6488.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.EncapsulatedContentType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.base.</span></span><span class="sig-name descname"><span class="pre">EncapsulatedContentType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.base.</span></span><span class="sig-name descname"><span class="pre">EncapsulatedContentType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.cms.html#rpkimancer.cms.ContentType" title="rpkimancer.cms.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cms.ContentType</span></code></a></p>
 <p>Base for CONTENT-TYPE instance for RPKI Signed Objects - RFC6488.</p>
 <dl class="field-list simple">
@@ -76,18 +76,18 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.EncapsulatedContentType.file_ext">
-<span class="sig-name descname"><span class="pre">file_ext</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType.file_ext" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">file_ext</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType.file_ext" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.EncapsulatedContentType.as_resources">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">as_resources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><s><span class="pre">'INHERIT'</span></s><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType.as_resources" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">as_resources</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'INHERIT'</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType.as_resources" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the AS Number Resources required by this eContent.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.EncapsulatedContentType.ip_resources">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ip_resources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">6</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><s><span class="pre">'INHERIT'</span></s><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ipaddress.IPv4Network</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ipaddress.IPv6Network</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType.ip_resources" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ip_resources</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">4</span><span class="p"><span class="pre">,</span> </span><span class="pre">6</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'INHERIT'</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">ipaddress.IPv4Network</span><span class="p"><span class="pre">,</span> </span><span class="pre">ipaddress.IPv6Network</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType.ip_resources" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the IP Address Resources required by this eContent.</p>
 </dd></dl>
 
@@ -128,7 +128,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.SignedObject">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.base.</span></span><span class="sig-name descname"><span class="pre">SignedObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.base.</span></span><span class="sig-name descname"><span class="pre">SignedObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.cms.html#rpkimancer.cms.ContentInfo" title="rpkimancer.cms.ContentInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cms.ContentInfo</span></code></a>[<a class="reference internal" href="rpkimancer.cms.html#rpkimancer.cms.SignedData" title="rpkimancer.cms.SignedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cms.SignedData</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.ECT</span></code>]</p>
 <p>Base CMS ASN.1 ContentInfo for RPKI Signed Objects - RFC5911/RFC6488.</p>
 <dl class="field-list simple">
@@ -146,7 +146,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.SignedObject.econtent_type">
-<span class="sig-name descname"><span class="pre">econtent_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">typing.Type</span><span class="p"><span class="pre">[</span></span><span class="pre">ECT</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.econtent_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">econtent_type</span></span><em class="property"><span class="pre">:</span> <span class="pre">typing.Type</span><span class="p"><span class="pre">[</span></span><span class="pre">ECT</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.econtent_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -157,19 +157,19 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.SignedObject.econtent_info">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">econtent_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="rpkimancer.cms.html#rpkimancer.cms.EncapsulatedContentInfo" title="rpkimancer.cms.EncapsulatedContentInfo"><span class="pre">rpkimancer.cms.EncapsulatedContentInfo</span></a><span class="p"><span class="pre">[</span></span><span class="pre">rpkimancer.sigobj.base.ECT</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.econtent_info" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">econtent_info</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="rpkimancer.cms.html#rpkimancer.cms.EncapsulatedContentInfo" title="rpkimancer.cms.EncapsulatedContentInfo"><span class="pre">rpkimancer.cms.EncapsulatedContentInfo</span></a><span class="p"><span class="pre">[</span></span><span class="pre">rpkimancer.sigobj.base.ECT</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.econtent_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Signed Object’s encapContentInfo.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.SignedObject.econtent">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">econtent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rpkimancer.sigobj.base.ECT</span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.econtent" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">econtent</span></span><em class="property"><span class="pre">:</span> <span class="pre">rpkimancer.sigobj.base.ECT</span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.econtent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Signed Object’s eContent.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.SignedObject.file_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">file_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.file_name" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">file_name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.sigobj.base.SignedObject.file_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the file name of the SignedObject.</p>
 </dd></dl>
 
@@ -244,7 +244,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.
   </div>
   
   </body>
