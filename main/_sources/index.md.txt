@@ -4,6 +4,7 @@
 :maxdepth: 2
 
 API Reference <generated/modules>
+oids
 :::
 
 :::{include} ../README.md
