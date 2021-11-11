@@ -1,0 +1,52 @@
+---
+root: "1.3.6.1.4.1.35743.3.1"
+arc:
+  0:
+    name: modules
+    description: Work-in-progress RPKI ASN.1 Module Idenifiers
+    arc:
+      0: reserved
+      1:
+        name: id-mod-rpki-aspa-2020
+        description: RPKI-ASPA-2020
+        refs:
+          - https://datatracker.ietf.org/doc/draft-ietf-sidrops-aspa-profile/
+        arc:
+          7:
+            name: draft-07
+            description: RPKI-ASPA-2020 (draft-ietf-sidrops-aspa-profile-07)
+      2:
+        name: id-mod-rpki-poem-2021
+        description: RPKI-Poem-2021 (Demo module, not for publication)
+        refs:
+          - https://github.com/benmaddison/slides-rpkimancer-sidrops-ietf112
+        arc:
+          1:
+            name: v1
+            description: RPKI-Poem-2021 v1 (Demo module, not for publication)
+  1:
+    name: content-types
+    description: Work-in-progress RPKI ASN.1 CONTENT-TYPE Idenifiers
+    arc:
+      0: reserved
+      1:
+        name: id-ct-ASPA
+        description: id-ct-ASPA
+        refs:
+          - https://datatracker.ietf.org/doc/draft-ietf-sidrops-aspa-profile/
+        arc:
+          7:
+            name: pre-draft-07
+            description: id-ct-ASPA (pre-early allocation working OID)
+            refs:
+              - https://github.com/benmaddison/rpkimancer-aspa/tree/tim-revised-profile
+      2:
+        name: id-ct-Poem
+        description: id-ct-Poem (Demo object, not for publication)
+        refs:
+          - https://github.com/benmaddison/slides-rpkimancer-sidrops-ietf112
+        arc:
+          1:
+            name: v1
+            description: id-ct-Poem v1 (Demo module, not for publication)
+...

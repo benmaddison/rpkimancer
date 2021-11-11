@@ -15,10 +15,15 @@ from __future__ import annotations
 
 import datetime
 import importlib.metadata
+import pathlib
+
+import docutils
 
 import rpkimancer
 
 import sphinx_readable_theme
+
+import yaml
 
 _dist = importlib.metadata.distribution(rpkimancer.__name__)
 _buildtime = datetime.datetime.utcnow()
@@ -88,3 +93,91 @@ smv_prebuild_command = "sphinx-apidoc --separate " \
                                      "--force " \
                                      "--output-dir docs/generated/ " \
                                      "rpkimancer/"
+
+# -- OID registry construction
+
+class OidRegistry(docutils.parsers.rst.Directive):
+
+    has_content = False
+    required_arguments = 0
+    option_spec = {
+        "path": docutils.parsers.rst.directives.unchanged_required,
+    }
+
+    def run(self):
+        registry_path = pathlib.Path(__file__).parent / self.options["path"]
+        with open(registry_path) as f:
+            data = yaml.safe_load(f)
+        root = data["root"]
+        arc = data["arc"]
+
+        table = docutils.nodes.table()
+        tgroup = docutils.nodes.tgroup(cols=2)
+        for w in range(2):
+            colspec = docutils.nodes.colspec(colwidth=w + 1)
+            tgroup.append(colspec)
+        table += tgroup
+
+        thead = docutils.nodes.thead()
+        tgroup += thead
+        row = docutils.nodes.row()
+        for col in ("OID", "Details"):
+            entry = docutils.nodes.entry()
+            entry += docutils.nodes.paragraph(text=col)
+            row += entry
+        thead.append(row)
+
+        body = self.render_arc(root, arc)
+        tgroup += body
+
+        return [table]
+
+    def render_arc(self, root_oid, arc, body=None):
+        if body is None:
+            body = docutils.nodes.tbody()
+        for roid, info in arc.items():
+            oid = f"{root_oid}.{roid}"
+            body.append(self.render_oid_row(oid, info))
+            try:
+                if (sub_arc := info.get("arc")) is not None:
+                    self.render_arc(oid, sub_arc, body=body)
+            except AttributeError:
+                continue
+        return body
+
+    def render_oid_row(self, oid, info):
+        row = docutils.nodes.row()
+
+        oid_cell = docutils.nodes.entry()
+        oid_para = docutils.nodes.paragraph()
+        oid_para += docutils.nodes.literal(text=oid)
+        oid_cell += oid_para
+        row += oid_cell
+
+        details_cell = docutils.nodes.entry()
+        if isinstance(info, str):
+            details = [docutils.nodes.paragraph(text=f"{info}")]
+        else:
+            name = docutils.nodes.paragraph()
+            name += docutils.nodes.literal(text=info["name"])
+            description = docutils.nodes.paragraph(text=info["description"])
+            details = [name, description]
+            try:
+                for uri in info["refs"]:
+                    ref_para = docutils.nodes.paragraph()
+                    ref = docutils.nodes.reference(internal=False, refuri=uri, text=uri)
+                    ref_para += ref
+                    details.append(ref_para)
+            except KeyError:
+                pass
+        details_cell.extend(details)
+        row += details_cell
+
+        return row
+
+
+def setup(app):
+    app.add_directive("oid-registry", OidRegistry)
+    return {"version": "0.1",
+            "parallel_read_safe": True,
+            "parallel_write_safe": True}

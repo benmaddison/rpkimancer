@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "oid registry schema",
+    "definitions": {
+        "oid": {
+            "type": "string",
+            "pattern": "^\\d+(\\.\\d+)*$"
+        },
+        "arc": {
+            "type": "object",
+            "propertyNames": {
+                "type": "integer"
+            },
+            "additionalProperties": {
+                "$ref": "#/definitions/node"
+            }
+        },
+        "node": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "const": "reserved"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "pattern": "^[a-z0-9]+(-\\w+)*$"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "refs": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "additionalItems": false
+                        },
+                        "arc": {
+                            "$ref": "#/definitions/arc"
+                        }
+                    },
+                    "required": ["name", "description"],
+                    "additionalProperties": false
+                }
+            ]
+        }
+    },
+    "type": "object",
+    "properties": {
+        "root": {
+            "$ref": "#/definitions/oid"
+        },
+        "arc": {
+            "$ref": "#/definitions/arc"
+        }
+    },
+    "required": ["root", "arc"],
+    "additionalProperties": false
+}
