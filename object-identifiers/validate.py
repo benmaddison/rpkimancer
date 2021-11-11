@@ -20,8 +20,11 @@ import pathlib
 import sys
 
 import coloredlogs
+
 import jsonschema
+
 import verboselogs
+
 import yaml
 
 log = verboselogs.VerboseLogger(__name__)

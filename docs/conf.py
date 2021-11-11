@@ -96,7 +96,9 @@ smv_prebuild_command = "sphinx-apidoc --separate " \
 
 # -- OID registry construction
 
+
 class OidRegistry(docutils.parsers.rst.Directive):
+    """RST directive to render OID registry data."""
 
     has_content = False
     required_arguments = 0
@@ -105,6 +107,7 @@ class OidRegistry(docutils.parsers.rst.Directive):
     }
 
     def run(self):
+        """Process the directive."""
         registry_path = pathlib.Path(__file__).parent / self.options["path"]
         with open(registry_path) as f:
             data = yaml.safe_load(f)
@@ -133,6 +136,7 @@ class OidRegistry(docutils.parsers.rst.Directive):
         return [table]
 
     def render_arc(self, root_oid, arc, body=None):
+        """Render the body of the table, recursively."""
         if body is None:
             body = docutils.nodes.tbody()
         for roid, info in arc.items():
@@ -146,6 +150,7 @@ class OidRegistry(docutils.parsers.rst.Directive):
         return body
 
     def render_oid_row(self, oid, info):
+        """Render the table row for a single OID."""
         row = docutils.nodes.row()
 
         oid_cell = docutils.nodes.entry()
@@ -165,7 +170,9 @@ class OidRegistry(docutils.parsers.rst.Directive):
             try:
                 for uri in info["refs"]:
                     ref_para = docutils.nodes.paragraph()
-                    ref = docutils.nodes.reference(internal=False, refuri=uri, text=uri)
+                    ref = docutils.nodes.reference(internal=False,
+                                                   refuri=uri,
+                                                   text=uri)
                     ref_para += ref
                     details.append(ref_para)
             except KeyError:
@@ -177,6 +184,7 @@ class OidRegistry(docutils.parsers.rst.Directive):
 
 
 def setup(app):
+    """Set up local extenstions."""
     app.add_directive("oid-registry", OidRegistry)
     return {"version": "0.1",
             "parallel_read_safe": True,
