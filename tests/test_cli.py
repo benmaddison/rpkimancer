@@ -50,7 +50,7 @@ def patch_meta_path():
                         "[rpkimancer.sigobj]",
                         "FooObject = rpkimancer_foo.sigobj:FooObject"]
             else:
-                text = None
+                return ""
             return "\n".join(text)
 
         def locate_file(self, path):
