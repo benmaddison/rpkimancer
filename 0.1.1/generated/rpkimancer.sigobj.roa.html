@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.sigobj.roa module &#8212; rpkimancer 0.1.2.dev54 documentation</title>
+    <title>rpkimancer.sigobj.roa module &#8212; rpkimancer 0.1.2.dev60 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="rpkimancer.sigobj.mft.html" title="rpkimancer.sigobj.mft module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev54 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev60 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.sigobj.html" accesskey="U">rpkimancer.sigobj package</a> &#187;</li>
@@ -57,7 +57,7 @@
 <p>RPKI ROA implementation - RFC6482.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.roa.</span></span><span class="sig-name descname"><span class="pre">RouteOriginAttestationEContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_address_blocks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.roa.</span></span><span class="sig-name descname"><span class="pre">RouteOriginAttestationEContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_address_blocks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.EncapsulatedContent" title="rpkimancer.sigobj.base.EncapsulatedContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.EncapsulatedContent</span></code></a></p>
 <p>encapContentInfo for RPKI ROAs - RFC6482.</p>
 <dl class="field-list simple">
@@ -74,27 +74,27 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_type">
-<span class="sig-name descname"><span class="pre">content_type</span></span><em class="property"><span class="pre">:</span> <span class="pre">OID</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;id-ct-routeOriginAuthz</span> <span class="pre">(OBJECT</span> <span class="pre">IDENTIFIER):</span> <span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">840,</span> <span class="pre">113549,</span> <span class="pre">1,</span> <span class="pre">9,</span> <span class="pre">16,</span> <span class="pre">1,</span> <span class="pre">24)&gt;</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">OID</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;id-ct-routeOriginAuthz</span> <span class="pre">(OBJECT</span> <span class="pre">IDENTIFIER):</span> <span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">840,</span> <span class="pre">113549,</span> <span class="pre">1,</span> <span class="pre">9,</span> <span class="pre">16,</span> <span class="pre">1,</span> <span class="pre">24)&gt;</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;RouteOriginAttestation</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_syntax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ASN1Obj</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;RouteOriginAttestation</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent.file_ext">
-<span class="sig-name descname"><span class="pre">file_ext</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'roa'</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.file_ext" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">file_ext</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'roa'</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.file_ext" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent.as_resources">
-<span class="sig-name descname"><span class="pre">as_resources</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.as_resources" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">as_resources</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.as_resources" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent.ip_resources">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ip_resources</span></span><em class="property"><span class="pre">:</span> <span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">4</span><span class="p"><span class="pre">,</span> </span><span class="pre">6</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'INHERIT'</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">ipaddress.IPv4Network</span><span class="p"><span class="pre">,</span> </span><span class="pre">ipaddress.IPv6Network</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.ip_resources" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ip_resources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">6</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><s><span class="pre">'INHERIT'</span></s><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ipaddress.IPv4Network</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ipaddress.IPv6Network</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.ip_resources" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the IP Address Resources covered by this ROA.</p>
 </dd></dl>
 
@@ -124,7 +124,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestation">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.roa.</span></span><span class="sig-name descname"><span class="pre">RouteOriginAttestation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.roa.</span></span><span class="sig-name descname"><span class="pre">RouteOriginAttestation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.SignedObject" title="rpkimancer.sigobj.base.SignedObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.SignedObject</span></code></a></p>
 <p>CMS ASN.1 ContentInfo for RPKI ROAs.</p>
 <dl class="field-list simple">
@@ -171,6 +171,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../dependency-updates/index.html">dependency-updates</a></li>
     <li><a href="../../main/index.html">main</a></li>
 </ul>
 
@@ -198,7 +199,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.0.
   </div>
   
   </body>

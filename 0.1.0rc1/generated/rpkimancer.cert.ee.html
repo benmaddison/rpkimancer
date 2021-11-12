@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.cert.ee module &#8212; rpkimancer 0.1.2.dev54 documentation</title>
+    <title>rpkimancer.cert.ee module &#8212; rpkimancer 0.1.2.dev60 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="rpkimancer.cert.ca.html" title="rpkimancer.cert.ca module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev54 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev60 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.cert.html" accesskey="U">rpkimancer.cert package</a> &#187;</li>
@@ -57,7 +57,7 @@
 <p>RPKI EE Certificate implementation - RFC6487.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cert.ee.EECertificate">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cert.ee.</span></span><span class="sig-name descname"><span class="pre">EECertificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed_object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cert.ee.</span></span><span class="sig-name descname"><span class="pre">EECertificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed_object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate" title="rpkimancer.cert.base.BaseResourceCertificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cert.base.BaseResourceCertificate</span></code></a></p>
 <p>RPKI EE Certificate - RFC6487.</p>
 <dl class="field-list simple">
@@ -73,25 +73,25 @@
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.ee.EECertificate.signed_object">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">signed_object</span></span><em class="property"><span class="pre">:</span> <span class="pre">SignedObject</span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.signed_object" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">signed_object</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SignedObject</span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.signed_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the SignedObject that this certificate signs.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.ee.EECertificate.issuer_repo_path">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">issuer_repo_path</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.issuer_repo_path" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">issuer_repo_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.issuer_repo_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the filesystem path to the the issuer publication point.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.ee.EECertificate.mft_entry">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mft_entry</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.mft_entry" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mft_entry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.mft_entry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an entry for inclusion in the issuer’s manifest.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.ee.EECertificate.sia">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">sia</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.SubjectInformationAccess</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.sia" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.SubjectInformationAccess</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ee.EECertificate.sia" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the SubjectInformationAccess extension for the certificate.</p>
 </dd></dl>
 
@@ -148,6 +148,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../dependency-updates/index.html">dependency-updates</a></li>
     <li><a href="../../main/index.html">main</a></li>
 </ul>
 
@@ -175,7 +176,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.0.
   </div>
   
   </body>

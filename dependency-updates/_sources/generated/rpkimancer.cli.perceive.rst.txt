@@ -1,0 +1,7 @@
+rpkimancer.cli.perceive module
+==============================
+
+.. automodule:: rpkimancer.cli.perceive
+   :members:
+   :undoc-members:
+   :show-inheritance:

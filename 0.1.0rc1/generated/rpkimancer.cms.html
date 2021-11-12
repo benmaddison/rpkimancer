@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.cms module &#8212; rpkimancer 0.1.2.dev54 documentation</title>
+    <title>rpkimancer.cms module &#8212; rpkimancer 0.1.2.dev60 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="rpkimancer.algorithms.html" title="rpkimancer.algorithms module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev54 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev60 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" accesskey="U">rpkimancer package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">rpkimancer.cms module</a></li> 
@@ -56,7 +56,7 @@
 <p>Classes implementing CMS ASN.1 types.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cms.ContentData">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">ContentData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.ContentData" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">ContentData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.ContentData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
 <p>Generic base class for ASN.1 types idenitied by an OID.</p>
 <dl class="field-list simple">
@@ -69,14 +69,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cms.ContentData.content_type">
-<span class="sig-name descname"><span class="pre">content_type</span></span><em class="property"><span class="pre">:</span> <span class="pre">OID</span></em><a class="headerlink" href="#rpkimancer.cms.ContentData.content_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">OID</span></em><a class="headerlink" href="#rpkimancer.cms.ContentData.content_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cms.ContentInfo">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">ContentInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.ContentInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">ContentInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.ContentInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
 <p>CMS ASN.1 ContentInfo type - RFC5911.</p>
 <dl class="field-list simple">
@@ -89,12 +89,12 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cms.ContentInfo.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ContentInfo</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.ContentInfo.content_syntax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ASN1Obj</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ContentInfo</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.ContentInfo.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rpkimancer.cms.ContentInfo.register_econtent_type">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">register_econtent_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">econtent_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.ContentInfo.register_econtent_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_econtent_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">econtent_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.ContentInfo.register_econtent_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add CONTENT-TYPE instance to eContentType constraint set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -113,7 +113,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cms.SignedData">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">SignedData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.SignedData" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">SignedData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.SignedData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#rpkimancer.cms.ContentData" title="rpkimancer.cms.ContentData"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cms.ContentData</span></code></a></p>
 <p>CMS ASN.1 SignedData type - RFC5911.</p>
 <dl class="field-list simple">
@@ -126,19 +126,19 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cms.SignedData.content_type">
-<span class="sig-name descname"><span class="pre">content_type</span></span><em class="property"><span class="pre">:</span> <span class="pre">OID</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;id-signedData</span> <span class="pre">(OBJECT</span> <span class="pre">IDENTIFIER):</span> <span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">840,</span> <span class="pre">113549,</span> <span class="pre">1,</span> <span class="pre">7,</span> <span class="pre">2)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.SignedData.content_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">OID</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;id-signedData</span> <span class="pre">(OBJECT</span> <span class="pre">IDENTIFIER):</span> <span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">840,</span> <span class="pre">113549,</span> <span class="pre">1,</span> <span class="pre">7,</span> <span class="pre">2)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.SignedData.content_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cms.SignedData.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SignedData</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.SignedData.content_syntax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ASN1Obj</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SignedData</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.SignedData.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cms.SignedAttributes">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">SignedAttributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_digest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.SignedAttributes" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">SignedAttributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_digest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.SignedAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
 <p>CMS ASN.1 SignedAttributes type - RFC5911.</p>
 <dl class="field-list simple">
@@ -154,14 +154,14 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cms.SignedAttributes.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SignedAttributes</span> <span class="pre">([Attributes]</span> <span class="pre">SET</span> <span class="pre">OF)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.SignedAttributes.content_syntax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ASN1Obj</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SignedAttributes</span> <span class="pre">([Attributes]</span> <span class="pre">SET</span> <span class="pre">OF)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.SignedAttributes.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cms.EncapsulatedContentInfo">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">EncapsulatedContentInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cms.</span></span><span class="sig-name descname"><span class="pre">EncapsulatedContentInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.asn1.html#rpkimancer.asn1.Content" title="rpkimancer.asn1.Content"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.asn1.Content</span></code></a></p>
 <p>CMS ASN.1 EncapsulatedContentInfo type - RFC5911.</p>
 <dl class="field-list simple">
@@ -174,12 +174,12 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cms.EncapsulatedContentInfo.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="pre">:</span> <span class="pre">ASN1Obj</span></em><em class="property"> <span class="pre">=</span> <span class="pre">&lt;EncapsulatedContentInfo</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo.content_syntax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ASN1Obj</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EncapsulatedContentInfo</span> <span class="pre">(SEQUENCE)&gt;</span></em><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rpkimancer.cms.EncapsulatedContentInfo.from_content_info">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_content_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo.from_content_info" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_content_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo.from_content_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>De-encapsulate from ContentInfo instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -193,7 +193,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cms.EncapsulatedContentInfo.econtent_val">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">econtent_val</span></span><em class="property"><span class="pre">:</span> <span class="pre">Any</span></em><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo.econtent_val" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">econtent_val</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#rpkimancer.cms.EncapsulatedContentInfo.econtent_val" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the eContent value.</p>
 </dd></dl>
 
@@ -220,6 +220,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../dependency-updates/index.html">dependency-updates</a></li>
     <li><a href="../../main/index.html">main</a></li>
 </ul>
 
@@ -247,7 +248,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.0.
   </div>
   
   </body>
