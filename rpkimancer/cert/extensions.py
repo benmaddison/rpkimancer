@@ -34,7 +34,7 @@ class X509CertificateExtension(x509.UnrecognizedExtension):
                           ext_type: typing.Optional[ASN1Class] = None,
                           **kwargs: typing.Any) -> None:
         """Register the EXTENSION instance for DER encoding/decoding."""
-        super().__init_subclass__(**kwargs)  # type: ignore[call-arg]
+        super().__init_subclass__(**kwargs)
         if ext_type is not None:
             asn1.Certificate.register_ext_type(ext_type)
 

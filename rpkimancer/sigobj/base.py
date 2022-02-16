@@ -55,7 +55,7 @@ class EncapsulatedContentType(ContentType):
 
     def digest(self) -> bytes:
         """Calculate the message digest over the DER-encoded eContent."""
-        return self.digest_algorithm(self.to_der()).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
+        return self.digest_algorithm(self.to_der()).digest()  # type: ignore[call-arg, misc] # noqa: E501
 
     def signed_attrs(self) -> SignedAttributes:
         """Construct the signedAttrs value from the EncapsulatedContentInfo."""
@@ -64,7 +64,7 @@ class EncapsulatedContentType(ContentType):
 
     def signed_attrs_digest(self) -> str:
         """Calculate the message digest over the DER-encoded signedAttrs."""
-        return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
+        return self.digest_algorithm(self.signed_attrs().to_der()).hexdigest()  # type: ignore[call-arg, misc] # noqa: E501
 
 
 class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):

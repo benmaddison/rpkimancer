@@ -48,7 +48,7 @@ class Interface:
     @classmethod
     def __init_subclass__(cls, /, **kwargs: typing.Any) -> None:
         """Create a new lock for each subclass."""
-        super().__init_subclass__(**kwargs)  # type: ignore[call-arg]
+        super().__init_subclass__(**kwargs)
         cls._lock = threading.Lock()
 
     def __init__(self, data: typing.Any) -> None:
@@ -59,7 +59,8 @@ class Interface:
         log.info(f"finished initialisation of {self} ASN.1 content")
 
     @classmethod
-    def from_data(cls, data: typing.Any) -> InterfaceSubclass:
+    def from_data(cls: typing.Type[InterfaceSubclass],
+                  data: typing.Any) -> InterfaceSubclass:
         """Construct an instance from python data."""
         log.info(f"creating new {cls} object")
         self: InterfaceSubclass = cls.__new__(cls)

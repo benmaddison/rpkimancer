@@ -63,7 +63,7 @@ class RpkiManifestContentType(EncapsulatedContentType):
 
     def hash_bitstring(self, contents: bytes) -> HashInfo:
         """Construct ASN.1 BIT STRING of a hash over file contents."""
-        digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, arg-type, misc] # noqa: E501
+        digest = self.digest_algorithm(contents).digest()  # type: ignore[call-arg, misc] # noqa: E501
         hash_bits = int.from_bytes(digest, "big")
         hash_len = len(digest) * 8
         return (hash_bits, hash_len)
