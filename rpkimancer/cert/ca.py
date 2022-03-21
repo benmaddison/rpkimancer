@@ -158,7 +158,7 @@ class CertificateAuthority(base.BaseResourceCertificate):
         crl_number = x509.CRLNumber(self.next_crl_number)
         crl_builder = crl_builder.add_extension(crl_number, critical=False)
         if self.crl is not None:
-            for revoked in self.crl:  # type: ignore[attr-defined]
+            for revoked in self.crl:
                 # TODO: clean up expired certs
                 crl_builder = crl_builder.add_revoked_certificate(revoked)
         if to_revoke is not None:

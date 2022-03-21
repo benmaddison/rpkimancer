@@ -57,8 +57,7 @@ def bitstring_to_net(bits: IPNetworkBits, version: int) -> IPNetwork:
     len_map = {4: ipaddress.IPV4LENGTH, 6: ipaddress.IPV6LENGTH}
     value, netbits = bits
     hostbits = len_map[version] - netbits
-    net = ipaddress.ip_network((value << hostbits, netbits))
-    return typing.cast(IPNetwork, net)
+    return ipaddress.ip_network((value << hostbits, netbits))
 
 
 class IPAddrBlocks(Interface):
