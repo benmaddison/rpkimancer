@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>rpkimancer.cert.ca module &#8212; rpkimancer 0.1.2.dev93 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rpkimancer.cert.ee module" href="rpkimancer.cert.ee.html" />
+    <link rel="prev" title="rpkimancer.cert.base module" href="rpkimancer.cert.base.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cert.ee.html" title="rpkimancer.cert.ee module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.cert.base.html" title="rpkimancer.cert.base module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2.dev93 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="rpkimancer.cert.html" accesskey="U">rpkimancer.cert package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rpkimancer.cert.ca module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-rpkimancer.cert.ca">
+<span id="rpkimancer-cert-ca-module"></span><h1>rpkimancer.cert.ca module<a class="headerlink" href="#module-rpkimancer.cert.ca" title="Permalink to this headline">¶</a></h1>
+<p>RPKI Certificate Authority implementation - RFC6487.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cert.ca.</span></span><span class="sig-name descname"><span class="pre">CertificateAuthority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crl_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mft_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate" title="rpkimancer.cert.base.BaseResourceCertificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cert.base.BaseResourceCertificate</span></code></a></p>
+<p>RPKI Certificate Authority - RFC6487.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>common_name</strong> (<em>str</em>) – </p></li>
+<li><p><strong>crl_days</strong> (<em>int</em>) – </p></li>
+<li><p><strong>mft_days</strong> (<em>int</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.crl">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.base.CertificateRevocationList</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.crl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last CRL issued by this CA.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.crl_der">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crl_der</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.crl_der" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last CRL as DER-encoded bytes.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.repo_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">repo_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.repo_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to this CA’s publication point.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.cert_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cert_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.cert_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to cert in the issuer publication point.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.mft_entry">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mft_entry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.mft_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an entry for inclusion in the issuer’s manifest.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.crl_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crl_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.crl_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to the CRL in publication point.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.mft_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mft_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.mft_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to the manifest in publication point.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.issued">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">issued</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate" title="rpkimancer.cert.base.BaseResourceCertificate"><span class="pre">rpkimancer.cert.base.BaseResourceCertificate</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.issued" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a generator over the certifactes issued by this CA.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.crldp">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crldp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.CRLDistributionPoints</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.crldp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CRLDistributionPoint extension for the certificate.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.aia">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.AuthorityInformationAccess</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.aia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the AuthorityInformationAccess extension for the certificate.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.sia">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.SubjectInformationAccess</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.sia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the SubjectInformationAccess extension for the certificate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.issue_cert">
+<span class="sig-name descname"><span class="pre">issue_cert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.issue_cert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issue a new Resource Certificate with this CA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subject</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate" title="rpkimancer.cert.base.BaseResourceCertificate"><em>rpkimancer.cert.base.BaseResourceCertificate</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>cryptography.x509.base.Certificate</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.issue_crl">
+<span class="sig-name descname"><span class="pre">issue_crl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_revoke</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.issue_crl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issue a new CRL for this CA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to_revoke</strong> (<em>Optional</em><em>[</em><em>Iterable</em><em>[</em><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate" title="rpkimancer.cert.base.BaseResourceCertificate"><em>rpkimancer.cert.base.BaseResourceCertificate</em></a><em>]</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.issue_mft">
+<span class="sig-name descname"><span class="pre">issue_mft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.issue_mft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issue a new manifest for this CA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_list</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>bytes</em><em>]</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.mft">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mft</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="rpkimancer.sigobj.mft.html#rpkimancer.sigobj.mft.RpkiManifest" title="rpkimancer.sigobj.mft.RpkiManifest"><span class="pre">RpkiManifest</span></a></em><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.mft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last manifest issued by this CA.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pub_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority.publish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publish this CA’s artifacts as DER files in the PP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pub_path</strong> (<em>str</em>) – </p></li>
+<li><p><strong>recursive</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.TACertificateAuthority">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cert.ca.</span></span><span class="sig-name descname"><span class="pre">TACertificateAuthority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rsync://rpki.example.net/rpki'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.TACertificateAuthority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority" title="rpkimancer.cert.ca.CertificateAuthority"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cert.ca.CertificateAuthority</span></code></a></p>
+<p>RPKI Trust Anchor Certificate Authority - RFC6487.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>common_name</strong> (<em>str</em>) – </p></li>
+<li><p><strong>base_uri</strong> (<em>str</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.TACertificateAuthority.repo_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">repo_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.TACertificateAuthority.repo_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to this CA’s publication point.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.TACertificateAuthority.cert_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cert_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.TACertificateAuthority.cert_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to cert in the publication point root.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.TACertificateAuthority.tal_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tal_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rpkimancer.cert.ca.TACertificateAuthority.tal_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filesystem path to the trust anchor locator.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.TACertificateAuthority.tal">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#rpkimancer.cert.ca.TACertificateAuthority.tal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the contents of the TAL for this trust anchor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.cert.ca.TACertificateAuthority.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pub_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tal_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.TACertificateAuthority.publish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publish this CA’s artifacts and TAL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pub_path</strong> (<em>str</em>) – </p></li>
+<li><p><strong>tal_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – </p></li>
+<li><p><strong>recursive</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation index</a><ul>
+  <li><a href="modules.html">rpkimancer</a><ul>
+  <li><a href="rpkimancer.html">rpkimancer package</a><ul>
+  <li><a href="rpkimancer.cert.html">rpkimancer.cert package</a><ul>
+      <li>Previous: <a href="rpkimancer.cert.base.html" title="previous chapter">rpkimancer.cert.base module</a></li>
+      <li>Next: <a href="rpkimancer.cert.ee.html" title="next chapter">rpkimancer.cert.ee module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+<h3>Branches</h3>
+<ul>
+    <li><a href="rpkimancer.cert.ca.html">deps-update</a></li>
+    <li><a href="../../main/index.html">main</a></li>
+</ul>
+
+
+<h3>Tags</h3>
+<ul>
+    <li><a href="../../0.1.0/index.html">0.1.0</a></li>
+    <li><a href="../../0.1.0rc1/index.html">0.1.0rc1</a></li>
+    <li><a href="../../0.1.1/index.html">0.1.1</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021-2022, Ben Maddison.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.
+  </div>
+  
+  </body>
+</html>
