@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>rpkimancer.utils module &#8212; rpkimancer 0.1.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Work-in-progress OIDs Registry" href="../oids.html" />
+    <link rel="prev" title="rpkimancer.resources module" href="rpkimancer.resources.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head><body>
+  
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../oids.html" title="Work-in-progress OIDs Registry"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rpkimancer.resources.html" title="rpkimancer.resources module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.1.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="rpkimancer.html" accesskey="U">rpkimancer package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rpkimancer.utils module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-rpkimancer.utils">
+<span id="rpkimancer-utils-module"></span><h1>rpkimancer.utils module<a class="headerlink" href="#module-rpkimancer.utils" title="Permalink to this headline">¶</a></h1>
+<p>Utilities and helper classes and functions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="rpkimancer.utils.LogWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.utils.</span></span><span class="sig-name descname"><span class="pre">LogWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_cb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.utils.LogWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">io.TextIOBase</span></code></p>
+<p>File-like object for stream-to-log redirection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<em>logging.Logger</em>) – </p></li>
+<li><p><strong>level</strong> (<em>int</em>) – </p></li>
+<li><p><strong>level_cb</strong> (<em>Optional</em><em>[</em><em>LogLevelCallback</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.utils.LogWriter.detach">
+<span class="sig-name descname"><span class="pre">detach</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.utils.LogWriter.detach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detatch the underlying binary buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><em>BinaryIO</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.utils.LogWriter.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.utils.LogWriter.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read from the text stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.utils.LogWriter.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.utils.LogWriter.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the contents of a buffer to the stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rpkimancer.utils.LogWriter.redirect_stdout">
+<span class="sig-name descname"><span class="pre">redirect_stdout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.utils.LogWriter.redirect_stdout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a context manager to redirect stdout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><em>ContextManager</em>[<em>Any</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation index</a><ul>
+  <li><a href="modules.html">rpkimancer</a><ul>
+  <li><a href="rpkimancer.html">rpkimancer package</a><ul>
+      <li>Previous: <a href="rpkimancer.resources.html" title="previous chapter">rpkimancer.resources module</a></li>
+      <li>Next: <a href="../oids.html" title="next chapter">Work-in-progress OIDs Registry</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+<h3>Branches</h3>
+<ul>
+    <li><a href="../../main/index.html">main</a></li>
+</ul>
+
+
+<h3>Tags</h3>
+<ul>
+    <li><a href="../../0.1.0/index.html">0.1.0</a></li>
+    <li><a href="../../0.1.0rc1/index.html">0.1.0rc1</a></li>
+    <li><a href="../../0.1.1/index.html">0.1.1</a></li>
+    <li><a href="rpkimancer.utils.html">0.1.2</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2021-2022, Ben Maddison.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+  </div>
+  
+  </body>
+</html>
