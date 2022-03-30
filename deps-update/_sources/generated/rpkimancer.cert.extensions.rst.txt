@@ -1,0 +1,7 @@
+rpkimancer.cert.extensions module
+=================================
+
+.. automodule:: rpkimancer.cert.extensions
+   :members:
+   :undoc-members:
+   :show-inheritance:
