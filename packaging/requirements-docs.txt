@@ -1,7 +1,7 @@
 sphinx==4.5.0
 
 # sphinx extensions
-myst-parser==0.17.0
+myst-parser==0.17.1
 sphinx-multiversion @ git+https://github.com/samtygier-stfc/sphinx-multiversion.git@prebuild_command#egg=sphinx-multiversion
 
 # sphinx theme
