@@ -123,16 +123,17 @@ class IPAddressRange(Interface):
         """Initialise instance from python data."""
         # Encode per RFC3779 section 2.1.2
         (low_addr, high_addr) = ip_range
-        (low_len, high_len) = (low_addr.max_prefixlen, high_addr.max_prefixlen)
         # Lower-bound address is encoded as a BIT STRING with trailling
         # zero-bits truncated
         low_bits = int(low_addr)
+        low_len: int = low_addr.max_prefixlen
         while low_bits % 2 == 0:
             low_bits = low_bits >> 1
             low_len = low_len - 1
         # Upper-bound address is encoded as a BIT STRING with trailling
         # one-bits truncated
         high_bits = int(high_addr)
+        high_len: int = high_addr.max_prefixlen
         while high_bits % 2 == 1:
             high_bits = high_bits >> 1
             high_len = high_len - 1
