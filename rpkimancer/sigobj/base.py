@@ -71,7 +71,7 @@ class SignedObject(ContentInfo[SignedData], typing.Generic[ECT]):
     """Base CMS ASN.1 ContentInfo for RPKI Signed Objects - RFC5911/RFC6488."""
 
     econtent_type: typing.Type[ECT]
-    ee_cert_cls: typing.Type[EECertificate[ECT]] = EECertificate
+    ee_cert_cls: typing.Type[EECertificate[ECT]] = EECertificate[ECT]
 
     @classmethod
     def __init_subclass__(cls, **kwargs: typing.Any) -> None:
