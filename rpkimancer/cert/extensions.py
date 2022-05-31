@@ -43,7 +43,6 @@ class IpResources(X509CertificateExtension,
                   ext_type=IPAddrAndASCertExtn.ext_IPAddrBlocks):
     """IP Address Resources X.509 certificate extension - RFC3779."""
 
-    # TODO: IPAddressRange support
     def __init__(self, ip_resources: IpResourcesInfo) -> None:
         """Initialise the certificate extension."""
         ip_address_blocks_data = IPAddrBlocks(ip_resources).to_der()

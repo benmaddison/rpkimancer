@@ -24,6 +24,7 @@ from . import Args, BaseCommand, Return
 
 if typing.TYPE_CHECKING:
     from ..cert import CertificateAuthority
+    from ..resources import IPAddressFamilyInfo
     from ..sigobj.roa import RoaNetworkInfo
 
 log = logging.getLogger(__name__)
@@ -38,6 +39,8 @@ DEFAULT_TA_IP_RESOURCES = [ipaddress.ip_network("0.0.0.0/0"),
 
 DEFAULT_CA_AS_RESOURCES = [65000]
 DEFAULT_CA_IP_RESOURCES = [ipaddress.ip_network("10.0.0.0/8"),
+                           (ipaddress.ip_address("192.168.0.0"),
+                            ipaddress.ip_address("192.168.2.255")),
                            ipaddress.ip_network("2001:db8::/32")]
 
 DEFAULT_GBR_FULLNAME = "Jane Doe"
@@ -46,8 +49,10 @@ DEFAULT_GBR_EMAIL = "jane@example.net"
 
 META_PATH = "<path>"
 META_AS = "<asn>"
-META_IP = "<prefix>/<length>"
-META_IP_MAXLEN = f"{META_IP}[-maxlen]"
+META_IP_PREFIX = "<prefix>/<length>"
+META_IP_PREFIX_MAXLEN = f"{META_IP_PREFIX}[-maxlen]"
+META_IP_RANGE = "<addr-lower>-<addr-upper>"
+META_IP = f"{META_IP_PREFIX}|{META_IP_RANGE}"
 META_NAME = "<name>"
 META_ADDR = "<addr>"
 
@@ -84,7 +89,7 @@ class Conjure(BaseCommand):
                                  help="ASN(s) to include in TA certificate "
                                       "(default: %(default)s)")
         self.parser.add_argument("--ta-ip-resources",
-                                 nargs="+", type=ipaddress.ip_network,
+                                 nargs="+", type=self.ip_resource,
                                  default=DEFAULT_TA_IP_RESOURCES,
                                  metavar=META_IP,
                                  help="IP addresses to include in TA certificate "  # noqa: E501
@@ -96,7 +101,7 @@ class Conjure(BaseCommand):
                                  help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ca-ip-resources",
-                                 nargs="+", type=ipaddress.ip_network,
+                                 nargs="+", type=self.ip_resource,
                                  default=DEFAULT_CA_IP_RESOURCES,
                                  metavar=META_IP,
                                  help="IP addresses to include in suboridinate CA certificate "  # noqa: E501
@@ -109,9 +114,11 @@ class Conjure(BaseCommand):
                                       "(default: %(default)s)")
         self.parser.add_argument("--roa-networks",
                                  nargs="+", type=self._roa_network,
-                                 default=[(ipaddress.ip_network(net), None)
-                                          for net in DEFAULT_CA_IP_RESOURCES],
-                                 metavar=META_IP_MAXLEN,
+                                 default=[(net, None)
+                                          for net in DEFAULT_CA_IP_RESOURCES
+                                          if isinstance(net, (ipaddress.IPv4Network,  # noqa: E501
+                                                              ipaddress.IPv6Network))],  # noqa: E501
+                                 metavar=META_IP_PREFIX_MAXLEN,
                                  help="IP prefixes to include in ROA "
                                       "(default: %(default)s)")
         self.parser.add_argument("--gbr-full-name",
@@ -171,6 +178,18 @@ class Conjure(BaseCommand):
                    tal_path=os.path.join(parsed_args.output_dir, TAL_SUB_DIR),
                    **plugin_publish_kwargs)
         return None
+
+    @staticmethod
+    def ip_resource(input_str: str) -> IPAddressFamilyInfo:
+        """Convert input string to IPAddressFamilyInfo variant."""
+        try:
+            return ipaddress.ip_network(input_str)
+        except ValueError:
+            lower, upper = input_str.split("-", 1)
+        try:
+            return ipaddress.IPv4Address(lower), ipaddress.IPv4Address(upper)
+        except ValueError:
+            return ipaddress.IPv6Address(lower), ipaddress.IPv6Address(upper)
 
     @staticmethod
     def _roa_network(input_str: str) -> RoaNetworkInfo:

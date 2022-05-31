@@ -34,9 +34,17 @@ INHERIT_IPV4: typing.Tuple[AfiInfo, Inherit] = (4, _INHERIT)
 INHERIT_IPV6: typing.Tuple[AfiInfo, Inherit] = (6, _INHERIT)
 
 IPNetwork = typing.Union[ipaddress.IPv4Network, ipaddress.IPv6Network]
+IPRange = typing.Union[typing.Tuple[ipaddress.IPv4Address,
+                                    ipaddress.IPv4Address],
+                       typing.Tuple[ipaddress.IPv6Address,
+                                    ipaddress.IPv6Address]]
+
 IPNetworkBits = typing.Tuple[int, int]
+IPRangeBits = typing.Tuple[IPNetworkBits, IPNetworkBits]
+
 IPAddressFamilyInfo = typing.Union[typing.Tuple[AfiInfo, Inherit],
-                                   IPNetwork]
+                                   IPNetwork,
+                                   IPRange]
 IpResourcesInfo = typing.Iterable[IPAddressFamilyInfo]
 ASIdOrRangeInfo = typing.Union[int, typing.Tuple[int, int]]
 AsResourcesInfo = typing.Union[Inherit,
@@ -75,13 +83,16 @@ class IPAddrBlocks(Interface):
                                      typing.Tuple[str, IPNetworkBits]]
         entry_type = typing.Tuple[int, net_data_type]
 
-        def _net_entry(network: IPAddressFamilyInfo) -> entry_type:
-            if isinstance(network, (ipaddress.IPv4Network,
-                                    ipaddress.IPv6Network)):
-                return network.version, ("addressPrefix",
-                                         net_to_bitstring(network))
+        def _net_entry(data: IPAddressFamilyInfo) -> entry_type:
+            if isinstance(data, (ipaddress.IPv4Network,
+                                 ipaddress.IPv6Network)):
+                return data.version, ("addressPrefix", net_to_bitstring(data))
+            elif isinstance(data[0], (ipaddress.IPv4Address,
+                                      ipaddress.IPv6Address)):
+                return data[0].version, ("addressRange",
+                                         IPAddressRange(data).content_data)
             else:
-                return network[0], _INHERIT
+                return data[0], _INHERIT
 
         combined_type = typing.Tuple[str,
                                      typing.Union[typing.Literal[0],
@@ -100,6 +111,33 @@ class IPAddrBlocks(Interface):
                   for (afi_version, afi_data) in AFI.items()}
         data = [{"addressFamily": afi, "ipAddressChoice": _combine(entries)}
                 for afi, entries in by_afi.items() if entries]
+        super().__init__(data)
+
+
+class IPAddressRange(Interface):
+    """ASN.1 IPAddressRange type - RFC3779."""
+
+    content_syntax = IPAddrAndASCertExtn.IPAddressRange
+
+    def __init__(self, ip_range: IPRange) -> None:
+        """Initialise instance from python data."""
+        # Encode per RFC3779 section 2.1.2
+        (low_addr, high_addr) = ip_range
+        (low_len, high_len) = (low_addr.max_prefixlen, high_addr.max_prefixlen)
+        # Lower-bound address is encoded as a BIT STRING with trailling
+        # zero-bits truncated
+        low_bits = int(low_addr)
+        while low_bits % 2 == 0:
+            low_bits = low_bits >> 1
+            low_len = low_len - 1
+        # Upper-bound address is encoded as a BIT STRING with trailling
+        # one-bits truncated
+        high_bits = int(high_addr)
+        while high_bits % 2 == 1:
+            high_bits = high_bits >> 1
+            high_len = high_len - 1
+        data = {"min": (low_bits, low_len),
+                "max": (high_bits, high_len)}
         super().__init__(data)
 
 
