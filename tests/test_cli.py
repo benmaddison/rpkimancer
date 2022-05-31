@@ -16,6 +16,7 @@ from __future__ import annotations
 import copy
 import importlib.abc
 import importlib.metadata
+import ipaddress
 import logging
 import os
 import subprocess
@@ -135,3 +136,29 @@ class TestCli:
             log.log(level, line.strip())
         assert proc.returncode == 0
         assert valid
+
+
+class TestHelpers:
+    """Test cases for cli argument helpers."""
+
+    @pytest.mark.parametrize(("input_str", "value"),
+                             (("10.0.0.0/8", ipaddress.IPv4Network("10.0.0.0/8")),  # noqa: E501
+                              ("2001:db8::/32", ipaddress.IPv6Network("2001:db8::/32")),  # noqa: E501
+                              ("192.168.1.128-192.168.2.255", (ipaddress.IPv4Address("192.168.1.128"),  # noqa: E501
+                                                               ipaddress.IPv4Address("192.168.2.255"))),  # noqa: E501
+                              ("2001:db8:beef::-2001:db8:dead::", (ipaddress.IPv6Address("2001:db8:beef::"),  # noqa: E501
+                                                                   ipaddress.IPv6Address("2001:db8:dead::")))))  # noqa: E501
+    def test_ip_resource_helper(self, input_str, value):
+        """Test the 'ip_resource' arg type helper."""
+        from rpkimancer.cli.helpers import ip_resource
+        assert ip_resource(input_str) == value
+
+    @pytest.mark.parametrize(("input_str", "value"),
+                             (("10.0.0.0/8", (ipaddress.IPv4Network("10.0.0.0/8"), None)),  # noqa: E501
+                              ("2001:db8::/32", (ipaddress.IPv6Network("2001:db8::/32"), None)),  # noqa: E501
+                              ("192.168.0.0/16-24", (ipaddress.IPv4Network("192.168.0.0/16"), 24)),  # noqa: E501
+                              ("2001:db8:f00::/48-64", (ipaddress.IPv6Network("2001:db8:f00::/48"), 64))))  # noqa: E501
+    def test_roa_network_helper(self, input_str, value):
+        """Test the 'roa_network' arg type helper."""
+        from rpkimancer.cli.helpers import roa_network
+        assert roa_network(input_str) == value

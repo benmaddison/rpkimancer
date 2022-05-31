@@ -21,11 +21,10 @@ import os
 import typing
 
 from . import Args, BaseCommand, Return
+from .helpers import ip_resource, roa_network
 
 if typing.TYPE_CHECKING:
     from ..cert import CertificateAuthority
-    from ..resources import IPAddressFamilyInfo
-    from ..sigobj.roa import RoaNetworkInfo
 
 log = logging.getLogger(__name__)
 
@@ -89,7 +88,7 @@ class Conjure(BaseCommand):
                                  help="ASN(s) to include in TA certificate "
                                       "(default: %(default)s)")
         self.parser.add_argument("--ta-ip-resources",
-                                 nargs="+", type=self.ip_resource,
+                                 nargs="+", type=ip_resource,
                                  default=DEFAULT_TA_IP_RESOURCES,
                                  metavar=META_IP,
                                  help="IP addresses to include in TA certificate "  # noqa: E501
@@ -101,7 +100,7 @@ class Conjure(BaseCommand):
                                  help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ca-ip-resources",
-                                 nargs="+", type=self.ip_resource,
+                                 nargs="+", type=ip_resource,
                                  default=DEFAULT_CA_IP_RESOURCES,
                                  metavar=META_IP,
                                  help="IP addresses to include in suboridinate CA certificate "  # noqa: E501
@@ -113,7 +112,7 @@ class Conjure(BaseCommand):
                                  help="ASN to include in ROA asID "
                                       "(default: %(default)s)")
         self.parser.add_argument("--roa-networks",
-                                 nargs="+", type=self._roa_network,
+                                 nargs="+", type=roa_network,
                                  default=[(net, None)
                                           for net in DEFAULT_CA_IP_RESOURCES
                                           if isinstance(net, (ipaddress.IPv4Network,  # noqa: E501
@@ -178,27 +177,6 @@ class Conjure(BaseCommand):
                    tal_path=os.path.join(parsed_args.output_dir, TAL_SUB_DIR),
                    **plugin_publish_kwargs)
         return None
-
-    @staticmethod
-    def ip_resource(input_str: str) -> IPAddressFamilyInfo:
-        """Convert input string to IPAddressFamilyInfo variant."""
-        try:
-            return ipaddress.ip_network(input_str)
-        except ValueError:
-            lower, upper = input_str.split("-", 1)
-        try:
-            return ipaddress.IPv4Address(lower), ipaddress.IPv4Address(upper)
-        except ValueError:
-            return ipaddress.IPv6Address(lower), ipaddress.IPv6Address(upper)
-
-    @staticmethod
-    def _roa_network(input_str: str) -> RoaNetworkInfo:
-        """Convert input string to RoaNetworkInfo tuple."""
-        try:
-            network, maxlen = input_str.split("-", 1)
-            return (ipaddress.ip_network(network), int(maxlen))
-        except ValueError:
-            return (ipaddress.ip_network(input_str), None)
 
 
 PluginReturn = typing.Optional[typing.Mapping[str, str]]
