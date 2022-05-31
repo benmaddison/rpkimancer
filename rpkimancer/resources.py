@@ -55,9 +55,11 @@ def net_to_bitstring(network: IPNetwork) -> IPNetworkBits:
 def bitstring_to_net(bits: IPNetworkBits, version: int) -> IPNetwork:
     """Convert an ASN.1 BIT STRING representation to an IPNetwork."""
     len_map = {4: ipaddress.IPV4LENGTH, 6: ipaddress.IPV6LENGTH}
+    cls_map = {4: ipaddress.IPv4Network, 6: ipaddress.IPv6Network}
     value, netbits = bits
     hostbits = len_map[version] - netbits
-    net = ipaddress.ip_network((value << hostbits, netbits))
+    cls = typing.cast(typing.Type[IPNetwork], cls_map[version])
+    net = cls((value << hostbits, netbits))
     return net
 
 
