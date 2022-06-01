@@ -21,7 +21,7 @@ import os
 import typing
 
 from . import Args, BaseCommand, Return
-from .helpers import ip_resource, roa_network
+from .helpers import as_id_or_range, ip_resource, roa_network
 
 if typing.TYPE_CHECKING:
     from ..cert import CertificateAuthority
@@ -36,7 +36,7 @@ DEFAULT_TA_AS_RESOURCES = [(0, 4294967295)]
 DEFAULT_TA_IP_RESOURCES = [ipaddress.ip_network("0.0.0.0/0"),
                            ipaddress.ip_network("::0/0")]
 
-DEFAULT_CA_AS_RESOURCES = [65000]
+DEFAULT_CA_AS_RESOURCES = [65000, (65010, 65019)]
 DEFAULT_CA_IP_RESOURCES = [ipaddress.ip_network("10.0.0.0/8"),
                            (ipaddress.ip_address("192.168.0.0"),
                             ipaddress.ip_address("192.168.2.255")),
@@ -48,6 +48,7 @@ DEFAULT_GBR_EMAIL = "jane@example.net"
 
 META_PATH = "<path>"
 META_AS = "<asn>"
+META_AS_RANGE = f"{META_AS}[-{META_AS}]"
 META_IP_PREFIX = "<prefix>/<length>"
 META_IP_PREFIX_MAXLEN = f"{META_IP_PREFIX}[-maxlen]"
 META_IP_RANGE = "<addr-lower>-<addr-upper>"
@@ -82,9 +83,9 @@ class Conjure(BaseCommand):
                                  help="Directory to write generated artifacts to "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ta-as-resources",
-                                 nargs="+", type=int,
+                                 nargs="+", type=as_id_or_range,
                                  default=DEFAULT_TA_AS_RESOURCES,
-                                 metavar=META_AS,
+                                 metavar=META_AS_RANGE,
                                  help="ASN(s) to include in TA certificate "
                                       "(default: %(default)s)")
         self.parser.add_argument("--ta-ip-resources",
@@ -94,9 +95,9 @@ class Conjure(BaseCommand):
                                  help="IP addresses to include in TA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ca-as-resources",
-                                 nargs="+", type=int,
+                                 nargs="+", type=as_id_or_range,
                                  default=DEFAULT_CA_AS_RESOURCES,
-                                 metavar=META_AS,
+                                 metavar=META_AS_RANGE,
                                  help="ASN(s) to include in suboridinate CA certificate "  # noqa: E501
                                       "(default: %(default)s)")
         self.parser.add_argument("--ca-ip-resources",

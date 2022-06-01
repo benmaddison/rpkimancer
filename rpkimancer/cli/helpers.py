@@ -17,7 +17,7 @@ import ipaddress
 import typing
 
 if typing.TYPE_CHECKING:
-    from ..resources import IPAddressFamilyInfo
+    from ..resources import IPAddressFamilyInfo, ASIdOrRangeInfo
     from ..sigobj.roa import RoaNetworkInfo
 
 
@@ -40,3 +40,12 @@ def roa_network(input_str: str) -> RoaNetworkInfo:
         return (ipaddress.ip_network(network), int(maxlen))
     except ValueError:
         return (ipaddress.ip_network(input_str), None)
+
+
+def as_id_or_range(input_str: str) -> ASIdOrRangeInfo:
+    """Convert input string to ASIdOrRangeInfo variant."""
+    try:
+        return int(input_str)
+    except ValueError:
+        lower, upper = input_str.split("-", 1)
+        return int(lower), int(upper)

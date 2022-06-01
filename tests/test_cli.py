@@ -162,3 +162,11 @@ class TestHelpers:
         """Test the 'roa_network' arg type helper."""
         from rpkimancer.cli.helpers import roa_network
         assert roa_network(input_str) == value
+
+    @pytest.mark.parametrize(("input_str", "value"),
+                             (("65000", 65000),
+                              ("65001-65005", (65001, 65005))))
+    def test_as_id_or_range_helper(self, input_str, value):
+        """Test the 'as_id_or_range' arg type helper."""
+        from rpkimancer.cli.helpers import as_id_or_range
+        assert as_id_or_range(input_str) == value
