@@ -7,5 +7,5 @@ flake8-commas==2.1.0
 flake8-docstrings==1.6.0
 flake8-eradicate==1.2.1
 flake8-import-order==0.18.1
-pep8-naming==0.12.1
+pep8-naming==0.13.0
 radon==5.1.0
