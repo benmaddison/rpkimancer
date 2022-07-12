@@ -1,4 +1,4 @@
 PyYAML==6.0
-jsonschema==4.5.1
+jsonschema==4.7.2
 coloredlogs==15.0.1
 verboselogs==1.7
