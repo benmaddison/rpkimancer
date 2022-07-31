@@ -1,7 +1,0 @@
-rpkimancer.cli.helpers module
-=============================
-
-.. automodule:: rpkimancer.cli.helpers
-   :members:
-   :undoc-members:
-   :show-inheritance:
