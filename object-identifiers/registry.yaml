@@ -15,6 +15,12 @@ arc:
           7:
             name: draft-07
             description: RPKI-ASPA-2020 (draft-ietf-sidrops-aspa-profile-07)
+          8:
+            name: draft-08
+            description: RPKI-ASPA-2022 (draft-ietf-sidrops-aspa-profile-08)
+          9:
+            name: draft-09
+            description: RPKI-ASPA-2022 (draft-ietf-sidrops-aspa-profile-09)
       2:
         name: id-mod-rpki-poem-2021
         description: RPKI-Poem-2021 (Demo module, not for publication)
