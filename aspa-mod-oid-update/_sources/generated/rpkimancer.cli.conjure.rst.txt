@@ -1,0 +1,7 @@
+rpkimancer.cli.conjure module
+=============================
+
+.. automodule:: rpkimancer.cli.conjure
+   :members:
+   :undoc-members:
+   :show-inheritance:

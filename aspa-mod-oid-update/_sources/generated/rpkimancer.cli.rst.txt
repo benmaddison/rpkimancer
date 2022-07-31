@@ -1,0 +1,20 @@
+rpkimancer.cli package
+======================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   rpkimancer.cli.conjure
+   rpkimancer.cli.helpers
+   rpkimancer.cli.perceive
+
+Module contents
+---------------
+
+.. automodule:: rpkimancer.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
