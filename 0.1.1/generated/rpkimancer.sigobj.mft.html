@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.sigobj.mft module &#8212; rpkimancer 0.2.1 documentation</title>
+    <title>rpkimancer.sigobj.mft module &#8212; rpkimancer 0.2.2.dev20 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -39,7 +40,7 @@
         <li class="right" >
           <a href="rpkimancer.sigobj.gbr.html" title="rpkimancer.sigobj.gbr module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.2.dev20 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.sigobj.html" accesskey="U">rpkimancer.sigobj package</a> &#187;</li>
@@ -53,15 +54,15 @@
           <div class="body" role="main">
             
   <section id="module-rpkimancer.sigobj.mft">
-<span id="rpkimancer-sigobj-mft-module"></span><h1>rpkimancer.sigobj.mft module<a class="headerlink" href="#module-rpkimancer.sigobj.mft" title="Permalink to this headline">¶</a></h1>
+<span id="rpkimancer-sigobj-mft-module"></span><h1>rpkimancer.sigobj.mft module<a class="headerlink" href="#module-rpkimancer.sigobj.mft" title="Permalink to this heading">¶</a></h1>
 <p>RPKI Manifest implementation - RFC6486.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.mft.RpkiManifestEContent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.mft.</span></span><span class="sig-name descname"><span class="pre">RpkiManifestEContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">this_update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.mft.RpkiManifestEContent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.EncapsulatedContent" title="rpkimancer.sigobj.base.EncapsulatedContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.EncapsulatedContent</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.EncapsulatedContent" title="rpkimancer.sigobj.base.EncapsulatedContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncapsulatedContent</span></code></a></p>
 <p>encapContentInfo for RPKI Manifests - RFC6486.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>version</strong> (<em>int</em>) – </p></li>
 <li><p><strong>manifest_number</strong> (<em>int</em>) – </p></li>
@@ -69,9 +70,6 @@
 <li><p><strong>next_update</strong> (<em>datetime.datetime</em>) – </p></li>
 <li><p><strong>file_list</strong> (<em>_file_list_type</em>) – </p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -104,10 +102,10 @@
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generalized_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.mft.RpkiManifestEContent.generalized_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct ASN.1 GeneralizedTime data from python datetime.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>timestamp</strong> (<em>datetime.datetime</em>) – </p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timestamp</strong> (<em>datetime</em>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>Tuple</em>[<em>Optional</em>[str], …]</p>
 </dd>
 </dl>
@@ -118,10 +116,10 @@
 <span class="sig-name descname"><span class="pre">hash_bitstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.mft.RpkiManifestEContent.hash_bitstring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct ASN.1 BIT STRING of a hash over file contents.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>contents</strong> (<em>bytes</em>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>Tuple</em>[int, int]</p>
 </dd>
 </dl>
@@ -132,10 +130,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.mft.RpkiManifest">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.mft.</span></span><span class="sig-name descname"><span class="pre">RpkiManifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.mft.RpkiManifest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.SignedObject" title="rpkimancer.sigobj.base.SignedObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.base.SignedObject</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.SignedObject" title="rpkimancer.sigobj.base.SignedObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignedObject</span></code></a></p>
 <p>CMS ASN.1 ContentInfo for RPKI Manifests.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>issuer</strong> (<a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority" title="rpkimancer.cert.ca.CertificateAuthority"><em>CertificateAuthority</em></a>) – </p></li>
 <li><p><strong>file_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – </p></li>
@@ -143,14 +141,11 @@
 <li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
-</dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.mft.RpkiManifest.econtent_cls">
 <span class="sig-name descname"><span class="pre">econtent_cls</span></span><a class="headerlink" href="#rpkimancer.sigobj.mft.RpkiManifest.econtent_cls" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#rpkimancer.sigobj.mft.RpkiManifestEContent" title="rpkimancer.sigobj.mft.RpkiManifestEContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.sigobj.mft.RpkiManifestEContent</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="#rpkimancer.sigobj.mft.RpkiManifestEContent" title="rpkimancer.sigobj.mft.RpkiManifestEContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">RpkiManifestEContent</span></code></a></p>
 </dd></dl>
 
 </dd></dl>
@@ -178,6 +173,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../deps-update/index.html">deps-update</a></li>
     <li><a href="../../main/index.html">main</a></li>
 </ul>
 
@@ -201,14 +197,14 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </body>

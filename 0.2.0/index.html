@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to rpkimancer’s documentation &#8212; rpkimancer 0.2.1 documentation</title>
+    <title>Welcome to rpkimancer’s documentation &#8212; rpkimancer 0.2.2.dev20 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/readable.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,7 +38,7 @@
         <li class="right" >
           <a href="generated/modules.html" title="rpkimancer"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">rpkimancer 0.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">rpkimancer 0.2.2.dev20 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to rpkimancer’s documentation</a></li> 
       </ul>
     </div>  
@@ -48,7 +49,7 @@
           <div class="body" role="main">
             
   <section id="welcome-to-rpkimancer-s-documentation">
-<h1>Welcome to rpkimancer’s documentation<a class="headerlink" href="#welcome-to-rpkimancer-s-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>Welcome to rpkimancer’s documentation<a class="headerlink" href="#welcome-to-rpkimancer-s-documentation" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated/modules.html">API Reference</a><ul>
@@ -60,7 +61,7 @@
 </div>
 </section>
 <section id="rpkimancer">
-<h1>rpkimancer<a class="headerlink" href="#rpkimancer" title="Permalink to this headline">¶</a></h1>
+<h1>rpkimancer<a class="headerlink" href="#rpkimancer" title="Permalink to this heading">¶</a></h1>
 <p><img alt="animated rpkimancer" src="_images/rpkimancer.png" /></p>
 <blockquote>
 <div><p><strong>rpkimancer</strong> /ɑː-piː-keɪ-aɪ-mænsə/</p>
@@ -72,7 +73,7 @@ RPKI.”</em></p>
 <a class="reference external" href="https://codecov.io/gh/benmaddison/rpkimancer"><img alt="codecov" src="https://codecov.io/gh/benmaddison/rpkimancer/branch/main/graph/badge.svg?token=RkTp3eCsOd" /></a>
 <a class="reference external" href="https://pyup.io/repos/github/benmaddison/rpkimancer/"><img alt="Updates" src="https://pyup.io/repos/github/benmaddison/rpkimancer/shield.svg" /></a></p>
 <section id="about">
-<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<h2>About<a class="headerlink" href="#about" title="Permalink to this heading">¶</a></h2>
 <p>A library and associated command line utility for quickly creating and reading
 arbitrary RPKI signed objects.</p>
 <p>The primary motivation was to be able to construct new RPKI signed object types
@@ -92,7 +93,7 @@ valid use-case is to create <em>almost</em> valid objects to recreate RP bugs.</
 <p>Similarly, the de-serialisation code contains no crypto validation at all.</p>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
 <p>Python version 3.8 or greater is required.</p>
 <p>A package is available on PyPI. You can:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 -m pip install rpkimancer
@@ -100,7 +101,7 @@ valid use-case is to create <em>almost</em> valid objects to recreate RP bugs.</
 </div>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>The CLI tools (in the <code class="docutils literal notranslate"><span class="pre">rpkimancer.cli</span></code> package) provide examples of library usage.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">rpkincant</span></code> CLI tool ships with two subcommands:</p>
 <ul>
@@ -118,7 +119,7 @@ formats.</p>
 </ul>
 </section>
 <section id="writing-plug-ins">
-<h2>Writing Plug-ins<a class="headerlink" href="#writing-plug-ins" title="Permalink to this headline">¶</a></h2>
+<h2>Writing Plug-ins<a class="headerlink" href="#writing-plug-ins" title="Permalink to this heading">¶</a></h2>
 <p>Plug-ins implementing new signed object types can advertise the required
 components to <code class="docutils literal notranslate"><span class="pre">rpkimancer</span></code> using the following entry points:</p>
 <ul>
@@ -150,7 +151,7 @@ and implementing the <code class="docutils literal notranslate"><span class="pre
 </ul>
 </section>
 <section id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">¶</a></h2>
 <p>Both feature contributions and bug fixes are very welcome.</p>
 <p>Please open an issue for discussion before expending energy on an implementation.</p>
 <p>Pre-standard RPKI object implementations will not be accepted into the main library.
@@ -168,7 +169,7 @@ python -m pip install -r packaging/requirements-dev.txt
 </div>
 </section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -207,6 +208,7 @@ python -m pip install -r packaging/requirements-dev.txt
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../deps-update/index.html">deps-update</a></li>
     <li><a href="../main/index.html">main</a></li>
 </ul>
 
@@ -230,14 +232,14 @@ python -m pip install -r packaging/requirements-dev.txt
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </div>

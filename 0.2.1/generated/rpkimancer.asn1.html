@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.asn1 package &#8212; rpkimancer 0.2.1 documentation</title>
+    <title>rpkimancer.asn1 package &#8212; rpkimancer 0.2.2.dev20 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -39,7 +40,7 @@
         <li class="right" >
           <a href="rpkimancer.html" title="rpkimancer package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.2.dev20 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" accesskey="U">rpkimancer package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">rpkimancer.asn1 package</a></li> 
@@ -52,9 +53,9 @@
           <div class="body" role="main">
             
   <section id="rpkimancer-asn1-package">
-<h1>rpkimancer.asn1 package<a class="headerlink" href="#rpkimancer-asn1-package" title="Permalink to this headline">¶</a></h1>
+<h1>rpkimancer.asn1 package<a class="headerlink" href="#rpkimancer-asn1-package" title="Permalink to this heading">¶</a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rpkimancer.asn1.mod.html">rpkimancer.asn1.mod package</a><ul>
@@ -65,7 +66,7 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rpkimancer.asn1.types.html">rpkimancer.asn1.types module</a></li>
@@ -73,20 +74,20 @@
 </div>
 </section>
 <section id="module-rpkimancer.asn1">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rpkimancer.asn1" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rpkimancer.asn1" title="Permalink to this heading">¶</a></h2>
 <p>ASN.1 data types and helpers.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="rpkimancer.asn1.append_info_object_set">
 <span class="sig-prename descclassname"><span class="pre">rpkimancer.asn1.</span></span><span class="sig-name descname"><span class="pre">append_info_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj_set</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">obj_ins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.append_info_object_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append an instance to an existing object information set at runtime.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj_set</strong> (<em>pycrate_asn1rt.asnobj_class.CLASS</em>) – </p></li>
-<li><p><strong>obj_ins</strong> (<em>pycrate_asn1rt.asnobj_class.CLASS</em>) – </p></li>
+<li><p><strong>obj_set</strong> (<em>CLASS</em>) – </p></li>
+<li><p><strong>obj_ins</strong> (<em>CLASS</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -98,16 +99,13 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Generic base ASN.1 type wrapping pycrates API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.asn1.Interface.content_syntax">
-<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pycrate_asn1rt.asnobj.ASN1Obj</span></em><a class="headerlink" href="#rpkimancer.asn1.Interface.content_syntax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">content_syntax</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ASN1Obj</span></em><a class="headerlink" href="#rpkimancer.asn1.Interface.content_syntax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -115,11 +113,11 @@
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.from_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct an instance from python data.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>rpkimancer.asn1.InterfaceSubclass</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>InterfaceSubclass</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -129,11 +127,11 @@
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_der</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">der_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.from_der" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct an instance from DER encoded data.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>der_data</strong> (<em>bytes</em>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>rpkimancer.asn1.InterfaceSubclass</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>InterfaceSubclass</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -149,11 +147,11 @@
 <span class="sig-name descname"><span class="pre">constructed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.constructed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provide a context manager to mediate the global pycrates object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>pycrate_asn1rt.asnobj.ASN1Obj</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ASN1Obj</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,7 +161,7 @@
 <span class="sig-name descname"><span class="pre">to_txt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get default text serialization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -174,7 +172,7 @@
 <span class="sig-name descname"><span class="pre">to_asn1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_asn1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as ASN.1 data.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -185,7 +183,7 @@
 <span class="sig-name descname"><span class="pre">to_der</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_der" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as DER.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bytes</p>
 </dd>
 </dl>
@@ -196,7 +194,7 @@
 <span class="sig-name descname"><span class="pre">to_jer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_jer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as JER.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -207,7 +205,7 @@
 <span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize as JSON.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -218,7 +216,7 @@
 <span class="sig-name descname"><span class="pre">to_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.asn1.Interface.to_internal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serialize using internal python repr.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -260,6 +258,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../deps-update/index.html">deps-update</a></li>
     <li><a href="../../main/index.html">main</a></li>
 </ul>
 
@@ -283,14 +282,14 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </body>

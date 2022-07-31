@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.cert.base module &#8212; rpkimancer 0.2.1 documentation</title>
+    <title>rpkimancer.cert.base module &#8212; rpkimancer 0.2.2.dev20 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -39,7 +40,7 @@
         <li class="right" >
           <a href="rpkimancer.cert.asn1.html" title="rpkimancer.cert.asn1 module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.2.dev20 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.cert.html" accesskey="U">rpkimancer.cert package</a> &#187;</li>
@@ -53,7 +54,7 @@
           <div class="body" role="main">
             
   <section id="module-rpkimancer.cert.base">
-<span id="rpkimancer-cert-base-module"></span><h1>rpkimancer.cert.base module<a class="headerlink" href="#module-rpkimancer.cert.base" title="Permalink to this headline">¶</a></h1>
+<span id="rpkimancer-cert-base-module"></span><h1>rpkimancer.cert.base module<a class="headerlink" href="#module-rpkimancer.cert.base" title="Permalink to this heading">¶</a></h1>
 <p>Base RPKI Resource Certificate implementation - RFC6487.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate">
@@ -61,7 +62,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base RPKI Resource Certificate class - RFC6487.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>common_name</strong> (<em>str</em>) – </p></li>
 <li><p><strong>days</strong> (<em>int</em>) – </p></li>
@@ -72,25 +73,22 @@
 <li><p><strong>as_resources</strong> (<em>Optional</em><em>[</em><em>AsResourcesInfo</em><em>]</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
-</dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.hash_algorithm">
 <span class="sig-name descname"><span class="pre">hash_algorithm</span></span><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.hash_algorithm" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">cryptography.hazmat.primitives.hashes.SHA256</span></code></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SHA256</span></code></p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.sia">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.SubjectInformationAccess</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.sia" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">SubjectInformationAccess</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.sia" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the SIA extension.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.cps">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">cryptography.x509.extensions.CertificatePolicies</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.cps" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">CertificatePolicies</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.cps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the CPS extension.</p>
 </dd></dl>
 
@@ -105,14 +103,14 @@
 <span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pub_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.publish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publish artifact files in the PP.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pub_path</strong> (<em>str</em>) – </p></li>
 <li><p><strong>recursive</strong> (<em>bool</em>) – </p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -120,19 +118,19 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.private_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">private_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">cryptography.hazmat.primitives.asymmetric.rsa.RSAPrivateKey</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.private_key" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">private_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RSAPrivateKey</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.private_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the private part of the RSA key pair.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.public_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">public_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">cryptography.hazmat.primitives.asymmetric.rsa.RSAPublicKey</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.public_key" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">public_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RSAPublicKey</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.public_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the public part of the RSA key pair.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.cert_builder">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cert_builder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">cryptography.x509.base.CertificateBuilder</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.cert_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cert_builder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">CertificateBuilder</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.cert_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the certificate builder used to construct the certificate.</p>
 </dd></dl>
 
@@ -150,7 +148,7 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.cert">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cert</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">cryptography.x509.base.Certificate</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.cert" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cert</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Certificate</span></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.cert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the underlying cryptography X.509 Certificate object.</p>
 </dd></dl>
 
@@ -180,13 +178,13 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.asn1_cert">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asn1_cert</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.Certificate" title="rpkimancer.cert.asn1.Certificate"><span class="pre">rpkimancer.cert.asn1.Certificate</span></a></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.asn1_cert" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asn1_cert</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.Certificate" title="rpkimancer.cert.asn1.Certificate"><span class="pre">Certificate</span></a></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.asn1_cert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an ASN.1 Certificate for the certificate.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="rpkimancer.cert.base.BaseResourceCertificate.subject_public_key_info">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subject_public_key_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.SubjectPublicKeyInfo" title="rpkimancer.cert.asn1.SubjectPublicKeyInfo"><span class="pre">rpkimancer.cert.asn1.SubjectPublicKeyInfo</span></a></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.subject_public_key_info" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subject_public_key_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.SubjectPublicKeyInfo" title="rpkimancer.cert.asn1.SubjectPublicKeyInfo"><span class="pre">SubjectPublicKeyInfo</span></a></em><a class="headerlink" href="#rpkimancer.cert.base.BaseResourceCertificate.subject_public_key_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the subjectPublicKeyInfo for the certificate.</p>
 </dd></dl>
 
@@ -215,6 +213,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../deps-update/index.html">deps-update</a></li>
     <li><a href="rpkimancer.cert.base.html">main</a></li>
 </ul>
 
@@ -238,14 +237,14 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </body>

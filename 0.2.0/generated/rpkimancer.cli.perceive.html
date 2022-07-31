@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.cli.perceive module &#8212; rpkimancer 0.2.1 documentation</title>
+    <title>rpkimancer.cli.perceive module &#8212; rpkimancer 0.2.2.dev20 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -39,7 +40,7 @@
         <li class="right" >
           <a href="rpkimancer.cli.helpers.html" title="rpkimancer.cli.helpers module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.2.dev20 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.cli.html" accesskey="U">rpkimancer.cli package</a> &#187;</li>
@@ -53,19 +54,16 @@
           <div class="body" role="main">
             
   <section id="module-rpkimancer.cli.perceive">
-<span id="rpkimancer-cli-perceive-module"></span><h1>rpkimancer.cli.perceive module<a class="headerlink" href="#module-rpkimancer.cli.perceive" title="Permalink to this headline">¶</a></h1>
+<span id="rpkimancer-cli-perceive-module"></span><h1>rpkimancer.cli.perceive module<a class="headerlink" href="#module-rpkimancer.cli.perceive" title="Permalink to this heading">¶</a></h1>
 <p>rpkincant perceive command implementation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cli.perceive.Perceive">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cli.perceive.</span></span><span class="sig-name descname"><span class="pre">Perceive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.perceive.Perceive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="rpkimancer.cli.html#rpkimancer.cli.BaseCommand" title="rpkimancer.cli.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">rpkimancer.cli.BaseCommand</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="rpkimancer.cli.html#rpkimancer.cli.BaseCommand" title="rpkimancer.cli.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a></p>
 <p>Learn of the secrets carried within an RPKI signed object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>parent</strong> (<em>OptionalSubParser</em>) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -83,7 +81,7 @@
 <span class="sig-name descname"><span class="pre">init_parser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.perceive.Perceive.init_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up command line argument parser.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
@@ -94,14 +92,14 @@
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cli.perceive.Perceive.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run with the given arguments.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parsed_args</strong> (<em>argparse.Namespace</em>) – </p></li>
+<li><p><strong>parsed_args</strong> (<em>Namespace</em>) – </p></li>
 <li><p><strong>args</strong> (<em>Any</em>) – </p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>Optional</em>[int]</p>
 </dd>
 </dl>
@@ -132,6 +130,7 @@
 </ul>
 <h3>Branches</h3>
 <ul>
+    <li><a href="../../deps-update/index.html">deps-update</a></li>
     <li><a href="../../main/index.html">main</a></li>
 </ul>
 
@@ -155,14 +154,14 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </body>
