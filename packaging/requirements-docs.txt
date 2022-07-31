@@ -9,3 +9,6 @@ sphinx-readable-theme==1.3.0
 
 # oid registry parsing
 PyYAML==6.0
+
+# constraints
+-c constraints-docs.txt
