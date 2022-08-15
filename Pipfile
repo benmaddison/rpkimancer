@@ -1,0 +1,47 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+rpkimancer = {editable = true, path = "."}
+
+[dev-packages]
+# linting
+# FIXME: https://github.com/benmaddison/rpkimancer/issues/170
+flake8 = "<5.0"
+flake8-bandit = "*"
+flake8-bugbear = "*"
+flake8-commas = "*"
+flake8-docstrings = "*"
+flake8-eradicate = "*"
+flake8-import-order = "*"
+pep8-naming = "*"
+radon = "*"
+# typechecking
+mypy = "*"
+# testing
+pytest = "*"
+pytest-cov = "*"
+# oid registry validation
+pyyaml = "*"
+jsonschema = "*"
+coloredlogs = "*"
+verboselogs = "*"
+importlib_resources = {version = "*", markers = "python_version < '3.9'"}
+# docs generation
+sphinx = "*"
+myst-parser = "*"
+sphinx-multiversion = {ref = "prebuild_command", git = "https://github.com/samtygier-stfc/sphinx-multiversion.git"}
+sphinx-readable-theme = "*"
+# packaging
+build = "*"
+twine = "*"
+
+[scripts]
+asn1-compile = "python -m rpkimancer.asn1.mod"
+typecheck = "mypy --package rpkimancer --config-file tox.ini"
+test = "py.test  -m 'not rpki_client'"
+lint = "flake8 ."
+docs = "sphinx-multiversion -E docs/ build/docs/html/"
+validate-oids = "python object-identifiers/validate.py"
