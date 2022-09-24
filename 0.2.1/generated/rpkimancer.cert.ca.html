@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.cert.ca module &#8212; rpkimancer 0.2.3.dev1 documentation</title>
+    <title>rpkimancer.cert.ca module &#8212; rpkimancer 0.2.3.dev2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -14,6 +14,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="rpkimancer.cert.ee module" href="rpkimancer.cert.ee.html" />
@@ -40,7 +41,7 @@
         <li class="right" >
           <a href="rpkimancer.cert.base.html" title="rpkimancer.cert.base module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.cert.html" accesskey="U">rpkimancer.cert package</a> &#187;</li>
@@ -53,10 +54,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="module-rpkimancer.cert.ca">
-<span id="rpkimancer-cert-ca-module"></span><h1>rpkimancer.cert.ca module<a class="headerlink" href="#module-rpkimancer.cert.ca" title="Permalink to this heading">¶</a></h1>
+  <section id="rpkimancer-cert-ca-module">
+<h1>rpkimancer.cert.ca module<a class="headerlink" href="#rpkimancer-cert-ca-module" title="Permalink to this heading">¶</a></h1>
 <p>RPKI Certificate Authority implementation - RFC6487.</p>
-<dl class="py class">
+<span class="target" id="module-rpkimancer.cert.ca"></span><dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.cert.ca.CertificateAuthority">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.cert.ca.</span></span><span class="sig-name descname"><span class="pre">CertificateAuthority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crl_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mft_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.cert.ca.CertificateAuthority" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate" title="rpkimancer.cert.base.BaseResourceCertificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseResourceCertificate</span></code></a></p>
@@ -272,7 +273,43 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">rpkimancer.cert.ca module</a><ul>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority</span></code></a><ul>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.crl"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crl</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.crl_der"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crl_der</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.repo_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.repo_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.cert_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.cert_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.mft_entry"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.mft_entry</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.crl_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crl_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.mft_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.mft_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.issued"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issued</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.crldp"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crldp</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.aia"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.aia</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.sia"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.sia</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.issue_cert"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issue_cert()</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.issue_crl"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issue_crl()</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.issue_mft"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issue_mft()</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.mft"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.mft</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.CertificateAuthority.publish"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.publish()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.TACertificateAuthority"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority</span></code></a><ul>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.TACertificateAuthority.repo_path"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.repo_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.TACertificateAuthority.cert_path"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.cert_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.TACertificateAuthority.tal_path"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.tal_path</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.TACertificateAuthority.tal"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.tal</span></code></a></li>
+<li><a class="reference internal" href="#rpkimancer.cert.ca.TACertificateAuthority.publish"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.publish()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div><h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation index</a><ul>
   <li><a href="modules.html">rpkimancer</a><ul>
@@ -318,7 +355,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.0.
   </div>
   
   </body>
