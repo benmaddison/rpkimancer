@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.sigobj.base module &#8212; rpkimancer 0.2.3.dev2 documentation</title>
+    <title>rpkimancer.sigobj.base module &#8212; rpkimancer 0.2.3.dev1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,6 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="rpkimancer.sigobj.gbr module" href="rpkimancer.sigobj.gbr.html" />
@@ -41,7 +40,7 @@
         <li class="right" >
           <a href="rpkimancer.sigobj.html" title="rpkimancer.sigobj package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.sigobj.html" accesskey="U">rpkimancer.sigobj package</a> &#187;</li>
@@ -54,10 +53,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="rpkimancer-sigobj-base-module">
-<h1>rpkimancer.sigobj.base module<a class="headerlink" href="#rpkimancer-sigobj-base-module" title="Permalink to this heading">¶</a></h1>
+  <section id="module-rpkimancer.sigobj.base">
+<span id="rpkimancer-sigobj-base-module"></span><h1>rpkimancer.sigobj.base module<a class="headerlink" href="#module-rpkimancer.sigobj.base" title="Permalink to this heading">¶</a></h1>
 <p>Base classes for RPKI Signed Object implementations - RFC6488.</p>
-<span class="target" id="module-rpkimancer.sigobj.base"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.base.EncapsulatedContentType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.base.</span></span><span class="sig-name descname"><span class="pre">EncapsulatedContentType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.base.EncapsulatedContentType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.cms.html#rpkimancer.cms.ContentType" title="rpkimancer.cms.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a></p>
@@ -198,35 +197,7 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">rpkimancer.sigobj.base module</a><ul>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType</span></code></a><ul>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.digest_algorithm"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.digest_algorithm()</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.file_ext"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.file_ext</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.as_resources"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.as_resources</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.ip_resources"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.ip_resources</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.digest"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.digest()</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.signed_attrs"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.signed_attrs()</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.EncapsulatedContentType.signed_attrs_digest"><code class="docutils literal notranslate"><span class="pre">EncapsulatedContentType.signed_attrs_digest()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject"><code class="docutils literal notranslate"><span class="pre">SignedObject</span></code></a><ul>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject.econtent_type"><code class="docutils literal notranslate"><span class="pre">SignedObject.econtent_type</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject.ee_cert_cls"><code class="docutils literal notranslate"><span class="pre">SignedObject.ee_cert_cls</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject.econtent_info"><code class="docutils literal notranslate"><span class="pre">SignedObject.econtent_info</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject.econtent"><code class="docutils literal notranslate"><span class="pre">SignedObject.econtent</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject.file_name"><code class="docutils literal notranslate"><span class="pre">SignedObject.file_name</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.base.SignedObject.publish"><code class="docutils literal notranslate"><span class="pre">SignedObject.publish()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  </div><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation index</a><ul>
   <li><a href="modules.html">rpkimancer</a><ul>
@@ -272,7 +243,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.0.post0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </body>

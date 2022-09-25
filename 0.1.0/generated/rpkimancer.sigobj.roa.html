@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.sigobj.roa module &#8212; rpkimancer 0.2.3.dev2 documentation</title>
+    <title>rpkimancer.sigobj.roa module &#8212; rpkimancer 0.2.3.dev1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,6 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="rpkimancer.algorithms module" href="rpkimancer.algorithms.html" />
@@ -41,7 +40,7 @@
         <li class="right" >
           <a href="rpkimancer.sigobj.mft.html" title="rpkimancer.sigobj.mft module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" >rpkimancer package</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="rpkimancer.sigobj.html" accesskey="U">rpkimancer.sigobj package</a> &#187;</li>
@@ -54,10 +53,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="rpkimancer-sigobj-roa-module">
-<h1>rpkimancer.sigobj.roa module<a class="headerlink" href="#rpkimancer-sigobj-roa-module" title="Permalink to this heading">¶</a></h1>
+  <section id="module-rpkimancer.sigobj.roa">
+<span id="rpkimancer-sigobj-roa-module"></span><h1>rpkimancer.sigobj.roa module<a class="headerlink" href="#module-rpkimancer.sigobj.roa" title="Permalink to this heading">¶</a></h1>
 <p>RPKI ROA implementation - RFC6482.</p>
-<span class="target" id="module-rpkimancer.sigobj.roa"></span><dl class="py class">
+<dl class="py class">
 <dt class="sig sig-object py" id="rpkimancer.sigobj.roa.RouteOriginAttestationEContent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rpkimancer.sigobj.roa.</span></span><span class="sig-name descname"><span class="pre">RouteOriginAttestationEContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_address_blocks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="rpkimancer.sigobj.base.html#rpkimancer.sigobj.base.EncapsulatedContent" title="rpkimancer.sigobj.base.EncapsulatedContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncapsulatedContent</span></code></a></p>
@@ -152,30 +151,7 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">rpkimancer.sigobj.roa module</a><ul>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent</span></code></a><ul>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_type"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.content_type</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.content_syntax"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.content_syntax</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.file_ext"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.file_ext</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.as_resources"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.as_resources</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.ip_resources"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.ip_resources</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.to_txt"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.to_txt()</span></code></a></li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestationEContent.to_json"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestationEContent.to_json()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestation"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestation</span></code></a><ul>
-<li><a class="reference internal" href="#rpkimancer.sigobj.roa.RouteOriginAttestation.econtent_cls"><code class="docutils literal notranslate"><span class="pre">RouteOriginAttestation.econtent_cls</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  </div><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation index</a><ul>
   <li><a href="modules.html">rpkimancer</a><ul>
@@ -221,7 +197,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.0.post0.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
   </div>
   
   </body>
