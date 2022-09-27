@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>rpkimancer.cert package &#8212; rpkimancer 0.2.3.dev1 documentation</title>
+    <title>rpkimancer.cert package &#8212; rpkimancer 0.2.3.dev2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/readable.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -14,6 +14,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="rpkimancer.cert.asn1 module" href="rpkimancer.cert.asn1.html" />
@@ -40,7 +41,7 @@
         <li class="right" >
           <a href="rpkimancer.asn1.types.html" title="rpkimancer.asn1.types module"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">rpkimancer 0.2.3.dev2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >rpkimancer</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="rpkimancer.html" accesskey="U">rpkimancer package</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">rpkimancer.cert package</a></li> 
@@ -58,11 +59,90 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.asn1.html">rpkimancer.cert.asn1 module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.base.html">rpkimancer.cert.base module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.ca.html">rpkimancer.cert.ca module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.ee.html">rpkimancer.cert.ee module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.extensions.html">rpkimancer.cert.extensions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.asn1.html">rpkimancer.cert.asn1 module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.Certificate"><code class="docutils literal notranslate"><span class="pre">Certificate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.Certificate.content_syntax"><code class="docutils literal notranslate"><span class="pre">Certificate.content_syntax</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.Certificate.subject_public_key_info"><code class="docutils literal notranslate"><span class="pre">Certificate.subject_public_key_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.Certificate.register_ext_type"><code class="docutils literal notranslate"><span class="pre">Certificate.register_ext_type()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.SubjectPublicKeyInfo"><code class="docutils literal notranslate"><span class="pre">SubjectPublicKeyInfo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.asn1.html#rpkimancer.cert.asn1.SubjectPublicKeyInfo.content_syntax"><code class="docutils literal notranslate"><span class="pre">SubjectPublicKeyInfo.content_syntax</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.base.html">rpkimancer.cert.base module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.hash_algorithm"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.hash_algorithm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.sia"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.sia</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.cps"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.cps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.mft_entry"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.mft_entry</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.publish"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.publish()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.private_key"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.private_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.public_key"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.public_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.cert_builder"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.cert_builder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.base_uri"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.base_uri</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.uri_path"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.uri_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.cert"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.cert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.cert_der"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.cert_der</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.issuer"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.issuer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.subject_cn"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.subject_cn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.ski_digest"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.ski_digest</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.asn1_cert"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.asn1_cert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.base.html#rpkimancer.cert.base.BaseResourceCertificate.subject_public_key_info"><code class="docutils literal notranslate"><span class="pre">BaseResourceCertificate.subject_public_key_info</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.ca.html">rpkimancer.cert.ca module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.crl"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crl</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.crl_der"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crl_der</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.repo_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.repo_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.cert_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.cert_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.mft_entry"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.mft_entry</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.crl_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crl_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.mft_path"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.mft_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.issued"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issued</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.crldp"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.crldp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.aia"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.aia</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.sia"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.sia</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.issue_cert"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issue_cert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.issue_crl"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issue_crl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.issue_mft"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.issue_mft()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.mft"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.mft</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.CertificateAuthority.publish"><code class="docutils literal notranslate"><span class="pre">CertificateAuthority.publish()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.TACertificateAuthority"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.TACertificateAuthority.repo_path"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.repo_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.TACertificateAuthority.cert_path"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.cert_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.TACertificateAuthority.tal_path"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.tal_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.TACertificateAuthority.tal"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.tal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ca.html#rpkimancer.cert.ca.TACertificateAuthority.publish"><code class="docutils literal notranslate"><span class="pre">TACertificateAuthority.publish()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.ee.html">rpkimancer.cert.ee module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate"><code class="docutils literal notranslate"><span class="pre">EECertificate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate.signed_object"><code class="docutils literal notranslate"><span class="pre">EECertificate.signed_object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate.issuer_repo_path"><code class="docutils literal notranslate"><span class="pre">EECertificate.issuer_repo_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate.mft_entry"><code class="docutils literal notranslate"><span class="pre">EECertificate.mft_entry</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate.sia"><code class="docutils literal notranslate"><span class="pre">EECertificate.sia</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate.sign_object"><code class="docutils literal notranslate"><span class="pre">EECertificate.sign_object()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpkimancer.cert.ee.html#rpkimancer.cert.ee.EECertificate.publish"><code class="docutils literal notranslate"><span class="pre">EECertificate.publish()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.extensions.html">rpkimancer.cert.extensions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.extensions.html#rpkimancer.cert.extensions.X509CertificateExtension"><code class="docutils literal notranslate"><span class="pre">X509CertificateExtension</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.extensions.html#rpkimancer.cert.extensions.IpResources"><code class="docutils literal notranslate"><span class="pre">IpResources</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rpkimancer.cert.extensions.html#rpkimancer.cert.extensions.AsResources"><code class="docutils literal notranslate"><span class="pre">AsResources</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="rpkimancer.cert.oid.html">rpkimancer.cert.oid module</a></li>
 </ul>
 </div>
@@ -134,7 +214,7 @@
     </div>
   <div class="footer">
     &copy; Copyright 2021-2022, Ben Maddison.
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.
   </div>
   
   </body>
