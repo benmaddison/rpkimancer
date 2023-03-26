@@ -8,4 +8,4 @@ flake8-docstrings==1.6.0
 flake8-eradicate==1.2.1
 flake8-import-order==0.18.1
 pep8-naming==0.13.1
-radon==5.1.0
+radon==6.0.1
