@@ -1,4 +1,4 @@
-sphinx==5.1.1
+sphinx==7.1.0
 
 # sphinx extensions
 myst-parser==0.18.0
