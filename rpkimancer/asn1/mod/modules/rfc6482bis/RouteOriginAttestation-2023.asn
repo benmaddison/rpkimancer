@@ -1,0 +1,52 @@
+RPKI-ROA-2023 { iso(1) member-body(2) us(840) rsadsi(113549)
+  pkcs(1) pkcs9(9) smime(16) mod(0) id-mod-rpkiROA-2023(999) }
+
+DEFINITIONS EXPLICIT TAGS ::=
+BEGIN
+
+IMPORTS
+  CONTENT-TYPE
+  FROM CryptographicMessageSyntax-2010 -- in [RFC6268]
+    { iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1)
+      pkcs-9(9) smime(16) modules(0) id-mod-cms-2009(58) } ;
+
+ct-routeOriginAttestation CONTENT-TYPE ::=
+  { TYPE RouteOriginAttestation
+    IDENTIFIED BY id-ct-routeOriginAuthz }
+
+id-ct-routeOriginAuthz OBJECT IDENTIFIER ::=
+  { iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1)
+    pkcs-9(9) id-smime(16) id-ct(1) routeOriginAuthz(24) }
+
+RouteOriginAttestation ::= SEQUENCE {
+  version [0]   INTEGER DEFAULT 0,
+  asID          ASID,
+  ipAddrBlocks  SEQUENCE (SIZE(1..2)) OF ROAIPAddressFamily }
+
+ASID ::= INTEGER (0..4294967295)
+
+ROAIPAddressFamily ::= SEQUENCE {
+  addressFamily AFI.&afi ({AddressFamilySet}),
+  addresses     AFI.&Addresses ({AddressFamilySet}{@addressFamily}) }
+
+AFI ::= CLASS {
+  &afi          OCTET STRING (SIZE(2)) UNIQUE,
+  &Addresses
+} WITH SYNTAX { AFI &afi ADDRESSES-TYPE &Addresses }
+
+AddressFamilySet AFI ::= { addressFamilyIPv4 | addressFamilyIPv6 }
+
+addressFamilyIPv4 AFI ::= { AFI ipv4 ADDRESSES-TYPE ROAIPv4Addresses }
+addressFamilyIPv6 AFI ::= { AFI ipv6 ADDRESSES-TYPE ROAIPv6Addresses }
+
+ipv4 OCTET STRING ::= '0001'H
+ipv6 OCTET STRING ::= '0002'H
+
+ROAIPv4Addresses ::= SEQUENCE (SIZE(1..MAX)) OF ROAIPAddress{32}
+ROAIPv6Addresses ::= SEQUENCE (SIZE(1..MAX)) OF ROAIPAddress{128}
+
+ROAIPAddress {INTEGER: len} ::= SEQUENCE {
+  address       BIT STRING (SIZE(0..len)),
+  maxLength     INTEGER (0..len) OPTIONAL }
+
+END

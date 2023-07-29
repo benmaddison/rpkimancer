@@ -13,13 +13,15 @@
 
 from __future__ import annotations
 
+import collections
 import copy
+import itertools
 import json
 import logging
 import typing
 
 from .base import EncapsulatedContentType, SignedObject
-from ..asn1.mod import RPKI_ROA
+from ..asn1.mod import RPKI_ROA_2023
 from ..resources import (AFI, IPNetwork, IPNetworkBits, IpResourcesInfo,
                          bitstring_to_net, net_to_bitstring)
 
@@ -31,7 +33,7 @@ RoaNetworkInfo = typing.Tuple[IPNetwork, typing.Optional[int]]
 class RouteOriginAttestationContentType(EncapsulatedContentType):
     """encapContentInfo for RPKI ROAs - RFC6482."""
 
-    asn1_definition = RPKI_ROA.ct_routeOriginAuthz
+    asn1_definition = RPKI_ROA_2023.ct_routeOriginAttestation
     file_ext = "roa"
     as_resources = None
 
@@ -53,6 +55,23 @@ class RouteOriginAttestationContentType(EncapsulatedContentType):
         address_blocks = [{"addressFamily": AFI[network.version],
                            "addresses": [address_entry(network, maxlen)]}
                           for network, maxlen in ip_address_blocks]
+
+        def net_info_to_afi(info: RoaNetworkInfo) -> bytes:
+            network = info[0]
+            return AFI[network.version]
+
+        def afi_to_addresses_type(afi: bytes) -> str:
+            instance = RPKI_ROA_2023.AddressFamilySet.get_uniq("afi", afi)
+            return instance["Addresses"].get_typeref().fullname()
+
+        address_blocks = [{"addressFamily": afi,
+                           "addresses": (afi_to_addresses_type(afi),
+                                         [address_entry(network, maxlen)
+                                          for network, maxlen in addrs])}
+                          for afi, addrs
+                          in itertools.groupby(sorted(ip_address_blocks, key=net_info_to_afi),
+                                               net_info_to_afi)]
+
         data = {"version": version,
                 "asID": as_id,
                 "ipAddrBlocks": address_blocks}
@@ -76,8 +95,8 @@ class RouteOriginAttestationContentType(EncapsulatedContentType):
             data_addr_block = data["ipAddrBlocks"][i]
             version = afi_bytes_version_map[addr_block["addressFamily"]]
             data_addr_block["addressFamily"] = f"ipv{version}"
-            for j, addr in enumerate(addr_block["addresses"]):
-                data_addr = data_addr_block["addresses"][j]
+            for j, addr in enumerate(addr_block["addresses"][1]):
+                data_addr = data_addr_block["addresses"][1][j]
                 network = bitstring_to_net(addr["address"], version)
                 data_addr["address"] = str(network)
         return json.dumps(data, indent=2)

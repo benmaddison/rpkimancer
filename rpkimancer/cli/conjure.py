@@ -42,6 +42,11 @@ DEFAULT_CA_IP_RESOURCES = [ipaddress.ip_network("10.0.0.0/8"),
                             ipaddress.ip_address("192.168.2.255")),
                            ipaddress.ip_network("2001:db8::/32")]
 
+DEFAULT_ROA_IP_RESOURCES = [(ipaddress.ip_network("10.0.0.0/8"), 16),
+                            (ipaddress.ip_network("192.0.2.0/24"), None),
+                            (ipaddress.ip_network("2001:db8::/32"), 40),
+                            (ipaddress.ip_network("2001:db8:f00::/48"), None)]
+
 DEFAULT_GBR_FULLNAME = "Jane Doe"
 DEFAULT_GBR_ORG = "Example Org"
 DEFAULT_GBR_EMAIL = "jane@example.net"
@@ -114,10 +119,7 @@ class Conjure(BaseCommand):
                                       "(default: %(default)s)")
         self.parser.add_argument("--roa-networks",
                                  nargs="+", type=roa_network,
-                                 default=[(net, None)
-                                          for net in DEFAULT_CA_IP_RESOURCES
-                                          if isinstance(net, (ipaddress.IPv4Network,  # noqa: E501
-                                                              ipaddress.IPv6Network))],  # noqa: E501
+                                 default=DEFAULT_ROA_IP_RESOURCES,
                                  metavar=META_IP_PREFIX_MAXLEN,
                                  help="IP prefixes to include in ROA "
                                       "(default: %(default)s)")
