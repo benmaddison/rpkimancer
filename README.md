@@ -60,7 +60,7 @@ The `rpkincant` CLI tool ships with two subcommands:
     All the CRLs and Manifests are generated, along with a ROA and a GBR
     issued by the CA. A TAL for the TA is also generated.
 
--   `rpkimancer perceive`:
+-   `rpkincant perceive`:
 
     Reads DER encoded signed objects from disk, and deserialises them based on
     the type indicated by the file extension.
