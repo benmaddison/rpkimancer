@@ -1,4 +1,4 @@
-pytest==7.1.2
+pytest==8.2.0
 
 # pytest plugins
 pytest-cov==3.0.0
