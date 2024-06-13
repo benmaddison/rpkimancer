@@ -11,12 +11,15 @@
 # the License.
 """Compile and re-export the provided ASN.1 modules."""
 from __future__ import annotations
+from copy import copy
 
 import glob
 import importlib.metadata
 import importlib.resources
 import logging
 import os
+import tempfile
+from typing import Optional
 
 import pycrate_asn1c.asnproc as _asn1_compile
 import pycrate_asn1c.generator as _asn1_generate
@@ -27,13 +30,15 @@ log = logging.getLogger(__name__)
 log_writer = LogWriter(log, level=logging.INFO)
 
 
-def _compile_modules() -> None:
+def _compile_modules(target_dir: Optional[str] = None) -> None:
     log.info("Trying to compile ASN.1 modules sources")
     pkg_dir = os.path.dirname(__file__)
     mods_dir = os.path.join(pkg_dir, "modules")
-    output_path = os.path.join(pkg_dir, "_mod.py")
+    if target_dir is None:
+        target_dir = pkg_dir
+    output_path = os.path.join(target_dir, "_mod.py")
     mods = list()
-    log.info("reading local distribution modules")
+    log.info(f"searching for local distribution modules in {mods_dir}")
     for path in glob.glob(os.path.join(mods_dir, "**", "*.asn")):
         log.debug(f"Reading {path}")
         with open(path) as f:
@@ -51,12 +56,17 @@ def _compile_modules() -> None:
             log.info(f"Reading {mod}.{item}")
             with importlib.resources.open_text(mod, item) as f:
                 mods.append(f.read())
+    log.info(f"Compiling {len(mods)} ASN.1 modules to {output_path}")
     with log_writer.redirect_stdout():
         _asn1_compile.compile_text(mods)
         _asn1_generate.PycrateGenerator(dest=output_path)
     log.info("Compilation done")
 
 
-_compile_modules()
-with log_writer.redirect_stdout():
-    from ._mod import *  # noqa
+with tempfile.TemporaryDirectory() as tmp:
+    _compile_modules(target_dir=tmp)
+    old_path = copy(__path__)
+    __path__ = (tmp,)
+    with log_writer.redirect_stdout():
+        from ._mod import *  # noqa
+    __path__ = old_path
