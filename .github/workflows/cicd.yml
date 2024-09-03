@@ -128,7 +128,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: download coverage report artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: coverage-${{ matrix.os }}-python${{ matrix.python-version }}
       - name: upload coverage report
@@ -200,7 +200,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: download built docs artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: docs
           path: build/docs/html/
@@ -224,12 +224,12 @@ jobs:
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
       - name: download sdist artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: sdist
           path: dist/
       - name: download wheel artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: wheel
           path: dist/
